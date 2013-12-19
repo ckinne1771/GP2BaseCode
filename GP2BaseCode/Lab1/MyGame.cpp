@@ -1,4 +1,5 @@
 #include "MyGame.h"
+#include "..\D3D10Renderer\D3D10Renderer.h"
 
 bool MyGame::initGame()
 {
@@ -68,5 +69,11 @@ bool MyGame::initGame()
 
 	m_GameObjectList.push_back(pCar);
 
+
+	D3D10Renderer *pD3D10Renderer=static_cast<D3D10Renderer*>(m_pRenderer);
+	//send the game object which has the light
+	//pD3D10Renderer->setMainLight(pLightObject)
+	//send the game object which has the camera
+	pD3D10Renderer->setMainCamera(pCameraGO);
 	return true;
 }
