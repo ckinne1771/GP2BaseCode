@@ -340,12 +340,12 @@ void D3D10Renderer::render(GameObject *pObject)
 		{
 			DirectionalLight *pDirectionLightComponent=static_cast<DirectionalLight*>(m_pMainLight->getComponent("DirectionalLight"));
 			if (pDirectionLightComponent){
-				//ID3D10EffectVectorVariable *pDiffuseLightVar=pCurrentEffect->GetVariableByName("diffuseLightColour")->AsVector();
-				//ID3D10EffectVectorVariable *pSpecularLightVar=pCurrentEffect->GetVariableByName("specularLightColour")->AsVector();
+				ID3D10EffectVectorVariable *pDiffuseLightVar=pCurrentEffect->GetVariableByName("diffuseLightColour")->AsVector();
+				ID3D10EffectVectorVariable *pSpecularLightVar=pCurrentEffect->GetVariableByName("specularLightColour")->AsVector();
 				ID3D10EffectVectorVariable *pLightDirVar=pCurrentEffect->GetVariableByName("lightDirection")->AsVector();
 
-				//pDiffuseLightVar->SetFloatVector((float*)&pDirectionLightComponent->getDiffuse());
-				//pSpecularLightVar->SetFloatVector((float*)&pDirectionLightComponent->getSpecular());
+				pDiffuseLightVar->SetFloatVector((float*)&pDirectionLightComponent->getDiffuse());
+				pSpecularLightVar->SetFloatVector((float*)&pDirectionLightComponent->getSpecular());
 				pLightDirVar->SetFloatVector((float*)&pDirectionLightComponent->getDirection());
 			}
 		}

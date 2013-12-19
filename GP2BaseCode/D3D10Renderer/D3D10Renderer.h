@@ -16,6 +16,8 @@
 
 #include "Vertex.h"
 
+class GameObject;
+
 //D3D10Renderer implements the Renderer interface
 class D3D10Renderer:public IRenderer
 {
@@ -51,7 +53,18 @@ public:
 
 	void setAmbientLightColour(float r,float g,float b,float a)
 	{
-		m_AmbientLightColour=XMCOLOR(r,g,b,a);
+		m_AmbientLightColour=XMFLOAT4(r,g,b,a);
+	};
+
+	//
+	void setMainLight(GameObject *pLight)
+	{
+		m_pMainLight=pLight;
+	};
+
+	void setMainCamera(GameObject *pCamera)
+	{
+		m_pMainCamera=pCamera;
 	};
 
 private:
@@ -81,7 +94,7 @@ private:
 	XMMATRIX m_View;
 	XMMATRIX m_Projection;
 
-	XMCOLOR m_AmbientLightColour;
+	XMFLOAT4 m_AmbientLightColour;
 
 	GameObject * m_pMainCamera;
 	GameObject * m_pMainLight;
