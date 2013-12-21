@@ -36,6 +36,7 @@ GameObject * ModelLoader::loadFbxModelFromFile(const string& filename, IRenderer
 
     // Use the first argument as the filename for the importer.
 	if(!lImporter->Initialize(filename.c_str(), -1, lSdkManager->GetIOSettings())) {
+		OutputDebugStringA(lImporter->GetStatus().GetErrorString());
 		return NULL;
     }
 
@@ -43,17 +44,22 @@ GameObject * ModelLoader::loadFbxModelFromFile(const string& filename, IRenderer
     FbxScene* lScene = FbxScene::Create(lSdkManager,"myScene");
 	FbxAxisSystem SceneAxisSystem = lScene->GetGlobalSettings().GetAxisSystem();
 
-
     INT iUpAxisSign;
 	FbxAxisSystem::EUpVector UpVector = SceneAxisSystem.GetUpVector( iUpAxisSign );
-
+	
     // Import the contents of the file into the scene.
     lImporter->Import(lScene);
+	
 
     // The file has been imported; we can get rid of the importer.
     lImporter->Destroy();
 	FbxNode* lRootNode = lScene->GetRootNode();
 	FbxMesh * pMesh=NULL;
+	FbxAxisSystem OurAxisSystem(FbxAxisSystem::eYAxis, FbxAxisSystem::eParityOdd, FbxAxisSystem::eLeftHanded);
+    if ( SceneAxisSystem != OurAxisSystem )
+    {
+      OurAxisSystem.ConvertScene(lScene);
+    }
 	if(lRootNode) {
 		pRootObject=new GameObject();
 		pRootObject->setName(lRootNode->GetName());
@@ -68,8 +74,21 @@ GameObject * ModelLoader::loadFbxModelFromFile(const string& filename, IRenderer
 					pMesh=(FbxMesh*)pAttributeNode;
 					if (pMesh)
 					{
+						FbxAMatrix& globalMatrix=modelNode->EvaluateGlobalTransform();
+
+						FbxVector4 rot=globalMatrix.GetR();
+						FbxVector4 scale=globalMatrix.GetS();
+						FbxVector4 pos=globalMatrix.GetT();
+
 						GameObject *pChildGO=new GameObject();
-						pChildGO->setName(pMesh->GetName());
+						pChildGO->getTransform().setRotation(rot[0],rot[1],
+							rot[2]);
+						pChildGO->getTransform().setScale(scale[0],scale[1],
+							scale[2]);
+						pChildGO->getTransform().setPosition(pos[0],pos[1],
+							pos[2]);
+
+						pChildGO->setName(modelNode->GetName());
 						pMesh=converter.TriangulateMesh(pMesh);
 						FbxVector4 * verts=pMesh->GetControlPoints();
 						int noVerts=pMesh->GetControlPointsCount();

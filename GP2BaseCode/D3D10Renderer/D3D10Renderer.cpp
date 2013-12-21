@@ -208,6 +208,11 @@ bool D3D10Renderer::createInitialRenderTarget(int windowWidth, int windowHeight)
 	return true;
 }
 
+bool D3D10Renderer::createPostRenderTarget(int windowWidth,int windowHeight)
+{
+	return true;
+}
+
 void D3D10Renderer::clear(float r,float g,float b,float a)
 {
     // Just clear the backbuffer, colours start at 0.0 to 1.0
@@ -221,7 +226,7 @@ void D3D10Renderer::clear(float r,float g,float b,float a)
 
 void D3D10Renderer::render()
 {
-	m_pD3D10Device->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP );
+	m_pD3D10Device->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	//We should really find all lights first! but instead we are just going to set a 'main' light 
 	while(!m_RenderQueue.empty())
 	{
@@ -239,7 +244,7 @@ void D3D10Renderer::render()
 
 void D3D10Renderer::render(GameObject *pObject)
 {
-	m_pD3D10Device->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP );
+	//m_pD3D10Device->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP );
 	
 	int noIndices=0;
 	int noVerts=0;

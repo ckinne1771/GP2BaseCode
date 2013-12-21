@@ -72,6 +72,8 @@ private:
 bool fullScreen);
 	bool createInitialRenderTarget(int windowWidth, int windowHeight);
 
+	bool createPostRenderTarget(int windowWidth,int windowHeight);
+
 	void render(GameObject *pCurrentObject);
 private:
 	typedef std::queue<GameObject*> RenderQueue;
@@ -98,4 +100,8 @@ private:
 
 	GameObject * m_pMainCamera;
 	GameObject * m_pMainLight;
+
+	ID3D10RenderTargetView * m_pPostRenderTargetView;
+	ID3D10ShaderResourceView * m_pPostShaderResourceView;
+	ID3D10Texture2D *m_pPostTexture;
 };

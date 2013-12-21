@@ -52,11 +52,11 @@ bool MyGame::initGame()
 	pCameraGO->setName("MainCamera");
 	pCameraGO->addComponent(pCameraComp);
 	setMainCamera(pCameraComp);
-	pCameraGO->getTransform().setPosition(0.0f,0.0f,-10.0f);
+	pCameraGO->getTransform().setPosition(0.0f,0.0f,-100.0f);
 
 	m_GameObjectList.push_back(pCameraGO);
 
-	GameObject *pCar=m_ModelLoader.loadModelFromFile("Models/armoredrecon.fbx",m_pRenderer);
+	GameObject *pCar=m_ModelLoader.loadModelFromFile("Models/Building1.fbx",m_pRenderer);
 	for(GameObject::ChildrenGameObjectsIter iter=pCar->getFirstChild();iter!=pCar->getLastChild();iter++)
 	{
 		pMaterial=new Material();
