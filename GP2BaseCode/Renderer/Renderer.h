@@ -13,4 +13,6 @@ public:
 	virtual void render()=0;
 
 	virtual void addToRenderQueue(GameObject *pObject)=0;
+	virtual void enablePostProcessing()=0;
+	virtual void disablePostProcessing()=0;
 };

@@ -67,6 +67,8 @@ public:
 		m_pMainCamera=pCamera;
 	};
 
+	void enablePostProcessing();
+	void disablePostProcessing();
 private:
 	bool createDevice(HWND pWindowHandle,int windowWidth, int windowHeight,
 bool fullScreen);
@@ -75,6 +77,11 @@ bool fullScreen);
 	bool createPostRenderTarget(int windowWidth,int windowHeight);
 
 	void render(GameObject *pCurrentObject);
+
+	bool createFullScreenQuad();
+
+	void renderFullScreenQuad();
+	
 private:
 	typedef std::queue<GameObject*> RenderQueue;
 	
@@ -101,7 +108,18 @@ private:
 	GameObject * m_pMainCamera;
 	GameObject * m_pMainLight;
 
+	//Post processing
 	ID3D10RenderTargetView * m_pPostRenderTargetView;
 	ID3D10ShaderResourceView * m_pPostShaderResourceView;
 	ID3D10Texture2D *m_pPostTexture;
+
+	ID3D10RenderTargetView * m_pCurrentRenderTarget;
+
+	bool m_bPostProcessingOn;
+
+	//Buffer for post processing
+	ID3D10Buffer *m_pFullScreenQuadVB;
+	ID3D10Effect * m_pPostProccessingEffect;
+	ID3D10InputLayout*      m_pPostVertexLayout;
+
 };

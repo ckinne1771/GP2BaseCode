@@ -49,6 +49,42 @@ const char basicEffect[]=\
 	"	}"\
 	"}";
 
+const char basicPostEffect[]=\
+	"struct PS_INPUT"\
+	"{"\
+	"	float4 pos:SV_POSITION;"\
+	"	float2 texCoord:TEXCOORD0;"\
+	"};"\
+	"Texture2D sceneTexture;"\
+	""\
+	"SamplerState clampSampler"\
+	"{"\
+	"	Filter = MIN_MAG_LINEAR_MIP_POINT;"\
+    "	AddressU = Clamp;"\
+    "	AddressV = Clamp;"\
+	"};"\
+	""\
+	"PS_INPUT VS( float4 Pos : POSITION, float2 texCoord:TEXCOORD0 )"\
+	"{"\
+	"	PS_INPUT output;"\
+	"	output.pos=Pos;"\
+	"	output.texCoord=texCoord;"\
+	"	return output;"\
+	"}"\
+	"float4 PS( PS_INPUT input ) : SV_Target"\
+	"{"\
+	"	return sceneTexture.Sample(clampSampler,input.texCoord);"\
+	"}"\
+	"technique10 Render"\
+	"{"\
+	"	pass P0"\
+	"	{"\
+	"		SetVertexShader( CompileShader( vs_4_0, VS() ) );"\
+	"		SetGeometryShader( NULL );"\
+	"		SetPixelShader( CompileShader( ps_4_0, PS() ) );"\
+	"	}"\
+	"}";
+
 D3D10Renderer::D3D10Renderer()
 {
 	m_pD3D10Device=NULL;
@@ -62,6 +98,13 @@ D3D10Renderer::D3D10Renderer()
 	m_Projection=XMMatrixIdentity();
 	setAmbientLightColour(0.5f,0.5f,0.5f,1.0f);
 	m_pMainLight=NULL;
+	m_pPostTexture=NULL;
+	m_pPostRenderTargetView=NULL;
+	m_pPostShaderResourceView=NULL;
+	m_pFullScreenQuadVB=NULL;
+	m_bPostProcessingOn=true;
+	m_pPostProccessingEffect=NULL;
+	m_pPostVertexLayout=NULL;
 }
 
 D3D10Renderer::~D3D10Renderer()
@@ -78,6 +121,18 @@ D3D10Renderer::~D3D10Renderer()
 		m_pDepthStencelView->Release();
 	if (m_pDepthStencilTexture)
 		m_pDepthStencilTexture->Release();
+	if (m_pPostShaderResourceView)
+		m_pPostShaderResourceView->Release();
+	if (m_pPostRenderTargetView)
+		m_pPostRenderTargetView->Release();
+	if (m_pPostTexture)
+		m_pPostTexture->Release();
+	if (m_pFullScreenQuadVB)
+		m_pFullScreenQuadVB->Release();
+	if (m_pPostProccessingEffect)
+		m_pPostProccessingEffect->Release();
+	if (m_pPostVertexLayout)
+		m_pPostVertexLayout->Release();
 	if (m_pSwapChain)
 		m_pSwapChain->Release();
 	if (m_pD3D10Device)
@@ -107,6 +162,11 @@ bool D3D10Renderer::init(void *pWindowHandle,bool fullScreen)
 	}
 	m_pDefaultTechnique=m_pDefaultEffect->GetTechniqueByIndex(0);
 	m_pDefaultVertexLayout=createVertexLayout(m_pDefaultEffect);
+
+	m_pPostProccessingEffect=loadEffectFromMemory(basicPostEffect);
+	createFullScreenQuad();
+	m_pPostVertexLayout=createVertexLayout(m_pPostProccessingEffect);
+	
 
 	return true;
 }
@@ -205,11 +265,92 @@ bool D3D10Renderer::createInitialRenderTarget(int windowWidth, int windowHeight)
     
 	m_pD3D10Device->RSSetViewports( 1 
 		, &vp );
+
+	createPostRenderTarget(windowWidth,windowHeight);
+
+	m_pCurrentRenderTarget=m_pRenderTargetView;
+	return true;
+}
+
+void D3D10Renderer::enablePostProcessing()
+{	
+	m_bPostProcessingOn=true;
+}
+
+void D3D10Renderer::disablePostProcessing()
+{
+	m_bPostProcessingOn=false;
+}
+
+bool D3D10Renderer::createFullScreenQuad()
+{
+	Vertex * quadVerts=new Vertex[4];
+
+	quadVerts[0].position=XMFLOAT3(-1.0f,-1.0f,0.0f);
+	quadVerts[0].textureCoords=XMFLOAT2(0.0f,0.0f);
+
+	quadVerts[1].position=XMFLOAT3(-1.0f,1.0f,0.0f);
+	quadVerts[1].textureCoords=XMFLOAT2(0.0f,1.0f);
+
+	quadVerts[2].position=XMFLOAT3(1.0f,-1.0f,0.0f);
+	quadVerts[2].textureCoords=XMFLOAT2(1.0f,0.0f);
+
+	quadVerts[3].position=XMFLOAT3(1.0f,1.0f,0.0f);
+	quadVerts[3].textureCoords=XMFLOAT2(1.0f,1.0f);
+
+	m_pFullScreenQuadVB=createVertexBuffer(4,quadVerts);
+
+	if (quadVerts)
+	{
+		delete [] quadVerts;
+		quadVerts=NULL;
+	}
+
+	if (m_pFullScreenQuadVB)
+	{
+		return false;
+	}
+
 	return true;
 }
 
 bool D3D10Renderer::createPostRenderTarget(int windowWidth,int windowHeight)
 {
+	D3D10_TEXTURE2D_DESC postTextureDesc;
+	ZeroMemory(&postTextureDesc,sizeof(D3D10_TEXTURE2D_DESC));
+	postTextureDesc.Width = windowWidth;
+	postTextureDesc.Height = windowHeight;
+	postTextureDesc.MipLevels = 1;
+	postTextureDesc.ArraySize = 1;
+	postTextureDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	postTextureDesc.SampleDesc.Count = 1;
+	postTextureDesc.Usage = D3D10_USAGE_DEFAULT;
+	postTextureDesc.BindFlags = D3D10_BIND_RENDER_TARGET | D3D10_BIND_SHADER_RESOURCE;
+	postTextureDesc.CPUAccessFlags = 0;
+	postTextureDesc.MiscFlags = 0;
+
+	if(FAILED(m_pD3D10Device->CreateTexture2D(&postTextureDesc,NULL,&m_pPostTexture)))
+		return false;
+
+	D3D10_RENDER_TARGET_VIEW_DESC postRenderTargetViewDesc;
+	ZeroMemory(&postRenderTargetViewDesc,sizeof(D3D10_RENDER_TARGET_VIEW_DESC));
+	postRenderTargetViewDesc.Format = postTextureDesc.Format;
+	postRenderTargetViewDesc.ViewDimension = D3D10_RTV_DIMENSION_TEXTURE2D;
+	postRenderTargetViewDesc.Texture2D.MipSlice = 0;
+
+	if (FAILED(m_pD3D10Device->CreateRenderTargetView(m_pPostTexture,&postRenderTargetViewDesc,&m_pPostRenderTargetView)))
+		return false;
+
+	D3D10_SHADER_RESOURCE_VIEW_DESC postShaderResourceViewDesc;
+	ZeroMemory(&postShaderResourceViewDesc,sizeof(D3D10_SHADER_RESOURCE_VIEW_DESC));
+	postShaderResourceViewDesc.Format = postTextureDesc.Format;
+	postShaderResourceViewDesc.ViewDimension = D3D10_SRV_DIMENSION_TEXTURE2D;
+	postShaderResourceViewDesc.Texture2D.MostDetailedMip = 0;
+	postShaderResourceViewDesc.Texture2D.MipLevels = 1;
+
+	if (FAILED(m_pD3D10Device->CreateShaderResourceView(m_pPostTexture,&postShaderResourceViewDesc,&m_pPostShaderResourceView)))
+		return false;
+
 	return true;
 }
 
@@ -220,12 +361,21 @@ void D3D10Renderer::clear(float r,float g,float b,float a)
     const float ClearColor[4] = { r, g, b, a}; 
 	//Clear the Render Target
 	//http://msdn.microsoft.com/en-us/library/bb173539%28v=vs.85%29.aspx - BMD
-    m_pD3D10Device->ClearRenderTargetView( m_pRenderTargetView, ClearColor );
+    m_pD3D10Device->ClearRenderTargetView( m_pCurrentRenderTarget, ClearColor );
 	m_pD3D10Device->ClearDepthStencilView(m_pDepthStencelView,D3D10_CLEAR_DEPTH,1.0f,0);
 }
 
 void D3D10Renderer::render()
 {
+	if(m_bPostProcessingOn){
+		m_pD3D10Device->OMSetRenderTargets(1, &m_pPostRenderTargetView,		
+			m_pDepthStencelView);
+	}else
+	{
+		m_pD3D10Device->OMSetRenderTargets(1, &m_pRenderTargetView,		
+			m_pDepthStencelView);
+	}
+
 	m_pD3D10Device->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	//We should really find all lights first! but instead we are just going to set a 'main' light 
 	while(!m_RenderQueue.empty())
@@ -240,12 +390,17 @@ void D3D10Renderer::render()
 		m_RenderQueue.pop();
 	}
 
+	if (m_bPostProcessingOn)
+	{
+		m_pD3D10Device->OMSetRenderTargets(1, &m_pRenderTargetView,		
+			m_pDepthStencelView);
+		renderFullScreenQuad();
+	}
+
 }
 
 void D3D10Renderer::render(GameObject *pObject)
-{
-	//m_pD3D10Device->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP );
-	
+{	
 	int noIndices=0;
 	int noVerts=0;
 	ID3D10Buffer *pIndexBuffer=NULL;
@@ -391,6 +546,50 @@ void D3D10Renderer::render(GameObject *pObject)
 			else if (pVertexBuffer)
 				m_pD3D10Device->Draw(noVerts,0);
 		}
+}
+
+void D3D10Renderer::renderFullScreenQuad()
+{
+	m_pD3D10Device->IASetPrimitiveTopology( D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	const float ClearColor[4] = { 1.0f, 1.0f, 1.0f, 1.0f}; 
+	//Clear the Render Target
+	//http://msdn.microsoft.com/en-us/library/bb173539%28v=vs.85%29.aspx - BMD
+	m_pD3D10Device->ClearRenderTargetView( m_pRenderTargetView, ClearColor );
+
+	m_pD3D10Device->IASetIndexBuffer(NULL,DXGI_FORMAT_R32_UINT,0);
+
+	//Get the stride(size) of the a vertex, we need this to tell the pipeline the size of one vertex - BMD
+	UINT stride = sizeof( Vertex );
+	//The offset from start of the buffer to where our vertices are located - BMD
+	UINT offset = 0;
+	//Bind the vertex buffer to input assembler stage - BMD
+		//   http://msdn.microsoft.com/en-us/library/bb173591%28v=VS.85%29.aspx - BMD
+	m_pD3D10Device->IASetVertexBuffers( 
+		0, //The input slot to bind, zero indicates the first slot - BMD
+		1, //The number of buffers - BMD
+		&m_pFullScreenQuadVB, //A pointer to an array of vertex buffers - BMD
+		&stride, //Pointer to an array of strides of vertices in the buffer - BMD
+		&offset );//Pointer to an array of offsets to the vertices in the vertex buffers - BMD
+
+	m_pD3D10Device->IASetInputLayout(m_pPostVertexLayout);
+
+	ID3D10EffectShaderResourceVariable * pScreenTextureVar=m_pPostProccessingEffect->GetVariableByName("sceneTexture")->AsShaderResource();
+	pScreenTextureVar->SetResource(m_pPostShaderResourceView);
+
+	ID3D10EffectTechnique * pTechnique=m_pPostProccessingEffect->GetTechniqueByIndex(0);
+	D3D10_TECHNIQUE_DESC techniqueDesc;
+	pTechnique->GetDesc(&techniqueDesc); 
+
+	for (unsigned int i=0;i<techniqueDesc.Passes;++i)
+	{
+		ID3D10EffectPass *pCurrentPass=pTechnique->GetPassByIndex(i);
+		pCurrentPass->Apply(0);
+		m_pD3D10Device->Draw(4,0);
+	}
+
+	pScreenTextureVar->SetResource(NULL);
+	pTechnique->GetPassByIndex(0)->Apply(0);
+
 }
 
 void D3D10Renderer::present()
