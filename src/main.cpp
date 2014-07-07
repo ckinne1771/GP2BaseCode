@@ -10,6 +10,15 @@
 #include <gl\GLU.h>
 #endif
 
+//global values go here!
+
+
+//Function to update the game state
+void update()
+{
+    
+}
+
 //Function to initialise OpenGL
 void initOpenGL()
 {
@@ -63,6 +72,7 @@ void setViewport( int width, int height )
     glLoadIdentity( );
 }
 
+//Function to render(aka draw)
 void render()
 {
     //old imediate mode!
@@ -76,27 +86,18 @@ void render()
     //Reset using the Indentity Matrix
     glLoadIdentity( );
     //translate
-    glTranslatef( -1.5f, 0.0f, -6.0f );
+    glTranslatef( 0.0f, 0.0f, -6.0f );
     
     //Begin drawing triangles
     glBegin( GL_TRIANGLES );
+    glColor3f(1.0f, 0.0f, 0.0f);
         glVertex3f(  0.0f,  1.0f, 0.0f ); // Top
         glVertex3f( -1.0f, -1.0f, 0.0f ); // Bottom Left
         glVertex3f(  1.0f, -1.0f, 0.0f ); // Bottom Right
     glEnd( );
-    
-    //Translate model view 3 units from previos position
-    glTranslatef( 3.0f, 0.0f, 0.0f );
-    
-    //Begin Drawing Quads
-    glBegin( GL_QUADS );
-        glVertex3f( -1.0f,  1.0f, 0.0f ); // Top Left
-        glVertex3f(  1.0f,  1.0f, 0.0f ); // Top Right
-        glVertex3f(  1.0f, -1.0f, 0.0f ); // Bottom Right
-        glVertex3f( -1.0f, -1.0f, 0.0f ); // Bottom Left
-    glEnd( );
 }
 
+//Main Method
 int main(int argc, char * arg[])
 {
     //Controls the game loop
@@ -151,7 +152,10 @@ int main(int argc, char * arg[])
                 
             }
         }
-        
+        if (!pause){
+            //update
+            update();
+        }
         //render
         render();
         //Call swap so that our GL buffer is displayed
