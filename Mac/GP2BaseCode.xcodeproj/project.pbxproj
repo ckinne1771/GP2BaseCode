@@ -14,6 +14,7 @@
 		D3737B5B19695DA0001A741F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3737B5A19695DA0001A741F /* OpenGL.framework */; };
 		D3737B5D19695DAF001A741F /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3737B5C19695DAF001A741F /* GLUT.framework */; };
 		D3737B6119695F55001A741F /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3737B6019695F55001A741F /* SDL2.framework */; };
+		D3868DBE196D6B1900A9E2C4 /* libGLEW.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3868DBD196D6B1900A9E2C4 /* libGLEW.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +38,9 @@
 		D3737B5A19695DA0001A741F /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = ../../../../../System/Library/Frameworks/OpenGL.framework; sourceTree = "<group>"; };
 		D3737B5C19695DAF001A741F /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../../../System/Library/Frameworks/GLUT.framework; sourceTree = "<group>"; };
 		D3737B6019695F55001A741F /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
+		D3868DB7196D5FDE00A9E2C4 /* libGLEW.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGLEW.a; path = ../../../../../usr/lib/libGLEW.a; sourceTree = "<group>"; };
+		D3868DB9196D605700A9E2C4 /* libGLEW.1.10.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.1.10.0.dylib; path = ../../../../../usr/lib/libGLEW.1.10.0.dylib; sourceTree = "<group>"; };
+		D3868DBD196D6B1900A9E2C4 /* libGLEW.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGLEW.a; path = "../../../Dev/glew-1.10.0/lib/libGLEW.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3868DBE196D6B1900A9E2C4 /* libGLEW.a in Frameworks */,
 				D3737B6119695F55001A741F /* SDL2.framework in Frameworks */,
 				D3737B5D19695DAF001A741F /* GLUT.framework in Frameworks */,
 				D3737B5B19695DA0001A741F /* OpenGL.framework in Frameworks */,
@@ -82,6 +87,9 @@
 		D3737B23196854B6001A741F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D3868DBD196D6B1900A9E2C4 /* libGLEW.a */,
+				D3868DB9196D605700A9E2C4 /* libGLEW.1.10.0.dylib */,
+				D3868DB7196D5FDE00A9E2C4 /* libGLEW.a */,
 				D3737B6019695F55001A741F /* SDL2.framework */,
 				D3737B5C19695DAF001A741F /* GLUT.framework */,
 				D3737B5A19695DA0001A741F /* OpenGL.framework */,
@@ -285,8 +293,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LIBRARY_SEARCH_PATHS = /usr/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
+				PRELINK_LIBS = "";
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -318,7 +328,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LIBRARY_SEARCH_PATHS = /usr/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRELINK_LIBS = "";
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -326,6 +338,7 @@
 		D3737B53196854B6001A741F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -335,7 +348,16 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = "GP2BaseCode/GP2BaseCode-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = (
+					/usr/lib,
+					"/Users/brian/Dev/glew-1.10.0/lib",
+				);
+				LINK_WITH_STANDARD_LIBRARIES = YES;
+				OTHER_LDFLAGS = "";
+				PRELINK_LIBS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = /usr/include;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -343,6 +365,7 @@
 		D3737B54196854B6001A741F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -352,7 +375,16 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = "GP2BaseCode/GP2BaseCode-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = (
+					/usr/lib,
+					"/Users/brian/Dev/glew-1.10.0/lib",
+				);
+				LINK_WITH_STANDARD_LIBRARIES = YES;
+				OTHER_LDFLAGS = "";
+				PRELINK_LIBS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = /usr/include;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
