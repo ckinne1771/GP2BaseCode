@@ -14,7 +14,6 @@
 		D3737B5B19695DA0001A741F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3737B5A19695DA0001A741F /* OpenGL.framework */; };
 		D3737B5D19695DAF001A741F /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3737B5C19695DAF001A741F /* GLUT.framework */; };
 		D3737B6119695F55001A741F /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3737B6019695F55001A741F /* SDL2.framework */; };
-		D3868DBE196D6B1900A9E2C4 /* libGLEW.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3868DBD196D6B1900A9E2C4 /* libGLEW.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,7 +47,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D3868DBE196D6B1900A9E2C4 /* libGLEW.a in Frameworks */,
 				D3737B6119695F55001A741F /* SDL2.framework in Frameworks */,
 				D3737B5D19695DAF001A741F /* GLUT.framework in Frameworks */,
 				D3737B5B19695DA0001A741F /* OpenGL.framework in Frameworks */,
