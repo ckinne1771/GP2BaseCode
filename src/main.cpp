@@ -92,7 +92,7 @@ int main(int argc, char * arg[])
 {
     //Controls the game loop
     bool run=true;
-    bool pause=false;
+
     // init everyting - SDL, if it is nonzero we have a problem
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
@@ -141,22 +141,9 @@ int main(int argc, char * arg[])
                 //set our boolean which controls the loop to false
                 run = false;
             }
-            if (event.type==SDL_WINDOWEVENT)
-            {
-                switch (event.window.event) {
-                    case SDL_WINDOWEVENT_MINIMIZED:
-                            pause=true;
-                        break;
-                    default:
-                        break;
-                }
-                
-            }
         }
-        if (!pause){
-            //update
-            update();
-        }
+        //update
+        update();
         //render
         render();
         //Call swap so that our GL buffer is displayed
