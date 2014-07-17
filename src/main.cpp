@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <string>
 
 #ifdef __APPLE__
 #include <SDL2/SDL.h>
@@ -11,12 +13,64 @@
 #include <gl\GLU.h>
 #endif
 
+#ifdef _DEBUG
+const std::string ASSET_PATH = "../../assets";
+#elif
+const std::string ASSET_PATH = "assets";
+#endif
+
+const std::string SHADER_PATH = "/shaders";
+
 //global values go here!
+//VBO
 GLuint triangleVBO;
 
 float triangleData[] = { 0.0f, 1.0f, 0.0f, // Top
 						-1.0f, -1.0f, 0.0f, // Bottom Left
 						1.0f, -1.0f, 0.0f }; //Bottom Right
+
+//Shader
+GLuint shaderProgram;
+
+//
+bool loadShader(const std::string& filename, char ** shaderData, unsigned long *shaderSize)
+{
+	std::ifstream file;
+	file.open(filename.c_str(), std::ios::in);
+	if (!file)
+	{
+		std::cout << "Can't load Shader file " << filename << std::endl;
+		return false;
+	}
+	//calculate file size
+	if (file.good())
+	{
+		file.seekg(0, std::ios::end);
+		unsigned long len= file.tellg();
+		file.seekg(std::ios::beg);
+
+		if (*shaderSize == 0)
+		{
+			std::cout << "File has no contents " << std::endl;
+			return false;
+		}
+		*shaderData = new char[len + 1];
+		*shaderData[len] = 0;
+		unsigned int i = 0;
+		while (file.good())
+		{
+			*shaderData[i] = file.get();       // get character from file.
+			if (!file.eof())
+				i++;
+		}
+
+		*shaderData[i] = 0;  // 0-terminate it at the correct position
+		*shaderSize = (unsigned long)i;
+		file.close();
+	}
+	return true;
+}
+
 void initGame()
 {
 	//Create buffer
@@ -25,6 +79,17 @@ void initGame()
 	glBindBuffer(GL_ARRAY_BUFFER, triangleVBO);
 	//Upload vertex data to the video device
 	glBufferData(GL_ARRAY_BUFFER, sizeof(triangleData), triangleData, GL_STATIC_DRAW);
+
+	//Create and link shaders
+	char * vsSource=NULL;
+	unsigned long vsLen;
+	std::string vsPath = ASSET_PATH + SHADER_PATH + "/SimpleVS.vert";
+	loadShader(vsPath, &vsSource, &vsLen);
+
+	if (vsSource)
+	{
+		delete[] vsSource;
+	}
 }
 
 //Function to update the game state
@@ -145,6 +210,10 @@ int main(int argc, char * arg[])
         
         return -1;
     }
+
+	std::cout << SDL_GetPlatform() << std::endl;
+	std::cout << "Number of CPU Cores " << SDL_GetCPUCount()<< std::endl;
+	std::cout << "RAM(in Mb) " << SDL_GetSystemRAM() << std::endl;
     
     //Create a window
     SDL_Window * window = SDL_CreateWindow(

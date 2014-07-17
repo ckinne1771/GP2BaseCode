@@ -13,6 +13,10 @@
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\assets\shaders\SimpleFS.frag" />
+    <None Include="..\assets\shaders\SimpleVS.vert" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{68F0627D-C58E-4BAD-B10A-401ECB51D69F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
