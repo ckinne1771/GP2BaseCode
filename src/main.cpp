@@ -220,9 +220,15 @@ void render()
     //clear the colour and depth buffer
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-	glEnableVertexAttribArray(0);
+	//Bind buffer containing our triangle
 	glBindBuffer(GL_ARRAY_BUFFER, triangleVBO);
+
+	//Use our shader program
+	glUseProgram(shaderProgram);
+	//Tell the shader that 0 is the position element
+	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+	//Draw our traingle
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
