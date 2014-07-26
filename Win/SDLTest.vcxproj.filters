@@ -26,10 +26,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\assets\shaders\SimpleFS.frag">
+    <None Include="..\assets\shaders\SimpleFS.glsl">
       <Filter>Assets\Shaders</Filter>
     </None>
-    <None Include="..\assets\shaders\SimpleVS.vert">
+    <None Include="..\assets\shaders\SimpleVS.glsl">
       <Filter>Assets\Shaders</Filter>
     </None>
   </ItemGroup>

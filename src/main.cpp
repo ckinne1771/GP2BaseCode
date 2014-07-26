@@ -121,7 +121,7 @@ void initGame()
 	//Create shaders
 	GLuint vertexShaderProgram;
 	std::string vsSource;
-	std::string vsPath = ASSET_PATH + SHADER_PATH+"/SimpleVS.vert";
+	std::string vsPath = ASSET_PATH + SHADER_PATH+"/SimpleVS.glsl";
 
 
 	loadShaderFromFile(vsPath, vsSource);
@@ -136,7 +136,7 @@ void initGame()
 
 	GLuint fragmentShaderProgram;
 	std::string fsSource;
-	std::string fsPath = ASSET_PATH + SHADER_PATH + "/SimpleFS.frag";
+	std::string fsPath = ASSET_PATH + SHADER_PATH + "/SimpleFS.glsl";
 
 	loadShaderFromFile(fsPath, fsSource);
 	fragmentShaderProgram = glCreateShader(GL_FRAGMENT_SHADER);
@@ -167,24 +167,6 @@ void update()
 //Function to initialise OpenGL
 void initOpenGL()
 {
-    //Smooth shading
-    glShadeModel( GL_SMOOTH );
-    
-    //clear the background to black
-    glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
-    
-    //Clear the depth buffer
-    glClearDepth( 1.0f );
-    
-    //Enable depth testing
-    glEnable( GL_DEPTH_TEST );
-    
-    //The depth test to go
-    glDepthFunc( GL_LEQUAL );
-    
-    //Turn on best perspective correction
-    glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
-
 	GLenum err = glewInit();
 	if (GLEW_OK != err)
 	{
@@ -238,6 +220,10 @@ int main(int argc, char * arg[])
     //Controls the game loop
     bool run=true;
     bool pause=false;
+	//Ask for version 4.2 of OpenGL
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+
     // init everyting - SDL, if it is nonzero we have a problem
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
