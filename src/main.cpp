@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 
 #ifdef __APPLE__
 #include <SDL2/SDL.h>
@@ -14,7 +15,7 @@
 #endif
 
 #ifdef _DEBUG
-const std::string ASSET_PATH = "../../assets";
+const std::string ASSET_PATH = "../assets";
 #elif
 const std::string ASSET_PATH = "assets";
 #endif
@@ -29,11 +30,11 @@ float triangleData[] = { 0.0f, 1.0f, 0.0f, // Top
 						-1.0f, -1.0f, 0.0f, // Bottom Left
 						1.0f, -1.0f, 0.0f }; //Bottom Right
 
-//Shader
+//basic 2d shader
 GLuint shaderProgram;
 
-//
-bool loadShader(const std::string& filename, char ** shaderData, unsigned long *shaderSize)
+//Loads a shader into a string
+bool loadShaderFromFile(const std::string& filename, std::string& shaderData)
 {
 	std::ifstream file;
 	file.open(filename.c_str(), std::ios::in);
@@ -49,24 +50,61 @@ bool loadShader(const std::string& filename, char ** shaderData, unsigned long *
 		unsigned long len= file.tellg();
 		file.seekg(std::ios::beg);
 
-		if (*shaderSize == 0)
+		if (len == 0)
 		{
 			std::cout << "File has no contents " << std::endl;
 			return false;
 		}
-		*shaderData = new char[len + 1];
-		*shaderData[len] = 0;
-		unsigned int i = 0;
-		while (file.good())
-		{
-			*shaderData[i] = file.get();       // get character from file.
-			if (!file.eof())
-				i++;
-		}
 
-		*shaderData[i] = 0;  // 0-terminate it at the correct position
-		*shaderSize = (unsigned long)i;
+		shaderData.resize(len);
+		file.read(&shaderData[0], len);
 		file.close();
+	}
+	return true;
+}
+
+bool checkForLinkErrors(GLuint program)
+{
+	GLint isLinked = 0;
+	glGetProgramiv(program, GL_LINK_STATUS, &isLinked);
+	if (isLinked == GL_FALSE) {
+
+		GLint maxLength = 0;
+		glGetShaderiv(shaderProgram, GL_INFO_LOG_LENGTH, &maxLength);
+
+		//The maxLength includes the NULL character
+		std::string infoLog;
+		glGetShaderInfoLog(shaderProgram, maxLength, &maxLength, &infoLog[0]);
+
+		std::cout << "Shader not linked " << infoLog << std::endl;
+
+		//We don't need the shader anymore.
+		glDeleteProgram(program);
+		return false;
+	}
+
+	return true;
+}
+
+bool checkForCompilerErrors(GLuint shaderProgram)
+{
+	GLint isCompiled = 0;
+	glGetShaderiv(shaderProgram, GL_COMPILE_STATUS, &isCompiled);
+	if (isCompiled == GL_FALSE)
+	{
+		GLint maxLength = 0;
+		glGetShaderiv(shaderProgram, GL_INFO_LOG_LENGTH, &maxLength);
+
+		//The maxLength includes the NULL character
+		std::string infoLog;
+		glGetShaderInfoLog(shaderProgram, maxLength, &maxLength, &infoLog[0]);
+
+		std::cout << "Shader not compiled " << infoLog << std::endl;
+
+		//We don't need the shader anymore.
+		glDeleteShader(shaderProgram);
+		return false;
+
 	}
 	return true;
 }
@@ -80,16 +118,44 @@ void initGame()
 	//Upload vertex data to the video device
 	glBufferData(GL_ARRAY_BUFFER, sizeof(triangleData), triangleData, GL_STATIC_DRAW);
 
-	//Create and link shaders
-	char * vsSource=NULL;
-	unsigned long vsLen;
-	std::string vsPath = ASSET_PATH + SHADER_PATH + "/SimpleVS.vert";
-	loadShader(vsPath, &vsSource, &vsLen);
+	//Create shaders
+	GLuint vertexShaderProgram;
+	std::string vsSource;
+	std::string vsPath = ASSET_PATH + SHADER_PATH+"/SimpleVS.vert";
 
-	if (vsSource)
-	{
-		delete[] vsSource;
-	}
+
+	loadShaderFromFile(vsPath, vsSource);
+	vertexShaderProgram=glCreateShader(GL_VERTEX_SHADER);
+	const GLchar *source = (const GLchar *)vsSource.c_str();
+	glShaderSource(vertexShaderProgram, 1, &source, NULL);
+	glCompileShader(vertexShaderProgram);
+	checkForCompilerErrors(vertexShaderProgram);
+
+	//bind locations
+	glBindAttribLocation(vertexShaderProgram, 0, "vertexPosition");
+
+	GLuint fragmentShaderProgram;
+	std::string fsSource;
+	std::string fsPath = ASSET_PATH + SHADER_PATH + "/SimpleFS.frag";
+
+	loadShaderFromFile(fsPath, fsSource);
+	fragmentShaderProgram = glCreateShader(GL_FRAGMENT_SHADER);
+	source = (const GLchar *)fsSource.c_str();
+	glShaderSource(fragmentShaderProgram, 1, &source, NULL);
+	glCompileShader(fragmentShaderProgram);
+	checkForCompilerErrors(fragmentShaderProgram);
+
+	
+	//Now Create and link
+	shaderProgram = glCreateProgram();
+	glAttachShader(shaderProgram, vertexShaderProgram);
+	glAttachShader(shaderProgram, fragmentShaderProgram);
+	glLinkProgram(shaderProgram);
+	checkForLinkErrors(shaderProgram);
+
+	//now we can delete the VS & FS Programs
+	glDeleteShader(vertexShaderProgram);
+	glDeleteShader(fragmentShaderProgram);
 }
 
 //Function to update the game state
@@ -128,34 +194,21 @@ void initOpenGL()
 }
 
 //Function to set/reset viewport
-void setViewport( int width, int height )
+void setViewport(int width, int height)
 {
-    //screen ration
-    GLfloat ratio;
-    
-    //make sure height is always above 1
-    if ( height == 0 ) {
-        height = 1;
-    }
-    
-    //calculate screen ration
-    ratio = ( GLfloat )width / ( GLfloat )height;
-    
-    //Setup viewport
-    glViewport( 0, 0, ( GLsizei )width, ( GLsizei )height );
-    
-    //Change to poject matrix mode
-    glMatrixMode( GL_PROJECTION );
-    glLoadIdentity( );
-    
-    //Calculate perspective matrix, using glu library functions
-    gluPerspective( 45.0f, ratio, 0.1f, 100.0f );
-    
-    //Swith to ModelView
-    glMatrixMode( GL_MODELVIEW );
-    
-    //Reset using the Indentity Matrix
-    glLoadIdentity( );
+	//screen ration
+	GLfloat ratio;
+
+	//make sure height is always above 1
+	if (height == 0) {
+		height = 1;
+	}
+
+	//calculate screen ration
+	ratio = (GLfloat)width / (GLfloat)height;
+
+	//Setup viewport
+	glViewport(0, 0, (GLsizei)width, (GLsizei)height);
 }
 
 //Function to render(aka draw)
@@ -166,35 +219,11 @@ void render()
     glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
     //clear the colour and depth buffer
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-    
-    //Swith to ModelView
-    glMatrixMode( GL_MODELVIEW );
-    //Reset using the Indentity Matrix
-    glLoadIdentity( );
-    //translate
-    glTranslatef( -2.0f, 0.0f, -6.0f );
-    
-    //Begin drawing triangles
-    glBegin( GL_TRIANGLES );
-        glVertex3f(  0.0f,  1.0f, 0.0f ); // Top
-        glVertex3f( -1.0f, -1.0f, 0.0f ); // Bottom Left
-        glVertex3f(  1.0f, -1.0f, 0.0f ); // Bottom Right
-    glEnd( );
 
-	//move four units from previous position
-	glTranslatef(4.0f, 0.0f, 0.0f);
-	//Make the new VBO active. Repeat here incase changed since initialisation
+	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, triangleVBO);
-
-	//Draw Triangle from VBO - do each time window, view point or data changes
-	//Establish its 3 coordinates per vertex with zero stride in this array; necessary here
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
-
-	//Establish array contains vertices (not normals, colours, texture coords etc)
-	glEnableClientState(GL_VERTEX_ARRAY);
-
-	//Actually draw the triangle, giving the number of vertices provided
-	glDrawArrays(GL_TRIANGLES, 0, sizeof(triangleData) / sizeof(float) / 3);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+	glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
 //Main Method
@@ -270,6 +299,7 @@ int main(int argc, char * arg[])
     }
     
     // clean up, reverse order!!!
+	glDeleteProgram(shaderProgram);
 	glDeleteBuffers(1, &triangleVBO);
     SDL_GL_DeleteContext(glcontext);
     SDL_DestroyWindow(window);
