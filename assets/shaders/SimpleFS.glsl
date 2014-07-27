@@ -3,9 +3,10 @@
 #version 400
  
 out vec4 FragColor;
- 
+in vec4 vertexColour;
+
 void main() 
 {
-    FragColor = vec4(1.0,1.0,1.0,1.0); //Set colour of each fragment to WHITE
+	FragColor = vertexColour;
 }
 /*--------------------------------------------------------------*/

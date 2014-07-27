@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 
+#include "../header/Vertex.h"
+
 #ifdef __APPLE__
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
@@ -26,9 +28,14 @@ const std::string SHADER_PATH = "/shaders";
 //VBO
 GLuint triangleVBO;
 
-float triangleData[] = { 0.0f, 1.0f, 0.0f, // Top
-						-1.0f, -1.0f, 0.0f, // Bottom Left
-						1.0f, -1.0f, 0.0f }; //Bottom Right
+ColourVertex triangleData[] = { { 0.0f, 1.0f, 0.0f,
+1.0f, 1.0f, 1.0f, 1.0f },// Top
+
+{ -1.0f, -1.0f, 0.0f,
+1.0f, 1.0f, 1.0f, 1.0f },// Bottom Left
+
+{ 1.0f, -1.0f, 0.0f,
+1.0f, 1.0f, 1.0f, 1.0f } }; //Bottom Right
 
 //basic 2d shader
 GLuint shaderProgram;
@@ -209,7 +216,10 @@ void render()
 	glUseProgram(shaderProgram);
 	//Tell the shader that 0 is the position element
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(ColourVertex), NULL);
+
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(ColourVertex), &triangleData[0].r);
 	//Draw our traingle
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 }
