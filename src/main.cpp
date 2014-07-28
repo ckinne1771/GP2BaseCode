@@ -3,17 +3,21 @@
 #include <string>
 #include <vector>
 
+#include <glm/glm.hpp>
+using glm::mat4;
+using glm::vec3;
+
+#include <glm/gtc/matrix_transform.hpp>
+
 #include "../header/Vertex.h"
 
 #ifdef __APPLE__
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
-#include <OpenGL/glu.h>
 #elif WIN32
 #include <GL\glew.h>
 #include <SDL.h>
 #include <SDL_opengl.h>
-#include <gl\GLU.h>
 #endif
 
 #ifdef _DEBUG
@@ -28,6 +32,7 @@ const std::string SHADER_PATH = "/shaders";
 //VBO
 GLuint triangleVBO;
 
+
 ColourVertex triangleData[] = { { 0.0f, 1.0f, 0.0f,
 1.0f, 0.0f, 1.0f, 1.0f },// Top
 
@@ -38,7 +43,8 @@ ColourVertex triangleData[] = { { 0.0f, 1.0f, 0.0f,
 0.0f, 1.0f, 1.0f, 1.0f } }; //Bottom Right
 
 //basic 2d shader
-GLuint shaderProgram;
+GLuint shaderProgram=0;
+GLuint worldMatrixLocation = 0;
 
 //Loads a shader into a string
 bool loadShaderFromFile(const std::string& filename, std::string& shaderData)
@@ -141,6 +147,7 @@ void initGame()
 	//bind locations
 	glBindAttribLocation(vertexShaderProgram, 0, "vertexPosition");
 	glBindAttribLocation(vertexShaderProgram, 1, "vertexColourIn");
+	
 
 	GLuint fragmentShaderProgram;
 	std::string fsSource;
@@ -161,6 +168,9 @@ void initGame()
 	glLinkProgram(shaderProgram);
 	checkForLinkErrors(shaderProgram);
 
+	worldMatrixLocation = glGetUniformLocation(vertexShaderProgram, "worldMatrix");
+	
+
 	//now we can delete the VS & FS Programs
 	glDeleteShader(vertexShaderProgram);
 	glDeleteShader(fragmentShaderProgram);
@@ -169,7 +179,13 @@ void initGame()
 //Function to update the game state
 void update()
 {
-    
+	glm::mat4 worldMatrix = glm::mat4();
+	//worldMatrix=glm::scale(glm::mat4(), glm::vec3(0.5));
+	if (worldMatrixLocation != 0)
+	{
+		glUseProgram(shaderProgram);
+		glUniformMatrix4fv(worldMatrixLocation, 1, GL_FALSE, &worldMatrix[0][0]);
+	}
 }
 
 //Function to initialise OpenGL
@@ -204,7 +220,6 @@ void setViewport(int width, int height)
 //Function to render(aka draw)
 void render()
 {
-    //old imediate mode!
     //Set the clear colour(background)
     glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
     //clear the colour and depth buffer
@@ -290,10 +305,9 @@ int main(int argc, char * arg[])
                 
             }
         }
-        if (!pause){
-            //update
-            update();
-        }
+  
+		//update
+		update();
         //render
         render();
         //Call swap so that our GL buffer is displayed
