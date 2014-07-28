@@ -29,13 +29,13 @@ const std::string SHADER_PATH = "/shaders";
 GLuint triangleVBO;
 
 ColourVertex triangleData[] = { { 0.0f, 1.0f, 0.0f,
-1.0f, 1.0f, 1.0f, 1.0f },// Top
+1.0f, 0.0f, 1.0f, 1.0f },// Top
 
 { -1.0f, -1.0f, 0.0f,
-1.0f, 1.0f, 1.0f, 1.0f },// Bottom Left
+1.0f, 1.0f, 0.0f, 1.0f },// Bottom Left
 
 { 1.0f, -1.0f, 0.0f,
-1.0f, 1.0f, 1.0f, 1.0f } }; //Bottom Right
+0.0f, 1.0f, 1.0f, 1.0f } }; //Bottom Right
 
 //basic 2d shader
 GLuint shaderProgram;
@@ -140,6 +140,7 @@ void initGame()
 
 	//bind locations
 	glBindAttribLocation(vertexShaderProgram, 0, "vertexPosition");
+	glBindAttribLocation(vertexShaderProgram, 1, "vertexColourIn");
 
 	GLuint fragmentShaderProgram;
 	std::string fsSource;
@@ -219,7 +220,7 @@ void render()
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(ColourVertex), NULL);
 
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(ColourVertex), &triangleData[0].r);
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(ColourVertex), (void**)(3 * sizeof(float)));
 	//Draw our traingle
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 }
