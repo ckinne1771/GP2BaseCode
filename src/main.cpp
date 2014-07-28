@@ -8,6 +8,7 @@ using glm::mat4;
 using glm::vec3;
 
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "../header/Vertex.h"
 
@@ -44,7 +45,6 @@ ColourVertex triangleData[] = { { 0.0f, 1.0f, 0.0f,
 
 //basic 2d shader
 GLuint shaderProgram=0;
-GLuint worldMatrixLocation = 0;
 
 //Loads a shader into a string
 bool loadShaderFromFile(const std::string& filename, std::string& shaderData)
@@ -167,10 +167,6 @@ void initGame()
 	glAttachShader(shaderProgram, fragmentShaderProgram);
 	glLinkProgram(shaderProgram);
 	checkForLinkErrors(shaderProgram);
-
-	worldMatrixLocation = glGetUniformLocation(vertexShaderProgram, "worldMatrix");
-	
-
 	//now we can delete the VS & FS Programs
 	glDeleteShader(vertexShaderProgram);
 	glDeleteShader(fragmentShaderProgram);
@@ -179,12 +175,12 @@ void initGame()
 //Function to update the game state
 void update()
 {
-	glm::mat4 worldMatrix = glm::mat4();
-	//worldMatrix=glm::scale(glm::mat4(), glm::vec3(0.5));
-	if (worldMatrixLocation != 0)
-	{
-		glUseProgram(shaderProgram);
-		glUniformMatrix4fv(worldMatrixLocation, 1, GL_FALSE, &worldMatrix[0][0]);
+	//Use program before we can grab values
+	glUseProgram(shaderProgram);
+	GLint MVPLocation= glGetUniformLocation(shaderProgram, "MVP");
+	glm::mat4 MVPMatrix=glm::scale(glm::mat4(), glm::vec3(0.5));
+	if (MVPLocation != -1){
+		glUniformMatrix4fv(MVPLocation, 1, GL_FALSE, glm::value_ptr(MVPMatrix));
 	}
 }
 
@@ -228,8 +224,6 @@ void render()
 	//Bind buffer containing our triangle
 	glBindBuffer(GL_ARRAY_BUFFER, triangleVBO);
 
-	//Use our shader program
-	glUseProgram(shaderProgram);
 	//Tell the shader that 0 is the position element
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(ColourVertex), NULL);
