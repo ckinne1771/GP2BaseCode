@@ -178,7 +178,13 @@ void update()
 	//Use program before we can grab values
 	glUseProgram(shaderProgram);
 	GLint MVPLocation= glGetUniformLocation(shaderProgram, "MVP");
-	glm::mat4 MVPMatrix=glm::scale(glm::mat4(), glm::vec3(0.5));
+	
+	glm::mat4 projMatrix = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f);
+	glm::mat4 viewMatrix = glm::lookAt(vec3(0.0f, 0.0f, -1.0f), vec3(0.0f), vec3(0.0f, 1.0f, 0.0f));
+	glm::mat4 rotation = glm::rotate(mat4(1.0f), 0.0f, vec3(1.0f, 0.0f, 0.0f))*glm::rotate(mat4(1.0f), 0.0f, vec3(0.0f, 1.0f, 0.0f))*glm::rotate(mat4(1.0f), 0.0f, vec3(0.0f, 0.0f, 1.0f));
+
+	glm::mat4 modelMatrix = glm::scale(mat4(1.0f), vec3(1.0f, 1.0f, 1.0f))*rotation *glm::translate(mat4(1.0f), vec3(0.0f, 0.0f, 0.0f));
+	glm::mat4 MVPMatrix = modelMatrix*viewMatrix*projMatrix;
 	if (MVPLocation != -1){
 		glUniformMatrix4fv(MVPLocation, 1, GL_FALSE, glm::value_ptr(MVPMatrix));
 	}
