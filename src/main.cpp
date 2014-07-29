@@ -179,12 +179,13 @@ void update()
 	glUseProgram(shaderProgram);
 	GLint MVPLocation= glGetUniformLocation(shaderProgram, "MVP");
 	
-	glm::mat4 projMatrix = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f);
-	glm::mat4 viewMatrix = glm::lookAt(vec3(0.0f, 0.0f, -1.0f), vec3(0.0f), vec3(0.0f, 1.0f, 0.0f));
+	glm::mat4 projMatrix = glm::perspective(45.0f, 640.0f / 480.0f, 0.1f, 100.0f);
+	glm::mat4 viewMatrix = glm::lookAt(vec3(0.0f, 0.0f, 10.0f), vec3(0.0f,0.0f,0.0f), vec3(0.0f, 1.0f, 0.0f));
 	glm::mat4 rotation = glm::rotate(mat4(1.0f), 0.0f, vec3(1.0f, 0.0f, 0.0f))*glm::rotate(mat4(1.0f), 0.0f, vec3(0.0f, 1.0f, 0.0f))*glm::rotate(mat4(1.0f), 0.0f, vec3(0.0f, 0.0f, 1.0f));
 
 	glm::mat4 modelMatrix = glm::scale(mat4(1.0f), vec3(1.0f, 1.0f, 1.0f))*rotation *glm::translate(mat4(1.0f), vec3(0.0f, 0.0f, 0.0f));
-	glm::mat4 MVPMatrix = modelMatrix*viewMatrix*projMatrix;
+	glm::mat4 MVPMatrix = projMatrix*viewMatrix*modelMatrix;
+
 	if (MVPLocation != -1){
 		glUniformMatrix4fv(MVPLocation, 1, GL_FALSE, glm::value_ptr(MVPMatrix));
 	}
@@ -225,7 +226,7 @@ void render()
     //Set the clear colour(background)
     glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
     //clear the colour and depth buffer
-    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+    glClear( GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
 	//Bind buffer containing our triangle
 	glBindBuffer(GL_ARRAY_BUFFER, triangleVBO);
