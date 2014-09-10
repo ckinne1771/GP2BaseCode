@@ -14,7 +14,7 @@ void CleanUp()
 
 }
 
-//Main Method
+//Main Method - Entry Point
 int main(int argc, char * arg[])
 {
     return 0;
