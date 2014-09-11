@@ -33,13 +33,14 @@ void InitWindows(int width, int height, bool fullscreen)
 
 void CleanUp()
 {
-
+	SDL_DestroyWindow(window);
+	SDL_Quit();
 }
 
 //Main Method - Entry Point
 int main(int argc, char * arg[])
 {
-	// init everyting - SDL, if it is nonzero we have a problem
+	// init everything - SDL, if it returns nonzero we have a problem
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 	{
 		std::cout << "ERROR SDL_Init " << SDL_GetError() << std::endl;
