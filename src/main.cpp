@@ -114,16 +114,6 @@ void update()
 //Function to render(aka draw)
 void render()
 {
-    //old imediate mode!
-    //Set the clear colour(background)
-    glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
-    //clear the colour and depth buffer
-    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-    
-    //Swith to ModelView
-    glMatrixMode( GL_MODELVIEW );
-    //Reset using the Indentity Matrix
-    glLoadIdentity( );
 
 	SDL_GL_SwapWindow(window);
 }
