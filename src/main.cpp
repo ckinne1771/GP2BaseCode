@@ -127,6 +127,7 @@ void render()
 	glTranslatef(0.0f, 0.0f, -5.0f);
 	//Begin drawing triangles
 	glBegin(GL_TRIANGLES);
+		glColor3f(1.0f, 0.0f, 0.0f); //Colour of the vertices
 		glVertex3f(0.0f, 1.0f, 0.0f); // Top
 		glVertex3f(-1.0f, -1.0f, 0.0f); // Bottom Left
 		glVertex3f(1.0f, -1.0f, 0.0f); // Bottom Right
