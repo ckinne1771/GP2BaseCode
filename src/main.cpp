@@ -24,7 +24,7 @@ const int WINDOW_HEIGHT = 480;
 bool running = true;
 
 //Global functions
-void InitWindows(int width, int height, bool fullscreen)
+void InitWindow(int width, int height, bool fullscreen)
 {
 	//Create a window
 	window = SDL_CreateWindow(
@@ -123,7 +123,14 @@ void render()
     //Swith to ModelView
     glMatrixMode( GL_MODELVIEW );
     //Reset using the Indentity Matrix
-    glLoadIdentity( );
+	glLoadIdentity();
+	glTranslatef(0.0f, 0.0f, -5.0f);
+	//Begin drawing triangles
+	glBegin(GL_TRIANGLES);
+		glVertex3f(0.0f, 1.0f, 0.0f); // Top
+		glVertex3f(-1.0f, -1.0f, 0.0f); // Bottom Left
+		glVertex3f(1.0f, -1.0f, 0.0f); // Bottom Right
+	glEnd();
 
 	SDL_GL_SwapWindow(window);
 }
@@ -131,9 +138,6 @@ void render()
 //Main Method
 int main(int argc, char * arg[])
 {
-    //Controls the game loop
-    bool run=true;
-
     // init everyting - SDL, if it is nonzero we have a problem
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
@@ -142,7 +146,7 @@ int main(int argc, char * arg[])
         return -1;
     }
 	
-	InitWindows(WINDOW_WIDTH, WINDOW_HEIGHT, false);
+	InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, false);
     
     //Call our InitOpenGL Function
     initOpenGL();
