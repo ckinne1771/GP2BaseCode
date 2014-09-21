@@ -68,7 +68,7 @@ void initOpenGL()
     //Enable depth testing
     glEnable( GL_DEPTH_TEST );
     
-    //The depth test to go
+    //The depth test to use
     glDepthFunc( GL_LEQUAL );
     
     //Turn on best perspective correction
@@ -81,7 +81,7 @@ void setViewport( int width, int height )
     //screen ration
     GLfloat ratio;
     
-    //make sure height is always above 1
+    //make sure height is always above 0
     if ( height == 0 ) {
         height = 1;
     }
@@ -104,18 +104,6 @@ void setViewport( int width, int height )
     
     //Reset using the Indentity Matrix
     glLoadIdentity( );
-}
-
-void update()
-{
-
-}
-
-//Function to render(aka draw)
-void render()
-{
-
-	SDL_GL_SwapWindow(window);
 }
 
 //Main Method
@@ -154,9 +142,6 @@ int main(int argc, char * arg[])
 				running = false;
 			}
 		}
-
-		update();
-		render();
 	}
 
 	//Call our cleanup
