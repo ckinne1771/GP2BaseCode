@@ -24,7 +24,7 @@ const int WINDOW_HEIGHT = 480;
 bool running = true;
 
 //Global functions
-void InitWindows(int width, int height, bool fullscreen)
+void InitWindow(int width, int height, bool fullscreen)
 {
 	//Create a window
 	window = SDL_CreateWindow(
@@ -142,7 +142,7 @@ int main(int argc, char * arg[])
         return -1;
     }
 	
-	InitWindows(WINDOW_WIDTH, WINDOW_HEIGHT, false);
+	InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, false);
     
     //Call our InitOpenGL Function
     initOpenGL();
