@@ -28,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D34CC01A19D8212400204C3A /* Vertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Vertex.h; path = ../headers/Vertex.h; sourceTree = "<group>"; };
 		D3737B21196854B6001A741F /* GP2BaseCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GP2BaseCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3737B2C196854B6001A741F /* GP2BaseCode-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GP2BaseCode-Info.plist"; sourceTree = "<group>"; };
 		D3737B2E196854B6001A741F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -66,6 +67,7 @@
 		D3737B18196854B6001A741F = {
 			isa = PBXGroup;
 			children = (
+				D34CC01A19D8212400204C3A /* Vertex.h */,
 				D3737B581968557F001A741F /* main.cpp */,
 				D3737B2A196854B6001A741F /* GP2BaseCode */,
 				D3737B23196854B6001A741F /* Frameworks */,

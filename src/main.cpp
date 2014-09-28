@@ -11,12 +11,20 @@
 #include <gl/GLU.h>
 #endif
 
+#include "Vertex.h"
+
 //global values go here!
 GLuint triangleVBO;
 
-float triangleData[] = { 0.0f, 1.0f, 0.0f, // Top
-						-1.0f, -1.0f, 0.0f, // Bottom Left
-						1.0f, -1.0f, 0.0f }; //Bottom Right
+Vertex triangleData[]={ {0.0f,1.0f,0.0f, //x,y,z
+                        1.0f,0.0f,0.0f,1.0f},//r,g,b,a
+    
+                        {-1.0f,-1.0f,0.0f, //x,y,z
+                        0.0f,1.0f,0.0f,1.0f},//r,g,b,a
+    
+                        {1.0f,-1.0f,0.0f, //x,y,z
+                        0.0f,0.0f,1.0f,1.0f}};//r,g,b,a
+
 //SDL Window
 SDL_Window * window = NULL;
 //SDL GL Context
@@ -143,12 +151,14 @@ void render()
     //Make the new VBO active. Repeat here as a sanity check( may have changed since initialisation)
 	glBindBuffer(GL_ARRAY_BUFFER, triangleVBO);
     
-	//Establish its 3 coordinates per vertex with zero stride(space between elements) in array
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
+	//Establish its 3 coordinates per vertex with stride is the size of one vertex(space between elements) in array
+	glVertexPointer(3, GL_FLOAT, sizeof(Vertex), NULL);
+    //The last parameter basically says that the colours start 3 floats into the data
+    glColorPointer(4, GL_FLOAT, sizeof(Vertex), (void**)(3 * sizeof(float)));
     
-	//Establish array contains vertices (not normals, colours, texture coords etc)
+	//Establish array contains vertices & colours
 	glEnableClientState(GL_VERTEX_ARRAY);
-    
+    glEnableClientState(GL_COLOR_ARRAY);
     
     //Swith to ModelView
     glMatrixMode( GL_MODELVIEW );
@@ -157,14 +167,14 @@ void render()
     //translate
     glTranslatef( -2.0f, 0.0f, -6.0f );
     //Actually draw the triangle, giving the number of vertices provided
-	glDrawArrays(GL_TRIANGLES, 0, sizeof(triangleData) / (3*sizeof(float))) ;
+	glDrawArrays(GL_TRIANGLES, 0, 3) ;
     
     //Load Identity
 	glLoadIdentity();
 	//translate
 	glTranslatef(2.0f, 0.0f, -6.0f);
 	//Actually draw the triangle, giving the number of vertices provided
-	glDrawArrays(GL_TRIANGLES, 0, sizeof(triangleData) / (3*sizeof(float))) ;
+	glDrawArrays(GL_TRIANGLES, 0, 3) ;
 
 	SDL_GL_SwapWindow(window);
 }
