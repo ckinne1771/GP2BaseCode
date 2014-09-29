@@ -164,6 +164,7 @@ void render()
     glMatrixMode( GL_MODELVIEW );
     //Reset using the Indentity Matrix
     glLoadIdentity( );
+    gluLookAt(0.0, 0.0, 0.0, 0.0, 0.0, -1.0f, 0.0, 1.0, 0.0);
     //translate
     glTranslatef( -2.0f, 0.0f, -6.0f );
     //Actually draw the triangle, giving the number of vertices provided
