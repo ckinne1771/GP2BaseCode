@@ -1,5 +1,4 @@
 #include <iostream>
-#include <GL/glew.h>
 
 #ifdef __APPLE__
 #include <SDL2/SDL.h>
@@ -15,15 +14,56 @@
 
 //global values go here!
 GLuint triangleVBO;
+GLuint triangleEBO;
 
-Vertex triangleData[]={ {0.0f,1.0f,0.0f, //x,y,z
-                        1.0f,0.0f,0.0f,1.0f},//r,g,b,a
+Vertex triangleData[]={
+//Front
+{ -0.5f, 0.5f, 0.5f,
+    1.0f, 0.0f, 1.0f, 1.0f },// Top Left
+
+{ -0.5f, -0.5f, 0.5f,
+    1.0f, 1.0f, 0.0f, 1.0f },// Bottom Left
+
+{ 0.5f, -0.5f, 0.5f,
+    0.0f, 1.0f, 1.0f, 1.0f }, //Bottom Right
+
+{ 0.5f, 0.5f, 0.5f,
+    1.0f, 0.0f, 1.0f, 1.0f },// Top Right
+
+
+//back
+{ -0.5f, 0.5f, -0.5f,
+    1.0f, 0.0f, 1.0f, 1.0f },// Top Left
+
+{ -0.5f, -0.5f, -0.5f,
+    1.0f, 1.0f, 0.0f, 1.0f },// Bottom Left
+
+{ 0.5f, -0.5f, -0.5f,
+    0.0f, 1.0f, 1.0f, 1.0f }, //Bottom Right
+
+{ 0.5f, 0.5f, -0.5f,
+    1.0f, 0.0f, 1.0f, 1.0f },// Top Right
+
+};
+
+
+GLuint indices[]={
+    //front
+    0,1,2,
+    0,3,2,
     
-                        {-1.0f,-1.0f,0.0f, //x,y,z
-                        0.0f,1.0f,0.0f,1.0f},//r,g,b,a
+    //left
     
-                        {1.0f,-1.0f,0.0f, //x,y,z
-                        0.0f,0.0f,1.0f,1.0f}};//r,g,b,a
+    //right
+    
+    //bottom
+    
+    //top
+    
+    //back
+    4,5,6,
+    4,7,6
+};
 
 //SDL Window
 SDL_Window * window = NULL;
@@ -42,7 +82,7 @@ void InitWindow(int width, int height, bool fullscreen)
 {
 	//Create a window
 	window = SDL_CreateWindow(
-		"Lab 1",             // window title
+		"Lab 2",             // window title
 		SDL_WINDOWPOS_CENTERED,     // x position, centered
 		SDL_WINDOWPOS_CENTERED,     // y position, centered
 		width,                        // width, in pixels
@@ -55,6 +95,7 @@ void CleanUp()
 {
 	// clean up, reverse order!!!
 	glDeleteBuffers(1, &triangleVBO);
+    glDeleteBuffers(1, &triangleEBO);
 	SDL_GL_DeleteContext(glcontext);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
@@ -68,6 +109,13 @@ void initGeometry()
 	glBindBuffer(GL_ARRAY_BUFFER, triangleVBO);
 	//Copy Vertex Data to VBO
 	glBufferData(GL_ARRAY_BUFFER, sizeof(triangleData), triangleData, GL_STATIC_DRAW);
+    
+    //create buffer
+    glGenBuffers(1, &triangleEBO);
+    //Make the EBO active
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, triangleEBO);
+    //Copy Index data to the EBO
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 }
 
 //Function to update the game state
@@ -99,13 +147,6 @@ void initOpenGL()
     
     //Turn on best perspective correction
     glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
-
-	GLenum err = glewInit();
-	if (GLEW_OK != err)
-	{
-		/* Problem: glewInit failed, something is seriously wrong. */
-		std::cout << "Error: "<<glewGetErrorString(err) << std::endl;
-	}
 }
 
 //Function to set/reset viewport
@@ -150,6 +191,7 @@ void render()
     
     //Make the new VBO active. Repeat here as a sanity check( may have changed since initialisation)
 	glBindBuffer(GL_ARRAY_BUFFER, triangleVBO);
+     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, triangleEBO);
     
 	//Establish its 3 coordinates per vertex with stride is the size of one vertex(space between elements) in array
 	glVertexPointer(3, GL_FLOAT, sizeof(Vertex), NULL);
@@ -168,16 +210,9 @@ void render()
     //translate
     glTranslatef( -2.0f, 0.0f, -6.0f );
     //Actually draw the triangle, giving the number of vertices provided
-	glDrawArrays(GL_TRIANGLES, 0, 3) ;
+	glDrawElements(GL_TRIANGLES,sizeof(indices)/sizeof(GLuint),GL_UNSIGNED_INT,(void*)0);
     
-    //Load Identity
-	glLoadIdentity();
-	//translate
-	glTranslatef(2.0f, 0.0f, -6.0f);
-	//Actually draw the triangle, giving the number of vertices provided
-	glDrawArrays(GL_TRIANGLES, 0, 3) ;
-
-	SDL_GL_SwapWindow(window);
+    SDL_GL_SwapWindow(window);
 }
 
 //Main Method
