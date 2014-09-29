@@ -1,4 +1,5 @@
 #include <iostream>
+#include <GL/glew.h>
 
 #ifdef __APPLE__
 #include <SDL2/SDL.h>
@@ -155,6 +156,13 @@ void initOpenGL()
     
     //Turn on best perspective correction
     glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
+
+	GLenum err = glewInit();
+	if (GLEW_OK != err)
+	{
+		/* Problem: glewInit failed, something is seriously wrong. */
+		std::cout << "Error: " << glewGetErrorString(err) << std::endl;
+	}
 }
 
 //Function to set/reset viewport
@@ -218,7 +226,7 @@ void render()
     //translate
     glTranslatef( -2.0f, 0.0f, -6.0f );
     //Actually draw the triangle, giving the number of vertices provided
-	glDrawElements(GL_TRIANGLES,sizeof(indices)/sizeof(GLuint),GL_UNSIGNED_INT,(void*)0);
+	glDrawElements(GL_TRIANGLES,sizeof(indices)/sizeof(GLuint),GL_UNSIGNED_INT,0);
     
     SDL_GL_SwapWindow(window);
 }
