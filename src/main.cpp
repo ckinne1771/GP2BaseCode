@@ -53,12 +53,20 @@ GLuint indices[]={
     0,3,2,
     
     //left
+    4,5,1,
+    4,1,0,
     
     //right
+    3,7,2,
+    7,6,2,
     
     //bottom
+    1,5,2,
+    6,2,1,
     
     //top
+    5,0,7,
+    5,7,3,
     
     //back
     4,5,6,
@@ -191,7 +199,7 @@ void render()
     
     //Make the new VBO active. Repeat here as a sanity check( may have changed since initialisation)
 	glBindBuffer(GL_ARRAY_BUFFER, triangleVBO);
-     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, triangleEBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, triangleEBO);
     
 	//Establish its 3 coordinates per vertex with stride is the size of one vertex(space between elements) in array
 	glVertexPointer(3, GL_FLOAT, sizeof(Vertex), NULL);
