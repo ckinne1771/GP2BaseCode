@@ -14,7 +14,11 @@
 		D3737B5B19695DA0001A741F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3737B5A19695DA0001A741F /* OpenGL.framework */; };
 		D3737B5D19695DAF001A741F /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3737B5C19695DAF001A741F /* GLUT.framework */; };
 		D3737B6119695F55001A741F /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3737B6019695F55001A741F /* SDL2.framework */; };
+		D3934F9219DC8FF50015CCBF /* simpleVS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D3934F9119DC8FF50015CCBF /* simpleVS.glsl */; };
 		D3CAAEEB198FFE3B006E620D /* libGLEW.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3CAAEEA198FFE3B006E620D /* libGLEW.a */; };
+		D3CACF9319DC6CA5003A75EA /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3CACF9219DC6CA5003A75EA /* Shader.cpp */; };
+		D3CACF9519DC6CF6003A75EA /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3CACF9419DC6CF6003A75EA /* CoreFoundation.framework */; };
+		D3CACF9719DC857F003A75EA /* simpleFS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D3CACF9619DC857F003A75EA /* simpleFS.glsl */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +43,12 @@
 		D3737B5A19695DA0001A741F /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = ../../../../../System/Library/Frameworks/OpenGL.framework; sourceTree = "<group>"; };
 		D3737B5C19695DAF001A741F /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../../../System/Library/Frameworks/GLUT.framework; sourceTree = "<group>"; };
 		D3737B6019695F55001A741F /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
+		D3934F9119DC8FF50015CCBF /* simpleVS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = simpleVS.glsl; path = ../../assets/shaders/simpleVS.glsl; sourceTree = "<group>"; };
 		D3CAAEEA198FFE3B006E620D /* libGLEW.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGLEW.a; path = "../../../Dev/glew-1.10.0/lib/libGLEW.a"; sourceTree = "<group>"; };
+		D3CACF9119DC6C36003A75EA /* Shader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Shader.h; path = ../src/Shader.h; sourceTree = "<group>"; };
+		D3CACF9219DC6CA5003A75EA /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Shader.cpp; path = ../src/Shader.cpp; sourceTree = "<group>"; };
+		D3CACF9419DC6CF6003A75EA /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		D3CACF9619DC857F003A75EA /* simpleFS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = simpleFS.glsl; path = ../../assets/shaders/simpleFS.glsl; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3CACF9519DC6CF6003A75EA /* CoreFoundation.framework in Frameworks */,
 				D3CAAEEB198FFE3B006E620D /* libGLEW.a in Frameworks */,
 				D3737B6119695F55001A741F /* SDL2.framework in Frameworks */,
 				D3737B5D19695DAF001A741F /* GLUT.framework in Frameworks */,
@@ -67,6 +77,8 @@
 		D3737B18196854B6001A741F = {
 			isa = PBXGroup;
 			children = (
+				D3CACF9219DC6CA5003A75EA /* Shader.cpp */,
+				D3CACF9119DC6C36003A75EA /* Shader.h */,
 				D34CC01A19D8212400204C3A /* Vertex.h */,
 				D3737B581968557F001A741F /* main.cpp */,
 				D3737B2A196854B6001A741F /* GP2BaseCode */,
@@ -87,6 +99,7 @@
 		D3737B23196854B6001A741F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D3CACF9419DC6CF6003A75EA /* CoreFoundation.framework */,
 				D3CAAEEA198FFE3B006E620D /* libGLEW.a */,
 				D3737B6019695F55001A741F /* SDL2.framework */,
 				D3737B5C19695DAF001A741F /* GLUT.framework */,
@@ -106,8 +119,10 @@
 		D3737B2A196854B6001A741F /* GP2BaseCode */ = {
 			isa = PBXGroup;
 			children = (
+				D3934F9119DC8FF50015CCBF /* simpleVS.glsl */,
 				D3737B3C196854B6001A741F /* Images.xcassets */,
 				D3737B2B196854B6001A741F /* Supporting Files */,
+				D3CACF9619DC857F003A75EA /* simpleFS.glsl */,
 			);
 			path = GP2BaseCode;
 			sourceTree = "<group>";
@@ -198,6 +213,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3CACF9719DC857F003A75EA /* simpleFS.glsl in Resources */,
+				D3934F9219DC8FF50015CCBF /* simpleVS.glsl in Resources */,
 				D3737B2F196854B6001A741F /* InfoPlist.strings in Resources */,
 				D3737B3D196854B6001A741F /* Images.xcassets in Resources */,
 				D3737B35196854B6001A741F /* Credits.rtf in Resources */,
@@ -218,6 +235,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3CACF9319DC6CA5003A75EA /* Shader.cpp in Sources */,
 				D3737B591968557F001A741F /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -347,7 +365,7 @@
 					"/Users/brian/Dev/glew-1.10.0/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "/Users/brian/Dev/glew-1.10.0/include";
+				USER_HEADER_SEARCH_PATHS = "/Users/brian/Dev/glew-1.10.0/include /Users/brian/Dev/glm";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -370,7 +388,7 @@
 					"/Users/brian/Dev/glew-1.10.0/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "/Users/brian/Dev/glew-1.10.0/include";
+				USER_HEADER_SEARCH_PATHS = "/Users/brian/Dev/glew-1.10.0/include /Users/brian/Dev/glm";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

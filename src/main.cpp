@@ -1,49 +1,70 @@
 #include <iostream>
 #include <GL/glew.h>
+//maths headers
+#include <glm/glm.hpp>
+using glm::mat4;
+using glm::vec3;
+
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #ifdef __APPLE__
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
 #include <OpenGL/glu.h>
+#include <CoreFoundation/CoreFoundation.h>
 #elif WIN32
 #include <SDL.h>
 #include <SDL_opengl.h>
 #include <gl/GLU.h>
 #endif
 
+#ifdef defined(_DEBUG) && defined(_WIN32)
+const std::string ASSET_PATH = "../assets";
+#else
+const std::string ASSET_PATH = "assets";
+#endif
+
+const std::string SHADER_PATH = "/shaders";
+const std::string TEXTURE_PATH = "/textures";
+
+
+//Our headers
 #include "Vertex.h"
+#include "Shader.h"
 
 //global values go here!
 GLuint triangleVBO;
 GLuint triangleEBO;
+GLuint VAO;
 
-Vertex triangleData[]={
+//Shader Program
+GLuint shaderProgram=0;
+
+//matrices
+mat4 viewMatrix;
+mat4 projMatrix;
+mat4 worldMatrix;
+
+float triangleData[]={
 //Front
-{ -0.5f, 0.5f, 0.5f,
-    1.0f, 0.0f, 1.0f, 1.0f },// Top Left
+ -0.5f, 0.5f, 0.5f ,// Top Left
 
-{ -0.5f, -0.5f, 0.5f,
-    1.0f, 1.0f, 0.0f, 1.0f },// Bottom Left
+ -0.5f, -0.5f, 0.5f,// Bottom Left
 
-{ 0.5f, -0.5f, 0.5f,
-    0.0f, 1.0f, 1.0f, 1.0f }, //Bottom Right
+0.5f, -0.5f, 0.5f, //Bottom Right
 
-{ 0.5f, 0.5f, 0.5f,
-    1.0f, 0.0f, 1.0f, 1.0f },// Top Right
+0.5f, 0.5f, 0.5f ,// Top Right
 
 
 //back
-{ -0.5f, 0.5f, -0.5f,
-    1.0f, 0.0f, 1.0f, 1.0f },// Top Left
+ -0.5f, 0.5f, -0.5f,// Top Left
 
-{ -0.5f, -0.5f, -0.5f,
-    1.0f, 1.0f, 0.0f, 1.0f },// Bottom Left
+ -0.5f, -0.5f, -0.5f ,// Bottom Left
 
-{ 0.5f, -0.5f, -0.5f,
-    0.0f, 1.0f, 1.0f, 1.0f }, //Bottom Right
+ 0.5f, -0.5f, -0.5f, //Bottom Right
 
-{ 0.5f, 0.5f, -0.5f,
-    1.0f, 0.0f, 1.0f, 1.0f },// Top Right
+ 0.5f, 0.5f, -0.5f ,// Top Right
 
 };
 
@@ -91,7 +112,7 @@ void InitWindow(int width, int height, bool fullscreen)
 {
 	//Create a window
 	window = SDL_CreateWindow(
-		"Lab 2",             // window title
+		"Lab 3",             // window title
 		SDL_WINDOWPOS_CENTERED,     // x position, centered
 		SDL_WINDOWPOS_CENTERED,     // y position, centered
 		width,                        // width, in pixels
@@ -103,34 +124,68 @@ void InitWindow(int width, int height, bool fullscreen)
 void CleanUp()
 {
 	// clean up, reverse order!!!
+    glDeleteProgram(shaderProgram);
 	glDeleteBuffers(1, &triangleVBO);
     glDeleteBuffers(1, &triangleEBO);
+    glDeleteVertexArrays(1,&VAO);
 	SDL_GL_DeleteContext(glcontext);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 }
 
+void createShader()
+{
+    GLuint vertexShaderProgram=0;
+	std::string vsPath = "simpleVS.glsl";
+	vertexShaderProgram = loadShaderFromFile(vsPath, VERTEX_SHADER);
+    
+    glBindAttribLocation(vertexShaderProgram, 0, "vertexPosition");
+    
+    GLuint fragmentShaderProgram=0;
+	std::string fsPath = "simpleFS.glsl";
+	fragmentShaderProgram = loadShaderFromFile(fsPath, FRAGMENT_SHADER);
+    
+    shaderProgram = glCreateProgram();
+	glAttachShader(shaderProgram, vertexShaderProgram);
+	glAttachShader(shaderProgram, fragmentShaderProgram);
+	glLinkProgram(shaderProgram);
+	checkForLinkErrors(shaderProgram);
+    
+	//now we can delete the VS & FS Programs
+	glDeleteShader(vertexShaderProgram);
+	glDeleteShader(fragmentShaderProgram);
+    
+
+}
+
 void initGeometry()
 {
+    glGenVertexArrays( 1, &VAO );
+    glBindVertexArray( VAO );
+    
 	//Create buffer
 	glGenBuffers(1, &triangleVBO);
 	// Make the new VBO active
 	glBindBuffer(GL_ARRAY_BUFFER, triangleVBO);
 	//Copy Vertex Data to VBO
-	glBufferData(GL_ARRAY_BUFFER, sizeof(triangleData), triangleData, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 24*sizeof(float), triangleData, GL_STATIC_DRAW);
     
     //create buffer
     glGenBuffers(1, &triangleEBO);
     //Make the EBO active
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, triangleEBO);
     //Copy Index data to the EBO
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 36*sizeof(int), indices, GL_STATIC_DRAW);
+    
+
 }
 
 //Function to update the game state
 void update()
 {
-    
+	projMatrix = glm::perspective(45.0f, (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
+	viewMatrix = glm::lookAt(vec3(0.0f, 0.0f, 10.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f));
+    worldMatrix= glm::translate(mat4(1.0f), vec3(0.0f,0.0f,0.0f));
 }
 
 //Function to initialise OpenGL
@@ -139,61 +194,29 @@ void initOpenGL()
 	//Create OpenGL Context
 	glcontext = SDL_GL_CreateContext(window);
 
-    //Smooth shading
-    glShadeModel( GL_SMOOTH );
-    
-    //clear the background to black
-    glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
-    
-    //Clear the depth buffer
-    glClearDepth( 1.0f );
-    
-    //Enable depth testing
-    glEnable( GL_DEPTH_TEST );
-    
-    //The depth test to go
-    glDepthFunc( GL_LEQUAL );
-    
-    //Turn on best perspective correction
-    glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
-
+    glewExperimental = GL_TRUE;
 	GLenum err = glewInit();
 	if (GLEW_OK != err)
 	{
 		/* Problem: glewInit failed, something is seriously wrong. */
 		std::cout << "Error: " << glewGetErrorString(err) << std::endl;
 	}
+    
+	glEnable(GL_DEPTH_TEST);
 }
 
 //Function to set/reset viewport
 void setViewport( int width, int height )
 {
-    //screen ration
-    GLfloat ratio;
     
     //make sure height is always above 1
     if ( height == 0 ) {
         height = 1;
     }
-    
-    //calculate screen ration
-    ratio = ( GLfloat )width / ( GLfloat )height;
+
     
     //Setup viewport
     glViewport( 0, 0, ( GLsizei )width, ( GLsizei )height );
-    
-    //Change to poject matrix mode
-    glMatrixMode( GL_PROJECTION );
-    glLoadIdentity( );
-    
-    //Calculate perspective matrix, using glu library functions
-    gluPerspective( 45.0f, ratio, 0.1f, 100.0f );
-    
-    //Swith to ModelView
-    glMatrixMode( GL_MODELVIEW );
-    
-    //Reset using the Indentity Matrix
-    glLoadIdentity( );
 }
 
 //Function to render(aka draw)
@@ -208,25 +231,22 @@ void render()
     //Make the new VBO active. Repeat here as a sanity check( may have changed since initialisation)
 	glBindBuffer(GL_ARRAY_BUFFER, triangleVBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, triangleEBO);
+    glBindVertexArray( VAO );
     
-	//Establish its 3 coordinates per vertex with stride is the size of one vertex(space between elements) in array
-	glVertexPointer(3, GL_FLOAT, sizeof(Vertex), NULL);
-    //The last parameter basically says that the colours start 3 floats into the data
-    glColorPointer(4, GL_FLOAT, sizeof(Vertex), (void**)(3 * sizeof(float)));
+    glUseProgram(shaderProgram);
+	GLint MVPLocation = glGetUniformLocation(shaderProgram, "MVP");
+	if (MVPLocation != -1)
+	{
+		mat4 MVP = projMatrix*viewMatrix*worldMatrix;
+		glUniformMatrix4fv(MVPLocation, 1, GL_FALSE, glm::value_ptr(MVP));
+	}
     
-	//Establish array contains vertices & colours
-	glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_COLOR_ARRAY);
-    
-    //Swith to ModelView
-    glMatrixMode( GL_MODELVIEW );
-    //Reset using the Indentity Matrix
-    glLoadIdentity( );
-    gluLookAt(0.0, 0.0, 0.0, 0.0, 0.0, -1.0f, 0.0, 1.0, 0.0);
-    //translate
-    glTranslatef( -2.0f, 0.0f, -6.0f );
+    //Tell the shader that 0 is the position element
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+
     //Actually draw the triangle, giving the number of vertices provided
-	glDrawElements(GL_TRIANGLES,sizeof(indices)/sizeof(GLuint),GL_UNSIGNED_INT,0);
+	glDrawElements(GL_TRIANGLES,36,GL_UNSIGNED_INT,0);
     
     SDL_GL_SwapWindow(window);
 }
@@ -234,6 +254,26 @@ void render()
 //Main Method
 int main(int argc, char * arg[])
 {
+    // Setup asset path, no real work required for Windows. Mac needs to load assets from a bundle
+    // ----------------------------------------------------------------------------
+    // http://stackoverflow.com/questions/516200/relative-paths-not-working-in-xcode-c
+    // This makes relative paths work in C++ in Xcode by changing directory to the Resources folder inside the .app bundle
+#ifdef __APPLE__
+    CFBundleRef mainBundle = CFBundleGetMainBundle();
+    CFURLRef resourcesURL = CFBundleCopyResourcesDirectoryURL(mainBundle);
+    char path[PATH_MAX];
+    if (!CFURLGetFileSystemRepresentation(resourcesURL, TRUE, (UInt8 *)path, PATH_MAX))
+    {
+        // error!
+    }
+    CFRelease(resourcesURL);
+    
+    chdir(path);
+    std::cout << "Current Path: " << path << std::endl;
+#endif
+    
+
+    
     // init everyting - SDL, if it is nonzero we have a problem
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
@@ -242,6 +282,11 @@ int main(int argc, char * arg[])
         return -1;
     }
     
+    //Ask for version 4.2 of OpenGL
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+    
 	InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, false);
     //Call our InitOpenGL Function
     initOpenGL();
@@ -249,6 +294,7 @@ int main(int argc, char * arg[])
 	setViewport(WINDOW_WIDTH, WINDOW_HEIGHT);
     
 	initGeometry();
+    createShader();
 
     //Value to hold the event generated by SDL
     SDL_Event event;
