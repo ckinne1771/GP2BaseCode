@@ -21,12 +21,15 @@ using glm::vec3;
 
 #ifdef _DEBUG && WIN32
 const std::string ASSET_PATH = "../assets";
+const std::string SHADER_PATH = "/shaders";
+#elif __APPLE__
+const std::string ASSET_PATH;
+const std::string SHADER_PATH;
 #else
-const std::string ASSET_PATH = "assets";
+const std::string ASSET_PATH="/assets";
+const std::string SHADER_PATH="/shaders";
 #endif
 
-const std::string SHADER_PATH = "/shaders";
-const std::string TEXTURE_PATH = "/textures";
 
 
 //Our headers
@@ -136,13 +139,13 @@ void CleanUp()
 void createShader()
 {
     GLuint vertexShaderProgram=0;
-	std::string vsPath = "simpleVS.glsl";
+	std::string vsPath = ASSET_PATH + SHADER_PATH+"/simpleVS.glsl";
 	vertexShaderProgram = loadShaderFromFile(vsPath, VERTEX_SHADER);
     
     glBindAttribLocation(vertexShaderProgram, 0, "vertexPosition");
     
     GLuint fragmentShaderProgram=0;
-	std::string fsPath = "simpleFS.glsl";
+	std::string fsPath = ASSET_PATH + SHADER_PATH + "/simpleFS.glsl";
 	fragmentShaderProgram = loadShaderFromFile(fsPath, FRAGMENT_SHADER);
     
     shaderProgram = glCreateProgram();
