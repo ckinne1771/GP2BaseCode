@@ -19,7 +19,7 @@ using glm::vec3;
 #include <gl/GLU.h>
 #endif
 
-#ifdef defined(_DEBUG) && defined(_WIN32)
+#ifdef _DEBUG && WIN32
 const std::string ASSET_PATH = "../assets";
 #else
 const std::string ASSET_PATH = "assets";

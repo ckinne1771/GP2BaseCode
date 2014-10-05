@@ -16,7 +16,7 @@ GLuint loadShaderFromFile(const std::string& filename, SHADER_TYPE shaderType)
 	file.open(filename.c_str(), std::ios::in);
 	if (!file)
 	{
-		return -1;
+		return 0;
 	}
 	//calculate file size
 	if (file.good())
@@ -28,7 +28,7 @@ GLuint loadShaderFromFile(const std::string& filename, SHADER_TYPE shaderType)
 		if (len == 0)
 		{
 			std::cout << "File has no contents " << std::endl;
-			return false;
+			return 0;
 		}
         
 		fileContents.resize(len);
@@ -38,7 +38,7 @@ GLuint loadShaderFromFile(const std::string& filename, SHADER_TYPE shaderType)
 		return program;
 	}
 	
-	return -1;
+	return 0;
 }
 
 
@@ -48,9 +48,9 @@ GLuint loadShaderFromMemory(const char * pMem, SHADER_TYPE shaderType)
 	GLuint program = glCreateShader(shaderType);
 	glShaderSource(program, 1, &pMem, NULL);
 	glCompileShader(program);
-	if (!checkForCompilerErrors(program))
+	if (checkForCompilerErrors(program))
 	{
-		return -1;
+		return 0;
 	}
 	return program;
 }
@@ -73,10 +73,10 @@ bool checkForLinkErrors(GLuint program)
         
 		//We don't need the shader anymore.
 		glDeleteProgram(program);
-		return false;
+		return true;
 	}
     
-	return true;
+	return false;
 }
 
 bool checkForCompilerErrors(GLuint shaderProgram)
@@ -97,8 +97,8 @@ bool checkForCompilerErrors(GLuint shaderProgram)
         
 		//We don't need the shader anymore.
 		glDeleteShader(shaderProgram);
-		return false;
+		return true;
         
 	}
-	return true;
+	return false;
 }
