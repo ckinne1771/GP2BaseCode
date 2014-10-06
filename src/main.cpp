@@ -142,8 +142,6 @@ void createShader()
 	std::string vsPath = ASSET_PATH + SHADER_PATH+"/simpleVS.glsl";
 	vertexShaderProgram = loadShaderFromFile(vsPath, VERTEX_SHADER);
     
-    glBindAttribLocation(vertexShaderProgram, 0, "vertexPosition");
-    
     GLuint fragmentShaderProgram=0;
 	std::string fsPath = ASSET_PATH + SHADER_PATH + "/simpleFS.glsl";
 	fragmentShaderProgram = loadShaderFromFile(fsPath, FRAGMENT_SHADER);
@@ -158,6 +156,7 @@ void createShader()
 	glDeleteShader(vertexShaderProgram);
 	glDeleteShader(fragmentShaderProgram);
     
+    glBindAttribLocation(shaderProgram, 0, "vertexPosition");
 
 }
 
@@ -194,6 +193,11 @@ void update()
 //Function to initialise OpenGL
 void initOpenGL()
 {
+    //Ask for version 3.2 of OpenGL
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+    
 	//Create OpenGL Context
 	glcontext = SDL_GL_CreateContext(window);
 
@@ -205,7 +209,23 @@ void initOpenGL()
 		std::cout << "Error: " << glewGetErrorString(err) << std::endl;
 	}
     
-	glEnable(GL_DEPTH_TEST);
+    //Smooth shading
+    glShadeModel( GL_SMOOTH );
+    
+    //clear the background to black
+    glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
+    
+    //Clear the depth buffer
+    glClearDepth( 1.0f );
+    
+    //Enable depth testing
+    glEnable( GL_DEPTH_TEST );
+    
+    //The depth test to go
+    glDepthFunc( GL_LEQUAL );
+    
+    //Turn on best perspective correction
+    glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
 }
 
 //Function to set/reset viewport
@@ -285,10 +305,7 @@ int main(int argc, char * arg[])
         return -1;
     }
     
-    //Ask for version 4.2 of OpenGL
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+
     
 	InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, false);
     //Call our InitOpenGL Function

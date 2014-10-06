@@ -66,7 +66,7 @@ bool checkForLinkErrors(GLuint program)
 	if (isLinked == GL_FALSE) {
         
 		GLint maxLength = 0;
-		glGetShaderiv(program, GL_INFO_LOG_LENGTH, &maxLength);
+		glGetProgramiv(program, GL_INFO_LOG_LENGTH, &maxLength);
         
 		//The maxLength includes the NULL character
 		std::string infoLog;
