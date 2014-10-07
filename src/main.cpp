@@ -57,23 +57,13 @@ GLuint texture=0;
 
 Vertex triangleData[] = {
 	//Front
-		{ -0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f },// Top Left
+		{ -0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f },// Top Left
 
-		{ -0.5f, -0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f },// Bottom Left
+		{ -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f },// Bottom Left
 
-		{ 0.5f, -0.5f, 0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f }, //Bottom Right
+		{ 0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f }, //Bottom Right
 
-		{ 0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f },// Top Right
-
-
-	//back
-		{ -0.5f, 0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f },// Top Left
-
-		{ -0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f },// Bottom Left
-
-		{0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f }, //Bottom Right
-
-		{0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f }// Top Right
+		{ 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f }// Top Right
 
 };
 
@@ -82,26 +72,6 @@ GLuint indices[]={
     //front
     0,1,2,
     0,3,2,
-    
-    //left
-    4,5,1,
-    4,1,0,
-    
-    //right
-    3,7,2,
-    7,6,2,
-    
-    //bottom
-    1,5,2,
-    6,2,1,
-    
-    //top
-    5,0,7,
-    5,7,3,
-    
-    //back
-    4,5,6,
-    4,7,6
 };
 
 //SDL Window
@@ -186,14 +156,14 @@ void initGeometry()
 	// Make the new VBO active
 	glBindBuffer(GL_ARRAY_BUFFER, triangleVBO);
 	//Copy Vertex Data to VBO
-	glBufferData(GL_ARRAY_BUFFER, 8*sizeof(Vertex), triangleData, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 4*sizeof(Vertex), triangleData, GL_STATIC_DRAW);
     
     //create buffer
     glGenBuffers(1, &triangleEBO);
     //Make the EBO active
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, triangleEBO);
     //Copy Index data to the EBO
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 36*sizeof(int), indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6*sizeof(int), indices, GL_STATIC_DRAW);
     
 
 }
@@ -202,7 +172,7 @@ void initGeometry()
 void update()
 {
 	projMatrix = glm::perspective(45.0f, (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
-	viewMatrix = glm::lookAt(vec3(0.0f, 0.0f, 10.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f));
+	viewMatrix = glm::lookAt(vec3(0.0f, 0.0f, 2.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f));
     worldMatrix= glm::translate(mat4(1.0f), vec3(0.0f,0.0f,0.0f));
 }
 
@@ -291,12 +261,12 @@ void render()
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(0));
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(20));
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(12));
 	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(28));
+	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(20));
 
     //Actually draw the triangle, giving the number of vertices provided
-	glDrawElements(GL_TRIANGLES,36,GL_UNSIGNED_INT,0);
+	glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,0);
     
     SDL_GL_SwapWindow(window);
 }
