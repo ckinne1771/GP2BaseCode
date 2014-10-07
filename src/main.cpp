@@ -146,18 +146,18 @@ void CleanUp()
 
 void createTexture()
 {
-	std::string texturePath = ASSET_PATH + TEXTURE_PATH + "/char_idle.png";
+	std::string texturePath = ASSET_PATH + TEXTURE_PATH + "/test.png";
 	texture = loadTextureFromFile(texturePath);
 }
 
 void createShader()
 {
     GLuint vertexShaderProgram=0;
-	std::string vsPath = ASSET_PATH + SHADER_PATH+"/vertexColourVS.glsl";
+	std::string vsPath = ASSET_PATH + SHADER_PATH+"/textureVS.glsl";
 	vertexShaderProgram = loadShaderFromFile(vsPath, VERTEX_SHADER);
     
     GLuint fragmentShaderProgram=0;
-	std::string fsPath = ASSET_PATH + SHADER_PATH + "/vertexColourFS.glsl";
+	std::string fsPath = ASSET_PATH + SHADER_PATH + "/textureFS.glsl";
 	fragmentShaderProgram = loadShaderFromFile(fsPath, FRAGMENT_SHADER);
     
     shaderProgram = glCreateProgram();
@@ -171,7 +171,8 @@ void createShader()
 	glDeleteShader(fragmentShaderProgram);
     
     glBindAttribLocation(shaderProgram, 0, "vertexPosition");
-	glBindAttribLocation(shaderProgram, 1, "vertexColour");
+	glBindAttribLocation(shaderProgram,1, "vertexTexCoords");
+	glBindAttribLocation(shaderProgram, 2, "vertexColour");
 
 }
 
@@ -241,6 +242,7 @@ void initOpenGL()
     
     //Turn on best perspective correction
     glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
+	glEnable(GL_TEXTURE_2D);
 }
 
 //Function to set/reset viewport
@@ -262,7 +264,7 @@ void render()
 {
     //old imediate mode!
     //Set the clear colour(background)
-    glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
+    glClearColor( 1.0f, 0.0f, 0.0f, 0.0f );
     //clear the colour and depth buffer
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     
@@ -273,16 +275,26 @@ void render()
     
     glUseProgram(shaderProgram);
 	GLint MVPLocation = glGetUniformLocation(shaderProgram, "MVP");
-	if (MVPLocation != -1)
-	{
-		mat4 MVP = projMatrix*viewMatrix*worldMatrix;
-		glUniformMatrix4fv(MVPLocation, 1, GL_FALSE, glm::value_ptr(MVP));
-	}
+	mat4 MVP = projMatrix*viewMatrix*worldMatrix;
+	glUniformMatrix4fv(MVPLocation, 1, GL_FALSE, glm::value_ptr(MVP));
+
+	
+	GLint texture1Location = glGetUniformLocation(shaderProgram, "texture1");
+	
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	glUniform1i(texture1Location, 0);
+
     //Tell the shader that 0 is the position element
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(0));
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(20));
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(20));
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(28));
+
     //Actually draw the triangle, giving the number of vertices provided
 	glDrawElements(GL_TRIANGLES,36,GL_UNSIGNED_INT,0);
     

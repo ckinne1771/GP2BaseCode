@@ -10,16 +10,37 @@ GLuint loadTextureFromFile(const std::string& filename)
 		return textureID;
 	}
 
-	//Texture format may be weird, we use some SDL functions to convert to RGB
-	SDL_Surface * myNewSurface = SDL_CreateRGBSurface(0, imageSurface->w, imageSurface->h, 32, 0xff000000, 0x00ff0000, 0x0000ff00, 0x000000ff);
-	SDL_BlitSurface(imageSurface, 0, myNewSurface, 0); /* blit onto a purely RGB Surface*/
+	// get the number of channels in the SDL surface
+	GLint  nOfColors = imageSurface->format->BytesPerPixel;
+	GLenum texture_format = GL_RGB;
+	if (nOfColors == 4)     // contains an alpha channel
+	{
+		if (imageSurface->format->Rmask == 0x000000ff)
+			texture_format = GL_RGBA;
+		else
+			texture_format = GL_BGRA;
+	}
+	else if (nOfColors == 3)     // no alpha channel
+	{
+		if (imageSurface->format->Rmask == 0x000000ff)
+			texture_format = GL_RGB;
+		else
+			texture_format = GL_BGR;
+	}
+	else {
+		std::cout << "warning: the image is not truecolor..  this will probably break";
+		// this error should not go unhandled
+	}
+	
 	glGenTextures(1, &textureID);
 	glBindTexture(GL_TEXTURE_2D, textureID);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, myNewSurface->w, myNewSurface->h, 0, GL_RGBA,
-		GL_UNSIGNED_BYTE, myNewSurface->pixels);
+	glTexImage2D(GL_TEXTURE_2D, 0, texture_format, imageSurface->w, imageSurface->h, 0, texture_format,
+		GL_UNSIGNED_BYTE, imageSurface->pixels);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-
-	SDL_FreeSurface(myNewSurface);
 	SDL_FreeSurface(imageSurface);
 
 	return textureID;
