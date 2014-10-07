@@ -12,7 +12,10 @@
 struct Vertex
 {
     float x,y,z;
-    float r,g,b,a;
+	float tu, tv;
+	float r,g,b,a;
 };
+
+#define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
 #endif
