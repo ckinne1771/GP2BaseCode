@@ -23,6 +23,8 @@
   <ItemGroup>
     <None Include="..\assets\shaders\simpleFS.glsl" />
     <None Include="..\assets\shaders\simpleVS.glsl" />
+    <None Include="..\assets\shaders\vertexColourFS.glsl" />
+    <None Include="..\assets\shaders\vertexColourVS.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{68F0627D-C58E-4BAD-B10A-401ECB51D69F}</ProjectGuid>

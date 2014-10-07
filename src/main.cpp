@@ -57,23 +57,23 @@ GLuint texture=0;
 
 Vertex triangleData[] = {
 	//Front
-		{ -0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f },// Top Left
+		{ -0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f },// Top Left
 
-		{ -0.5f, -0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f },// Bottom Left
+		{ -0.5f, -0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f },// Bottom Left
 
-		{ 0.5f, -0.5f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f }, //Bottom Right
+		{ 0.5f, -0.5f, 0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f }, //Bottom Right
 
-		{ 0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f },// Top Right
+		{ 0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f },// Top Right
 
 
 	//back
-		{ -0.5f, 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f },// Top Left
+		{ -0.5f, 0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f },// Top Left
 
-		{ -0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f },// Bottom Left
+		{ -0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f },// Bottom Left
 
-		{0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f }, //Bottom Right
+		{0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f }, //Bottom Right
 
-		{0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f }// Top Right
+		{0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f }// Top Right
 
 };
 
@@ -153,11 +153,11 @@ void createTexture()
 void createShader()
 {
     GLuint vertexShaderProgram=0;
-	std::string vsPath = ASSET_PATH + SHADER_PATH+"/simpleVS.glsl";
+	std::string vsPath = ASSET_PATH + SHADER_PATH+"/vertexColourVS.glsl";
 	vertexShaderProgram = loadShaderFromFile(vsPath, VERTEX_SHADER);
     
     GLuint fragmentShaderProgram=0;
-	std::string fsPath = ASSET_PATH + SHADER_PATH + "/simpleFS.glsl";
+	std::string fsPath = ASSET_PATH + SHADER_PATH + "/vertexColourFS.glsl";
 	fragmentShaderProgram = loadShaderFromFile(fsPath, FRAGMENT_SHADER);
     
     shaderProgram = glCreateProgram();
@@ -171,6 +171,7 @@ void createShader()
 	glDeleteShader(fragmentShaderProgram);
     
     glBindAttribLocation(shaderProgram, 0, "vertexPosition");
+	glBindAttribLocation(shaderProgram, 1, "vertexColour");
 
 }
 
@@ -280,7 +281,8 @@ void render()
     //Tell the shader that 0 is the position element
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(0));
-	
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(20));
     //Actually draw the triangle, giving the number of vertices provided
 	glDrawElements(GL_TRIANGLES,36,GL_UNSIGNED_INT,0);
     
