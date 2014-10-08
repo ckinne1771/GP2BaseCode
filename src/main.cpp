@@ -27,9 +27,11 @@ const std::string TEXTURE_PATH = "/textures";
 #elif __APPLE__
 const std::string ASSET_PATH;
 const std::string SHADER_PATH;
+const std::string TEXTURE_PATH;
 #else
 const std::string ASSET_PATH="/assets";
 const std::string SHADER_PATH="/shaders";
+const std::string TEXTURE_PATH = "/textures";
 #endif
 
 
