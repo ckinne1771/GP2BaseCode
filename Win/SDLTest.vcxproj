@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\headers\Texture.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\Shader.cpp" />
+    <ClCompile Include="..\src\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\headers\Shader.h" />
