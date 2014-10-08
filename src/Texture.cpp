@@ -12,18 +12,18 @@ GLuint loadTextureFromFile(const std::string& filename)
 
 	// get the number of channels in the SDL surface
 	GLint  nOfColors = imageSurface->format->BytesPerPixel;
-	GLenum texture_format = GL_RGB;
+	GLenum texture_format = GL_RGB32F;
 	if (nOfColors == 4)     // contains an alpha channel
 	{
 		if (imageSurface->format->Rmask == 0x000000ff)
-			texture_format = GL_RGBA;
+			texture_format = GL_RGBA32F;
 		else
 			texture_format = GL_BGRA;
 	}
 	else if (nOfColors == 3)     // no alpha channel
 	{
 		if (imageSurface->format->Rmask == 0x000000ff)
-			texture_format = GL_RGB;
+			texture_format = GL_RGB32F;
 		else
 			texture_format = GL_BGR;
 	}
