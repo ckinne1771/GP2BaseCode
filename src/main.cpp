@@ -58,13 +58,13 @@ GLuint texture=0;
 
 Vertex triangleData[] = {
 	//Front
-		{ -0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f },// Top Left
+		{ vec3(-0.5f, 0.5f, 0.0f), vec2(0.0f, 0.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f) },// Top Left
 
-		{ -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f },// Bottom Left
+		{ vec3 (- 0.5f, -0.5f, 0.0f), vec2(0.0f,1.0f), vec4(0.0f, 1.0f, 0.0f, 1.0f) },// Bottom Left
 
-		{ 0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f }, //Bottom Right
+		{ vec3(0.5f, -0.5f, 0.0f), vec2(1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f) }, //Bottom Right
 
-		{ 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f }// Top Right
+		{ vec3(0.5f, 0.5f, 0.0f), vec2(1.0f, 0.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f) }// Top Right
 
 };
 
@@ -213,6 +213,8 @@ void initOpenGL()
     
     //Turn on best perspective correction
     glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
+
+	glEnable(GL_TEXTURE);
 }
 
 //Function to set/reset viewport
@@ -241,8 +243,15 @@ void render()
     //Make the new VBO active. Repeat here as a sanity check( may have changed since initialisation)
 	glBindBuffer(GL_ARRAY_BUFFER, triangleVBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, triangleEBO);
-    //glBindVertexArray( VAO );
-    
+    glBindVertexArray( VAO );
+	//Tell the shader that 0 is the position element
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), NULL);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void**)sizeof(vec3));
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void**)(sizeof(vec3) + sizeof(vec2)));
+
     glUseProgram(shaderProgram);
 	GLint MVPLocation = glGetUniformLocation(shaderProgram, "MVP");
 	mat4 MVP = projMatrix*viewMatrix*worldMatrix;
@@ -257,13 +266,7 @@ void render()
 	glUniform1i(texture1Location, 0);
     GLenum glErr = glGetError();
 
-    //Tell the shader that 0 is the position element
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(0));
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(12));
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(20));
+
 
     //Actually draw the triangle, giving the number of vertices provided
 	glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,0);

@@ -12,18 +12,18 @@ GLuint loadTextureFromFile(const std::string& filename)
 
 	// get the number of channels in the SDL surface
 	GLint  nOfColors = imageSurface->format->BytesPerPixel;
-	GLenum texture_format = GL_RGB32F;
+	GLenum texture_format = GL_RGB;
 	if (nOfColors == 4)     // contains an alpha channel
 	{
 		if (imageSurface->format->Rmask == 0x000000ff)
-			texture_format = GL_RGBA32F;
+			texture_format = GL_RGBA;
 		else
 			texture_format = GL_BGRA;
 	}
 	else if (nOfColors == 3)     // no alpha channel
 	{
 		if (imageSurface->format->Rmask == 0x000000ff)
-			texture_format = GL_RGB32F;
+			texture_format = GL_RGBA;
 		else
 			texture_format = GL_BGR;
 	}
@@ -34,13 +34,11 @@ GLuint loadTextureFromFile(const std::string& filename)
 	
 	glGenTextures(1, &textureID);
 	glBindTexture(GL_TEXTURE_2D, textureID);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexImage2D(GL_TEXTURE_2D, 0, texture_format, imageSurface->w, imageSurface->h, 0, texture_format,
 		GL_UNSIGNED_BYTE, imageSurface->pixels);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
+	glGenerateMipmap(GL_TEXTURE_2D);
 	SDL_FreeSurface(imageSurface);
 
 	return textureID;
