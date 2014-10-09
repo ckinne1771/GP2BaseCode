@@ -1,3 +1,5 @@
+//Properties -> Debugging -> Environment -> "PATH=F:\MATLAB R2010b\bin\win32"
+
 #include <iostream>
 #include <GL/glew.h>
 //maths headers
