@@ -19,6 +19,7 @@ using glm::vec3;
 #include <SDL.h>
 #include <SDL_opengl.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <gl/GLU.h>
 #endif
 
@@ -26,16 +27,16 @@ using glm::vec3;
 const std::string ASSET_PATH = "../assets";
 const std::string SHADER_PATH = "/shaders";
 const std::string TEXTURE_PATH = "/textures";
+const std::string FONT_PATH = "/fonts";
 #elif __APPLE__
 const std::string ASSET_PATH;
 const std::string SHADER_PATH;
 const std::string TEXTURE_PATH;
+const std::string FONT_PATH;
 #else
 const std::string ASSET_PATH="/assets";
 const std::string SHADER_PATH="/shaders";
 #endif
-
-
 
 //Our headers
 #include "Vertex.h"
@@ -57,6 +58,7 @@ mat4 worldMatrix;
 
 //Texture
 GLuint texture=0;
+GLuint nameTexture = 0;
 
 Vertex triangleData[] = {
 	//Front
@@ -107,6 +109,7 @@ void CleanUp()
 {
 	// clean up, reverse order!!!
 	glDeleteTextures(1, &texture);
+	glDeleteTextures(1, &nameTexture);
     glDeleteProgram(shaderProgram);
 	glDeleteBuffers(1, &triangleVBO);
     glDeleteBuffers(1, &triangleEBO);
@@ -114,7 +117,14 @@ void CleanUp()
 	SDL_GL_DeleteContext(glcontext);
 	SDL_DestroyWindow(window);
 	IMG_Quit();
+	TTF_Quit();
 	SDL_Quit();
+}
+
+void createNameTexture()
+{
+	std::string fontPath = ASSET_PATH + FONT_PATH + "/OratorStd.otf";
+	nameTexture = loadTextureFromFont(fontPath, 16, "Hello");
 }
 
 void createTexture()
@@ -264,11 +274,13 @@ void render()
 	
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture);
+	glBindTexture(GL_TEXTURE_2D, nameTexture);
 	glUniform1i(texture1Location, 0);
     GLenum glErr = glGetError();
 
 
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_ALPHA);
 
     //Actually draw the triangle, giving the number of vertices provided
 	glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,0);
@@ -313,6 +325,10 @@ int main(int argc, char * arg[])
 		std::cout << "ERROR SDL_Image Init " << IMG_GetError() << std::endl;
 		// handle error
 	}
+
+	if (TTF_Init() == -1) {
+		std::cout << "TTF_Init: " << TTF_GetError();
+	}
     
 	InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, false);
     //Call our InitOpenGL Function
@@ -323,6 +339,7 @@ int main(int argc, char * arg[])
 	initGeometry();
     createShader();
 	createTexture();
+	createNameTexture();
     GLenum error;
     do{
         error=glGetError();
