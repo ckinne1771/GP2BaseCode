@@ -225,8 +225,6 @@ void initOpenGL()
     
     //Turn on best perspective correction
     glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
-
-	glEnable(GL_TEXTURE);
 }
 
 //Function to set/reset viewport
@@ -270,13 +268,12 @@ void render()
 	glUniformMatrix4fv(MVPLocation, 1, GL_FALSE, glm::value_ptr(MVP));
 
 	
-	GLint texture1Location = glGetUniformLocation(shaderProgram, "texture1");
+	GLint texture0Location = glGetUniformLocation(shaderProgram, "texture0");
 	
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, nameTexture);
-	glUniform1i(texture1Location, 0);
-    GLenum glErr = glGetError();
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glUniform1i(texture0Location, 0);
 
 
 	glEnable(GL_BLEND);
