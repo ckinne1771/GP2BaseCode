@@ -60,15 +60,28 @@ mat4 worldMatrix;
 GLuint texture=0;
 GLuint nameTexture = 0;
 
+/*
 Vertex triangleData[] = {
 	//Front
-		{ vec3(-0.5f, 0.5f, 0.0f), vec2(0.0f, 0.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f) },// Top Left
+		{ vec3(-0.5, 0.5f, 0.0f), vec2(0.0f, 0.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f) },// Top Left
 
 		{ vec3 (- 0.5f, -0.5f, 0.0f), vec2(0.0f,1.0f), vec4(0.0f, 1.0f, 0.0f, 1.0f) },// Bottom Left
 
 		{ vec3(0.5f, -0.5f, 0.0f), vec2(1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f) }, //Bottom Right
 
 		{ vec3(0.5f, 0.5f, 0.0f), vec2(1.0f, 0.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f) }// Top Right
+
+};
+*/
+Vertex triangleData[] = {
+	//Front
+		{ vec3(0.0, 0.0f, 0.0f), vec2(0.0f, 0.0f), vec4(1.0f, 1.0f, 1.0f, 1.0f) },// Top Left
+
+		{ vec3(0.0f, 200.f, 0.0f), vec2(0.0f, 1.0f), vec4(1.0f, 1.0f, 1.0f, 1.0f) },// Bottom Left
+
+		{ vec3(200.0f, 200.0f, 0.0f), vec2(1.0f, 1.0f), vec4(1.0f, 1.0f, 1.0f, 1.0f) }, //Bottom Right
+
+		{ vec3(200.0f,0.0f, 0.0f), vec2(1.0f, 0.0f), vec4(1.0f, 1.0f, 1.0f, 1.0f) }// Top Right
 
 };
 
@@ -124,7 +137,7 @@ void CleanUp()
 void createNameTexture()
 {
 	std::string fontPath = ASSET_PATH + FONT_PATH + "/OratorStd.otf";
-	nameTexture = loadTextureFromFont(fontPath, 16, "Hello");
+	nameTexture = loadTextureFromFont(fontPath, 64, "Hello");
 }
 
 void createTexture()
@@ -136,11 +149,11 @@ void createTexture()
 void createShader()
 {
     GLuint vertexShaderProgram=0;
-	std::string vsPath = ASSET_PATH + SHADER_PATH+"/textureVS.glsl";
+	std::string vsPath = ASSET_PATH + SHADER_PATH+"/vertexColourTextureVS.glsl";
 	vertexShaderProgram = loadShaderFromFile(vsPath, VERTEX_SHADER);
     
     GLuint fragmentShaderProgram=0;
-	std::string fsPath = ASSET_PATH + SHADER_PATH + "/textureFS.glsl";
+	std::string fsPath = ASSET_PATH + SHADER_PATH + "/vertexColourTextureFS.glsl";
 	fragmentShaderProgram = loadShaderFromFile(fsPath, FRAGMENT_SHADER);
     
     shaderProgram = glCreateProgram();
@@ -159,11 +172,55 @@ void createShader()
 
 }
 
+void initGeometryFromTexture(GLuint textureID)
+{
+	int width, height;
+
+	glBindTexture(GL_TEXTURE_2D, textureID);
+	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width);
+	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &height);
+
+	Vertex vertData[] = {
+		//Front
+			{ vec3(0.0, 0.0f, 0.0f), vec2(0.0f, 0.0f), vec4(1.0f, 1.0f, 1.0f, 1.0f) },// Top Left
+
+			{ vec3(0.0f, height, 0.0f), vec2(0.0f, 1.0f), vec4(1.0f, 1.0f, 1.0f, 1.0f) },// Bottom Left
+
+			{ vec3(width, height, 0.0f), vec2(1.0f, 1.0f), vec4(1.0f, 1.0f, 1.0f, 1.0f) }, //Bottom Right
+
+			{ vec3(width, 0.0f, 0.0f), vec2(1.0f, 0.0f), vec4(1.0f, 1.0f, 1.0f, 1.0f) }// Top Right
+
+	};
+
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+	//Create buffer
+	glGenBuffers(1, &triangleVBO);
+	// Make the new VBO active
+	glBindBuffer(GL_ARRAY_BUFFER, triangleVBO);
+	//Copy Vertex Data to VBO
+	glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(Vertex), vertData, GL_STATIC_DRAW);
+
+	//create buffer
+	glGenBuffers(1, &triangleEBO);
+	//Make the EBO active
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, triangleEBO);
+	//Copy Index data to the EBO
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(int), indices, GL_STATIC_DRAW);
+
+	//Tell the shader that 0 is the position element
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), NULL);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void**)sizeof(vec3));
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void**)(sizeof(vec3) + sizeof(vec2)));
+}
+
 void initGeometry()
 {
     glGenVertexArrays( 1, &VAO );
     glBindVertexArray( VAO );
-    
 	//Create buffer
 	glGenBuffers(1, &triangleVBO);
 	// Make the new VBO active
@@ -177,16 +234,23 @@ void initGeometry()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, triangleEBO);
     //Copy Index data to the EBO
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6*sizeof(int), indices, GL_STATIC_DRAW);
-    
 
+	//Tell the shader that 0 is the position element
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), NULL);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void**)sizeof(vec3));
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void**)(sizeof(vec3) + sizeof(vec2)));
 }
 
 //Function to update the game state
 void update()
 {
-	projMatrix = glm::perspective(45.0f, (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
+	//projMatrix = glm::perspective(45.0f, (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
 	viewMatrix = glm::lookAt(vec3(0.0f, 0.0f, 2.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f));
-    worldMatrix= glm::translate(mat4(1.0f), vec3(0.0f,0.0f,0.0f));
+	projMatrix = glm::ortho(0.0f, (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT,0.0f,0.1f, 100.0f);
+    worldMatrix= glm::translate(mat4(1.0f), vec3(100.0f,0.0f,-1.0f));
 }
 
 //Function to initialise OpenGL
@@ -226,6 +290,7 @@ void initOpenGL()
     //Turn on best perspective correction
     glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
 
+	//Turn on Alpha Blending
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
@@ -253,33 +318,18 @@ void render()
     //clear the colour and depth buffer
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     
-    //Make the new VBO active. Repeat here as a sanity check( may have changed since initialisation)
-	glBindBuffer(GL_ARRAY_BUFFER, triangleVBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, triangleEBO);
     glBindVertexArray( VAO );
-	//Tell the shader that 0 is the position element
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), NULL);
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void**)sizeof(vec3));
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void**)(sizeof(vec3) + sizeof(vec2)));
 
     glUseProgram(shaderProgram);
 	GLint MVPLocation = glGetUniformLocation(shaderProgram, "MVP");
 	mat4 MVP = projMatrix*viewMatrix*worldMatrix;
 	glUniformMatrix4fv(MVPLocation, 1, GL_FALSE, glm::value_ptr(MVP));
-
 	
 	GLint texture0Location = glGetUniformLocation(shaderProgram, "texture0");
-	
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, nameTexture);
 	glUniform1i(texture0Location, 0);
-
-
-
 
     //Actually draw the triangle, giving the number of vertices provided
 	glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,0);
@@ -335,10 +385,11 @@ int main(int argc, char * arg[])
     //Set our viewport
 	setViewport(WINDOW_WIDTH, WINDOW_HEIGHT);
     
-	initGeometry();
+	//initGeometry();
     createShader();
-	//createTexture();
+	createTexture();
 	createNameTexture();
+	initGeometryFromTexture(nameTexture);
     GLenum error;
     do{
         error=glGetError();
