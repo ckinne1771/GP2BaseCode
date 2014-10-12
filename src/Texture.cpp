@@ -1,34 +1,56 @@
 #include "Texture.h"
+#include <math.h>
+
+void saveTextureToFile(const std::string filename, GLuint textureID)
+{
+	int width, height, internalFormat;
+	int numBytes = 0;
+	int pitch = 0;
+	char * pixelData = NULL;
+	SDL_Surface * saveSurface = NULL;
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D,textureID);
+	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width);
+	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &height);
+	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_COMPONENTS, &internalFormat);
+
+	if (internalFormat == GL_RGB)
+	{
+		pixelData = new char[width*height * 3];
+		pitch = 3 * width;
+	}
+	else if (internalFormat == GL_RGBA || internalFormat == GL_BGRA)
+	{
+		pixelData = new char[width*height * 4];
+		pitch = 4 * width;
+	}
+
+	glGetTexImage(GL_TEXTURE_2D, 0, internalFormat, GL_UNSIGNED_BYTE, pixelData);
+
+	saveSurface=SDL_CreateRGBSurfaceFrom(pixelData, width, height, 32, pitch,
+		0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
+
+	if (saveSurface)
+	{
+		IMG_SavePNG(saveSurface, filename.c_str());
+		SDL_FreeSurface(saveSurface);
+	}
+	if (pixelData)
+	{
+		delete[] pixelData;
+		pixelData = NULL;
+	}
+}
 
 //Will clean up the surface as well;
 GLuint convertSDLSurfaceToGLTexture(SDL_Surface * surface)
 {
 	GLuint textureID = 0;
-	// get the number of channels in the SDL surface
-	GLint  nOfColors = surface->format->BytesPerPixel;
-	GLenum textureFormat = GL_RGB;
-	if (nOfColors == 4)     // contains an alpha channel
-	{
-		if (surface->format->Rmask == 0x000000ff)
-			textureFormat = GL_RGBA;
-		else
-			textureFormat = GL_BGRA;
-	}
-	else if (nOfColors == 3)     // no alpha channel
-	{
-		if (surface->format->Rmask == 0x000000ff)
-			textureFormat = GL_RGB;
-		else
-			textureFormat = GL_BGR;
-	}
-	else {
-		std::cout << "warning: the image is not truecolor..  this will probably break";
-		// this error should not go unhandled
-	}
 
 	glGenTextures(1, &textureID);
 	glBindTexture(GL_TEXTURE_2D, textureID);
-	glTexImage2D(GL_TEXTURE_2D, 0, textureFormat, surface->w, surface->h, 0, textureFormat,
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_RGBA,
 		GL_UNSIGNED_BYTE, surface->pixels);
 
 	SDL_FreeSurface(surface);
@@ -70,13 +92,6 @@ GLuint loadTextureFromFont(const std::string& fontFilename, int pointSize, const
 	}
 
 	SDL_Surface *textSurface = TTF_RenderText_Blended(font, text.c_str(), { 255, 255, 255 });
-
-	IMG_SavePNG(textSurface, "test.png");
-	if (!textSurface)
-	{
-		std::cout << "Can't Render Font to surface " << TTF_GetError();
-	}
-	
 	textureID=convertSDLSurfaceToGLTexture(textSurface);
 
 	TTF_CloseFont(font);
@@ -85,7 +100,6 @@ GLuint loadTextureFromFont(const std::string& fontFilename, int pointSize, const
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glGenerateMipmap(GL_TEXTURE_2D);
 
 	return textureID;
 }

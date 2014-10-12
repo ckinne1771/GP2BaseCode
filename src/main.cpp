@@ -225,6 +225,9 @@ void initOpenGL()
     
     //Turn on best perspective correction
     glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 //Function to set/reset viewport
@@ -246,7 +249,7 @@ void render()
 {
     //old imediate mode!
     //Set the clear colour(background)
-    glClearColor( 1.0f, 0.0f, 0.0f, 0.0f );
+    glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
     //clear the colour and depth buffer
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     
@@ -272,12 +275,11 @@ void render()
 	
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture);
+	glBindTexture(GL_TEXTURE_2D, nameTexture);
 	glUniform1i(texture0Location, 0);
 
 
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_ALPHA);
+
 
     //Actually draw the triangle, giving the number of vertices provided
 	glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,0);
@@ -335,7 +337,7 @@ int main(int argc, char * arg[])
     
 	initGeometry();
     createShader();
-	createTexture();
+	//createTexture();
 	createNameTexture();
     GLenum error;
     do{
@@ -354,6 +356,13 @@ int main(int argc, char * arg[])
                 //set our boolean which controls the loop to false
                 running = false;
             }
+			if (event.type == SDL_KEYUP)
+			{
+				if (event.key.keysym.sym == SDLK_F1)
+				{
+					saveTextureToFile("test.png", nameTexture);
+				}
+			}
         }
 		update();
         //render
