@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D372632619EC163300C7E996 /* texture.png in Resources */ = {isa = PBXBuildFile; fileRef = D372632519EC163300C7E996 /* texture.png */; };
 		D3737B2F196854B6001A741F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3737B2D196854B6001A741F /* InfoPlist.strings */; };
 		D3737B35196854B6001A741F /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D3737B33196854B6001A741F /* Credits.rtf */; };
 		D3737B3D196854B6001A741F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3737B3C196854B6001A741F /* Images.xcassets */; };
@@ -40,6 +41,7 @@
 
 /* Begin PBXFileReference section */
 		D34CC01A19D8212400204C3A /* Vertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Vertex.h; path = ../headers/Vertex.h; sourceTree = "<group>"; };
+		D372632519EC163300C7E996 /* texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = texture.png; path = "../../../../Google Drive/Uni/Teaching/Session 14-15/GP2/Labs/Lab 4/texture.png"; sourceTree = "<group>"; };
 		D3737B21196854B6001A741F /* GP2BaseCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GP2BaseCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3737B2C196854B6001A741F /* GP2BaseCode-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GP2BaseCode-Info.plist"; sourceTree = "<group>"; };
 		D3737B2E196854B6001A741F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 		D3737B2A196854B6001A741F /* GP2BaseCode */ = {
 			isa = PBXGroup;
 			children = (
+				D372632519EC163300C7E996 /* texture.png */,
 				D383D25E19E5BEC2009A30C0 /* test.png */,
 				D383D25619E5BEB2009A30C0 /* textureFS.glsl */,
 				D383D25719E5BEB2009A30C0 /* textureVS.glsl */,
@@ -237,6 +240,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D372632619EC163300C7E996 /* texture.png in Resources */,
 				D3CACF9719DC857F003A75EA /* simpleFS.glsl in Resources */,
 				D383D25F19E5BEC2009A30C0 /* test.png in Resources */,
 				D3934F9219DC8FF50015CCBF /* simpleVS.glsl in Resources */,

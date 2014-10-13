@@ -119,7 +119,7 @@ void CleanUp()
 
 void createTexture()
 {
-	std::string texturePath = ASSET_PATH + TEXTURE_PATH + "/test.png";
+	std::string texturePath = ASSET_PATH + TEXTURE_PATH + "/texture.png";
 	texture = loadTextureFromFile(texturePath);
 }
 

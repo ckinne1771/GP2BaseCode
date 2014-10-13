@@ -21,6 +21,5 @@ struct Vertex
 	vec4 colours;
 };
 
-#define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
 #endif
