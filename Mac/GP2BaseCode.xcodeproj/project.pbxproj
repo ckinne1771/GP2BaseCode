@@ -21,6 +21,10 @@
 		D383D25F19E5BEC2009A30C0 /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = D383D25E19E5BEC2009A30C0 /* test.png */; };
 		D383D26119E5BEE7009A30C0 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D383D26019E5BEE7009A30C0 /* Texture.cpp */; };
 		D383D26419E5BF1F009A30C0 /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D383D26319E5BF1F009A30C0 /* SDL2_image.framework */; };
+		D386D4F319EC810700998AD5 /* SDL2_ttf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D386D4F219EC810700998AD5 /* SDL2_ttf.framework */; };
+		D386D4F919EC857F00998AD5 /* vertexColourTextureFS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D386D4F719EC857F00998AD5 /* vertexColourTextureFS.glsl */; };
+		D386D4FA19EC857F00998AD5 /* vertexColourTextureVS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D386D4F819EC857F00998AD5 /* vertexColourTextureVS.glsl */; };
+		D386D4FB19EC862500998AD5 /* OratorStd.otf in Resources */ = {isa = PBXBuildFile; fileRef = D386D4F619EC856C00998AD5 /* OratorStd.otf */; };
 		D3934F9219DC8FF50015CCBF /* simpleVS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D3934F9119DC8FF50015CCBF /* simpleVS.glsl */; };
 		D3CAAEEB198FFE3B006E620D /* libGLEW.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3CAAEEA198FFE3B006E620D /* libGLEW.a */; };
 		D3CACF9319DC6CA5003A75EA /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3CACF9219DC6CA5003A75EA /* Shader.cpp */; };
@@ -58,6 +62,10 @@
 		D383D26019E5BEE7009A30C0 /* Texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Texture.cpp; path = ../src/Texture.cpp; sourceTree = "<group>"; };
 		D383D26219E5BEEE009A30C0 /* Texture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Texture.h; path = ../headers/Texture.h; sourceTree = "<group>"; };
 		D383D26319E5BF1F009A30C0 /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_image.framework; path = ../../../../../Library/Frameworks/SDL2_image.framework; sourceTree = "<group>"; };
+		D386D4F219EC810700998AD5 /* SDL2_ttf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_ttf.framework; path = ../../../../../Library/Frameworks/SDL2_ttf.framework; sourceTree = "<group>"; };
+		D386D4F619EC856C00998AD5 /* OratorStd.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = OratorStd.otf; path = ../../assets/fonts/OratorStd.otf; sourceTree = "<group>"; };
+		D386D4F719EC857F00998AD5 /* vertexColourTextureFS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = vertexColourTextureFS.glsl; path = ../../assets/shaders/vertexColourTextureFS.glsl; sourceTree = "<group>"; };
+		D386D4F819EC857F00998AD5 /* vertexColourTextureVS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = vertexColourTextureVS.glsl; path = ../../assets/shaders/vertexColourTextureVS.glsl; sourceTree = "<group>"; };
 		D3934F9119DC8FF50015CCBF /* simpleVS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = simpleVS.glsl; path = ../../assets/shaders/simpleVS.glsl; sourceTree = "<group>"; };
 		D3BAC4DD19E1E78F004E734C /* Shader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Shader.h; path = ../headers/Shader.h; sourceTree = "<group>"; };
 		D3CAAEEA198FFE3B006E620D /* libGLEW.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGLEW.a; path = "../../../Dev/glew-1.10.0/lib/libGLEW.a"; sourceTree = "<group>"; };
@@ -72,6 +80,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3CACF9519DC6CF6003A75EA /* CoreFoundation.framework in Frameworks */,
+				D386D4F319EC810700998AD5 /* SDL2_ttf.framework in Frameworks */,
 				D3CAAEEB198FFE3B006E620D /* libGLEW.a in Frameworks */,
 				D3737B6119695F55001A741F /* SDL2.framework in Frameworks */,
 				D383D26419E5BF1F009A30C0 /* SDL2_image.framework in Frameworks */,
@@ -117,6 +126,7 @@
 		D3737B23196854B6001A741F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D386D4F219EC810700998AD5 /* SDL2_ttf.framework */,
 				D383D26319E5BF1F009A30C0 /* SDL2_image.framework */,
 				D3CACF9419DC6CF6003A75EA /* CoreFoundation.framework */,
 				D3CAAEEA198FFE3B006E620D /* libGLEW.a */,
@@ -138,6 +148,9 @@
 		D3737B2A196854B6001A741F /* GP2BaseCode */ = {
 			isa = PBXGroup;
 			children = (
+				D386D4F619EC856C00998AD5 /* OratorStd.otf */,
+				D386D4F719EC857F00998AD5 /* vertexColourTextureFS.glsl */,
+				D386D4F819EC857F00998AD5 /* vertexColourTextureVS.glsl */,
 				D383D25E19E5BEC2009A30C0 /* test.png */,
 				D383D25619E5BEB2009A30C0 /* textureFS.glsl */,
 				D383D25719E5BEB2009A30C0 /* textureVS.glsl */,
@@ -237,11 +250,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D386D4FB19EC862500998AD5 /* OratorStd.otf in Resources */,
 				D3CACF9719DC857F003A75EA /* simpleFS.glsl in Resources */,
+				D386D4F919EC857F00998AD5 /* vertexColourTextureFS.glsl in Resources */,
 				D383D25F19E5BEC2009A30C0 /* test.png in Resources */,
 				D3934F9219DC8FF50015CCBF /* simpleVS.glsl in Resources */,
 				D383D25D19E5BEB2009A30C0 /* vertexColourVS.glsl in Resources */,
 				D383D25B19E5BEB2009A30C0 /* textureVS.glsl in Resources */,
+				D386D4FA19EC857F00998AD5 /* vertexColourTextureVS.glsl in Resources */,
 				D3737B2F196854B6001A741F /* InfoPlist.strings in Resources */,
 				D3737B3D196854B6001A741F /* Images.xcassets in Resources */,
 				D383D25A19E5BEB2009A30C0 /* textureFS.glsl in Resources */,

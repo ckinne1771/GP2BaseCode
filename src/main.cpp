@@ -15,6 +15,8 @@ using glm::vec3;
 #include <SDL2/SDL_opengl.h>
 #include <OpenGL/glu.h>
 #include <CoreFoundation/CoreFoundation.h>
+#include <SDL2_ttf/SDL_ttf.h>
+#include <SDL2_image/SDL_image.h>
 #elif WIN32
 #include <SDL.h>
 #include <SDL_opengl.h>
