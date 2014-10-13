@@ -54,19 +54,29 @@ GLuint loadTextureFromFile(const std::string& filename)
 	// get the number of channels in the SDL surface
 	GLint  nOfColors = imageSurface->format->BytesPerPixel;
 	GLenum texture_format = GL_RGB;
+    GLenum internalFormat=GL_RGB8;
 	if (nOfColors == 4)     // contains an alpha channel
 	{
-		if (imageSurface->format->Rmask == 0x000000ff)
+		if (imageSurface->format->Rmask == 0x000000ff){
 			texture_format = GL_RGBA;
-		else
+            internalFormat=GL_RGBA8;
+        }
+		else{
 			texture_format = GL_BGRA;
+            internalFormat=GL_RGBA8;
+        }
 	}
 	else if (nOfColors == 3)     // no alpha channel
 	{
-		if (imageSurface->format->Rmask == 0x000000ff)
-			texture_format = GL_RGBA;
+		if (imageSurface->format->Rmask == 0x000000ff){
+			texture_format = GL_RGB;
+            internalFormat=GL_RGB8;
+        }
 		else
+        {
 			texture_format = GL_BGR;
+            internalFormat=GL_RGB8;
+        }
 	}
 	else {
 		std::cout << "warning: the image is not truecolor..  this will probably break";
@@ -75,7 +85,7 @@ GLuint loadTextureFromFile(const std::string& filename)
 	glGenTextures(1, &textureID);
     glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, textureID);
-	glTexImage2D(GL_TEXTURE_2D, 0, texture_format, imageSurface->w, imageSurface->h, 0, texture_format,
+	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, imageSurface->w, imageSurface->h, 0, texture_format,
 		GL_UNSIGNED_BYTE, imageSurface->pixels);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
