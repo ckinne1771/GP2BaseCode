@@ -1,5 +1,46 @@
 #include "Texture.h"
 
+void saveTextureToFile(const std::string filename, GLuint textureID)
+{
+	int width, height, internalFormat;
+	int pitch = 0;
+	char * pixelData = NULL;
+	SDL_Surface * saveSurface = NULL;
+    
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D,textureID);
+	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width);
+	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &height);
+	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_COMPONENTS, &internalFormat);
+    
+	if (internalFormat == GL_RGB)
+	{
+		pixelData = new char[width*height * 3];
+		pitch = 3 * width;
+	}
+	else if (internalFormat == GL_RGBA || internalFormat == GL_BGRA)
+	{
+		pixelData = new char[width*height * 4];
+		pitch = 4 * width;
+	}
+    
+	glGetTexImage(GL_TEXTURE_2D, 0, internalFormat, GL_UNSIGNED_BYTE, pixelData);
+    
+	saveSurface=SDL_CreateRGBSurfaceFrom(pixelData, width, height, 32, pitch,
+                                         0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
+    
+	if (saveSurface)
+	{
+		IMG_SavePNG(saveSurface, filename.c_str());
+		SDL_FreeSurface(saveSurface);
+	}
+	if (pixelData)
+	{
+		delete[] pixelData;
+		pixelData = NULL;
+	}
+}
+
 GLuint loadTextureFromFile(const std::string& filename)
 {
 	GLuint textureID = 0;
@@ -31,17 +72,15 @@ GLuint loadTextureFromFile(const std::string& filename)
 		std::cout << "warning: the image is not truecolor..  this will probably break";
 		// this error should not go unhandled
 	}
-	
 	glGenTextures(1, &textureID);
+    glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, textureID);
 	glTexImage2D(GL_TEXTURE_2D, 0, texture_format, imageSurface->w, imageSurface->h, 0, texture_format,
 		GL_UNSIGNED_BYTE, imageSurface->pixels);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
+    GLenum glErr = glGetError();
 	//glGenerateMipmap(GL_TEXTURE_2D);
-
+    
 	SDL_FreeSurface(imageSurface);
-
+    saveTextureToFile("test.png",textureID);
 	return textureID;
 }

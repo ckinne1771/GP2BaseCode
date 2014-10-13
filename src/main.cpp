@@ -266,7 +266,7 @@ void render()
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glUniform1i(texture1Location, 0);
-    GLenum glErr = glGetError();
+    
 
 
 
@@ -339,6 +339,13 @@ int main(int argc, char * arg[])
             if (event.type == SDL_QUIT || event.type == SDL_WINDOWEVENT_CLOSE) {
                 //set our boolean which controls the loop to false
                 running = false;
+            }
+            if (event.type==SDL_KEYUP)
+            {
+                if (event.key.keysym.sym==SDLK_F1)
+                {
+                    saveTextureToFile("screencap.png", texture);
+                }
             }
         }
 		update();

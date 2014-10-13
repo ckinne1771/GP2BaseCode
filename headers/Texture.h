@@ -16,7 +16,7 @@
 #include <iostream>
 #include <string>
 
-
+void saveTextureToFile(const std::string filename, GLuint textureID);
 GLuint loadTextureFromFile(const std::string& filename);
 
 #endif
