@@ -15,12 +15,12 @@ void saveTextureToFile(const std::string filename, GLuint textureID)
 	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &height);
 	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_COMPONENTS, &internalFormat);
 
-	if (internalFormat == GL_RGB)
+	if (internalFormat == GL_RGB || internalFormat==GL_RGB8)
 	{
 		pixelData = new char[width*height * 3];
 		pitch = 3 * width;
 	}
-	else if (internalFormat == GL_RGBA || internalFormat == GL_BGRA)
+	else if (internalFormat == GL_RGBA || internalFormat == GL_BGRA || internalFormat == GL_RGBA8)
 	{
 		pixelData = new char[width*height * 4];
 		pitch = 4 * width;
@@ -28,6 +28,7 @@ void saveTextureToFile(const std::string filename, GLuint textureID)
 
 	glGetTexImage(GL_TEXTURE_2D, 0, internalFormat, GL_UNSIGNED_BYTE, pixelData);
 
+	//This needs some work
 	saveSurface=SDL_CreateRGBSurfaceFrom(pixelData, width, height, 32, pitch,
 		0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
 
