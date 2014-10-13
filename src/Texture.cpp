@@ -27,7 +27,7 @@ void saveTextureToFile(const std::string filename, GLuint textureID)
 	glGetTexImage(GL_TEXTURE_2D, 0, internalFormat, GL_UNSIGNED_BYTE, pixelData);
     
 	saveSurface=SDL_CreateRGBSurfaceFrom(pixelData, width, height, 32, pitch,
-                                         0xff000000, 0x00ff0000, 0x0000ff00, 0x000000ff);
+                                         0, 0, 0, 0x000000ff);
     
 	if (saveSurface)
 	{
@@ -84,6 +84,5 @@ GLuint loadTextureFromFile(const std::string& filename)
 	glGenerateMipmap(GL_TEXTURE_2D);
     
 	SDL_FreeSurface(imageSurface);
-    saveTextureToFile("test.png",textureID);
 	return textureID;
 }
