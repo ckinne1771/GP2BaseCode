@@ -60,7 +60,7 @@ mat4 worldMatrix;
 
 //Texture
 GLuint texture=0;
-GLuint nameTexture = 0;
+GLuint fontTexture = 0;
 
 /*
 Vertex triangleData[] = {
@@ -124,7 +124,7 @@ void CleanUp()
 {
 	// clean up, reverse order!!!
 	glDeleteTextures(1, &texture);
-	glDeleteTextures(1, &nameTexture);
+	glDeleteTextures(1, &fontTexture);
     glDeleteProgram(shaderProgram);
 	glDeleteBuffers(1, &triangleVBO);
     glDeleteBuffers(1, &triangleEBO);
@@ -139,7 +139,7 @@ void CleanUp()
 void createNameTexture()
 {
 	std::string fontPath = ASSET_PATH + FONT_PATH + "OratorStd.otf";
-	nameTexture = loadTextureFromFont(fontPath, 64, "Hello");
+	fontTexture = loadTextureFromFont(fontPath, 64, "Hello");
 }
 
 void createTexture()
@@ -330,7 +330,7 @@ void render()
 	GLint texture0Location = glGetUniformLocation(shaderProgram, "texture0");
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, nameTexture);
+	glBindTexture(GL_TEXTURE_2D, fontTexture);
 	glUniform1i(texture0Location, 0);
 
     //Actually draw the triangle, giving the number of vertices provided
@@ -391,7 +391,7 @@ int main(int argc, char * arg[])
     createShader();
 	createTexture();
 	createNameTexture();
-	initGeometryFromTexture(nameTexture);
+	initGeometryFromTexture(fontTexture);
     GLenum error;
     do{
         error=glGetError();
