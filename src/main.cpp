@@ -330,7 +330,7 @@ void render()
 	GLint texture0Location = glGetUniformLocation(shaderProgram, "texture0");
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture);
+	glBindTexture(GL_TEXTURE_2D, nameTexture);
 	glUniform1i(texture0Location, 0);
 
     //Actually draw the triangle, giving the number of vertices provided
@@ -378,7 +378,7 @@ int main(int argc, char * arg[])
 	}
 
 	if (TTF_Init() == -1) {
-		std::cout << "TTF_Init: " << TTF_GetError();
+		std::cout << "ERROR TTF_Init: " << TTF_GetError();
 	}
     
 	InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, false);
@@ -409,13 +409,6 @@ int main(int argc, char * arg[])
                 //set our boolean which controls the loop to false
                 running = false;
             }
-			if (event.type == SDL_KEYUP)
-			{
-				if (event.key.keysym.sym == SDLK_F1)
-				{
-					saveTextureToFile("test.png", nameTexture);
-				}
-			}
         }
 		update();
         //render
