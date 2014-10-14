@@ -26,18 +26,18 @@ using glm::vec3;
 #endif
 
 #ifdef _DEBUG && WIN32
-const std::string ASSET_PATH = "../assets";
-const std::string SHADER_PATH = "/shaders";
-const std::string TEXTURE_PATH = "/textures";
-const std::string FONT_PATH = "/fonts";
+const std::string ASSET_PATH = "../assets/";
+const std::string SHADER_PATH = "shaders/";
+const std::string TEXTURE_PATH = "textures/";
+const std::string FONT_PATH = "fonts/";
 #elif __APPLE__
 const std::string ASSET_PATH;
 const std::string SHADER_PATH;
 const std::string TEXTURE_PATH;
 const std::string FONT_PATH;
 #else
-const std::string ASSET_PATH="/assets";
-const std::string SHADER_PATH="/shaders";
+const std::string ASSET_PATH="/assets/";
+const std::string SHADER_PATH="shaders/";
 #endif
 
 //Our headers
@@ -138,24 +138,24 @@ void CleanUp()
 
 void createNameTexture()
 {
-	std::string fontPath = ASSET_PATH + FONT_PATH + "/OratorStd.otf";
+	std::string fontPath = ASSET_PATH + FONT_PATH + "OratorStd.otf";
 	nameTexture = loadTextureFromFont(fontPath, 64, "Hello");
 }
 
 void createTexture()
 {
-	std::string texturePath = ASSET_PATH + TEXTURE_PATH + "/test.png";
+	std::string texturePath = ASSET_PATH + TEXTURE_PATH + "test.png";
 	texture = loadTextureFromFile(texturePath);
 }
 
 void createShader()
 {
     GLuint vertexShaderProgram=0;
-	std::string vsPath = ASSET_PATH + SHADER_PATH+"/vertexColourTextureVS.glsl";
+	std::string vsPath = ASSET_PATH + SHADER_PATH+"vertexColourTextureVS.glsl";
 	vertexShaderProgram = loadShaderFromFile(vsPath, VERTEX_SHADER);
     
     GLuint fragmentShaderProgram=0;
-	std::string fsPath = ASSET_PATH + SHADER_PATH + "/vertexColourTextureFS.glsl";
+	std::string fsPath = ASSET_PATH + SHADER_PATH + "vertexColourTextureFS.glsl";
 	fragmentShaderProgram = loadShaderFromFile(fsPath, FRAGMENT_SHADER);
     
     shaderProgram = glCreateProgram();
@@ -252,7 +252,7 @@ void update()
 	//projMatrix = glm::perspective(45.0f, (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
 	viewMatrix = glm::lookAt(vec3(0.0f, 0.0f, 2.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f));
 	projMatrix = glm::ortho(0.0f, (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT,0.0f,0.1f, 100.0f);
-    worldMatrix= glm::translate(mat4(1.0f), vec3(100.0f,0.0f,-1.0f));
+    worldMatrix= glm::translate(mat4(1.0f), vec3(100.0f,0.0f,-10.0f));
 }
 
 //Function to initialise OpenGL
@@ -330,7 +330,7 @@ void render()
 	GLint texture0Location = glGetUniformLocation(shaderProgram, "texture0");
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, nameTexture);
+	glBindTexture(GL_TEXTURE_2D, texture);
 	glUniform1i(texture0Location, 0);
 
     //Actually draw the triangle, giving the number of vertices provided
