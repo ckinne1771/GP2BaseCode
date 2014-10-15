@@ -50,6 +50,8 @@ GLuint triangleVBO;
 GLuint triangleEBO;
 GLuint VAO;
 
+
+
 //Shader Program
 GLuint shaderProgram=0;
 
@@ -252,7 +254,7 @@ void update()
 	//projMatrix = glm::perspective(45.0f, (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
 	viewMatrix = glm::lookAt(vec3(0.0f, 0.0f, 2.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f));
 	projMatrix = glm::ortho(0.0f, (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT,0.0f,0.1f, 100.0f);
-    worldMatrix= glm::translate(mat4(1.0f), vec3(100.0f,0.0f,-10.0f));
+    worldMatrix= glm::translate(mat4(1.0f), vec3(100.0f,200.0f,-10.0f));
 }
 
 //Function to initialise OpenGL
@@ -330,7 +332,7 @@ void render()
 	GLint texture0Location = glGetUniformLocation(shaderProgram, "texture0");
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture);
+	glBindTexture(GL_TEXTURE_2D, nameTexture);
 	glUniform1i(texture0Location, 0);
 
     //Actually draw the triangle, giving the number of vertices provided
