@@ -1,48 +1,4 @@
 #include "Texture.h"
-#include <math.h>
-
-void saveTextureToFile(const std::string filename, GLuint textureID)
-{
-	int width, height, internalFormat;
-	int numBytes = 0;
-	int pitch = 0;
-	char * pixelData = NULL;
-	SDL_Surface * saveSurface = NULL;
-
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D,textureID);
-	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width);
-	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &height);
-	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_COMPONENTS, &internalFormat);
-
-	if (internalFormat == GL_RGB || internalFormat==GL_RGB8)
-	{
-		pixelData = new char[width*height * 3];
-		pitch = 3 * width;
-	}
-	else if (internalFormat == GL_RGBA || internalFormat == GL_BGRA || internalFormat == GL_RGBA8)
-	{
-		pixelData = new char[width*height * 4];
-		pitch = 4 * width;
-	}
-
-	glGetTexImage(GL_TEXTURE_2D, 0, internalFormat, GL_UNSIGNED_BYTE, pixelData);
-
-	//This needs some work
-	saveSurface=SDL_CreateRGBSurfaceFrom(pixelData, width, height, 32, pitch,
-		0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
-
-	if (saveSurface)
-	{
-		IMG_SavePNG(saveSurface, filename.c_str());
-		SDL_FreeSurface(saveSurface);
-	}
-	if (pixelData)
-	{
-		delete[] pixelData;
-		pixelData = NULL;
-	}
-}
 
 //Will clean up the surface as well;
 GLuint convertSDLSurfaceToGLTexture(SDL_Surface * surface)
@@ -119,14 +75,15 @@ GLuint loadTextureFromFont(const std::string& fontFilename, int pointSize, const
 	}
 
 	SDL_Surface *textSurface = TTF_RenderText_Blended(font, text.c_str(), { 255, 255, 255 });
-	textureID=convertSDLSurfaceToGLTexture(textSurface);
 
-	TTF_CloseFont(font);
+	textureID=convertSDLSurfaceToGLTexture(textSurface);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+	TTF_CloseFont(font);
 
 	return textureID;
 }

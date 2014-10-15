@@ -18,7 +18,7 @@
 #include <iostream>
 #include <string>
 
-void saveTextureToFile(const std::string filename, GLuint textureID);
+GLuint convertSDLSurfaceToGLTexture(SDL_Surface * surface);
 
 GLuint loadTextureFromFile(const std::string& filename);
 //this shouldn't be used for realtime use, build on startup!
