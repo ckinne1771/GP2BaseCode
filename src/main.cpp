@@ -1,6 +1,7 @@
 //Properties -> Debugging -> Environment -> "PATH=F:\MATLAB R2010b\bin\win32"
 
 #include <iostream>
+#include <string>
 #include <GL/glew.h>
 //maths headers
 #include <glm/glm.hpp>
@@ -87,6 +88,30 @@ const int WINDOW_HEIGHT = 480;
 
 bool running = true;
 
+const std::string vsShaderSource="#version 150\n"
+"in vec3 vertexPosition;\n"
+"in vec2 vertexTexCoords;\n"
+"in vec4 vertexColour;\n"
+"out vec4 vertexColourOut;\n"
+"out vec2 vertexTexCoordsOut;\n"
+"uniform mat4 MVP;\n"
+"void main()\n"
+"{\n"
+"vertexTexCoordsOut = vertexTexCoords;\n"
+"vertexColourOut = vertexColour;\n"
+"gl_Position = MVP * vec4(vertexPosition, 1.0);\n"
+"}";
+
+const std::string fsShaderSource="#version 150\n"
+"out vec4 FragColor;\n"
+"in vec2 vertexTexCoordsOut;\n"
+"in vec4 vertexColourOut;\n"
+"uniform sampler2D texture0;\n"
+"void main()\n"
+"{\n"
+"FragColor = texture(texture0, vertexTexCoordsOut)*vertexColourOut;\n"
+"}";
+
 //Global functions
 void InitWindow(int width, int height, bool fullscreen)
 {
@@ -140,11 +165,13 @@ void create2DScene()
     
     GLuint vertexShaderProgram=0;
 	std::string vsPath = ASSET_PATH + SHADER_PATH+"vertexColourTextureVS.glsl";
-	vertexShaderProgram = loadShaderFromFile(vsPath, VERTEX_SHADER);
+	//vertexShaderProgram = loadShaderFromFile(vsPath, VERTEX_SHADER);
+    vertexShaderProgram=loadShaderFromMemory(vsShaderSource.c_str(), VERTEX_SHADER);
     
     GLuint fragmentShaderProgram=0;
 	std::string fsPath = ASSET_PATH + SHADER_PATH + "vertexColourTextureFS.glsl";
-	fragmentShaderProgram = loadShaderFromFile(fsPath, FRAGMENT_SHADER);
+    fragmentShaderProgram=loadShaderFromMemory(fsShaderSource.c_str(), FRAGMENT_SHADER);
+	//fragmentShaderProgram = loadShaderFromFile(fsPath, FRAGMENT_SHADER);
     
     shaderProgramUI = glCreateProgram();
 	glAttachShader(shaderProgramUI, vertexShaderProgram);
