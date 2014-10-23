@@ -26,6 +26,7 @@
 		D386D4FA19EC857F00998AD5 /* vertexColourTextureVS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D386D4F819EC857F00998AD5 /* vertexColourTextureVS.glsl */; };
 		D386D4FB19EC862500998AD5 /* OratorStd.otf in Resources */ = {isa = PBXBuildFile; fileRef = D386D4F619EC856C00998AD5 /* OratorStd.otf */; };
 		D3934F9219DC8FF50015CCBF /* simpleVS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D3934F9119DC8FF50015CCBF /* simpleVS.glsl */; };
+		D393C3C419F64D2200343641 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D393C3C319F64D2200343641 /* Game.cpp */; };
 		D3CAAEEB198FFE3B006E620D /* libGLEW.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3CAAEEA198FFE3B006E620D /* libGLEW.a */; };
 		D3CACF9319DC6CA5003A75EA /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3CACF9219DC6CA5003A75EA /* Shader.cpp */; };
 		D3CACF9519DC6CF6003A75EA /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3CACF9419DC6CF6003A75EA /* CoreFoundation.framework */; };
@@ -67,6 +68,8 @@
 		D386D4F719EC857F00998AD5 /* vertexColourTextureFS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = vertexColourTextureFS.glsl; path = ../../assets/shaders/vertexColourTextureFS.glsl; sourceTree = "<group>"; };
 		D386D4F819EC857F00998AD5 /* vertexColourTextureVS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = vertexColourTextureVS.glsl; path = ../../assets/shaders/vertexColourTextureVS.glsl; sourceTree = "<group>"; };
 		D3934F9119DC8FF50015CCBF /* simpleVS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = simpleVS.glsl; path = ../../assets/shaders/simpleVS.glsl; sourceTree = "<group>"; };
+		D393C3C219F64CFD00343641 /* Game.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Game.h; path = ../headers/Game/Game.h; sourceTree = "<group>"; };
+		D393C3C319F64D2200343641 /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Game.cpp; path = ../src/Game/Game.cpp; sourceTree = "<group>"; };
 		D3BAC4DD19E1E78F004E734C /* Shader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Shader.h; path = ../headers/Shader.h; sourceTree = "<group>"; };
 		D3CAAEEA198FFE3B006E620D /* libGLEW.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGLEW.a; path = "../../../Dev/glew-1.10.0/lib/libGLEW.a"; sourceTree = "<group>"; };
 		D3CACF9219DC6CA5003A75EA /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Shader.cpp; path = ../src/Shader.cpp; sourceTree = "<group>"; };
@@ -102,6 +105,8 @@
 		D3737B18196854B6001A741F = {
 			isa = PBXGroup;
 			children = (
+				D393C3C319F64D2200343641 /* Game.cpp */,
+				D393C3C219F64CFD00343641 /* Game.h */,
 				D3BAC4DD19E1E78F004E734C /* Shader.h */,
 				D3CACF9219DC6CA5003A75EA /* Shader.cpp */,
 				D34CC01A19D8212400204C3A /* Vertex.h */,
@@ -283,6 +288,7 @@
 				D383D26119E5BEE7009A30C0 /* Texture.cpp in Sources */,
 				D3CACF9319DC6CA5003A75EA /* Shader.cpp in Sources */,
 				D3737B591968557F001A741F /* main.cpp in Sources */,
+				D393C3C419F64D2200343641 /* Game.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,7 +417,7 @@
 					"/Users/brian/Dev/glew-1.10.0/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "/Users/brian/Dev/glew-1.10.0/include /Users/brian/Dev/glm";
+				USER_HEADER_SEARCH_PATHS = "/Users/brian/Dev/glew-1.10.0/include /Users/brian/Dev/glm ../../header";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -434,7 +440,7 @@
 					"/Users/brian/Dev/glew-1.10.0/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "/Users/brian/Dev/glew-1.10.0/include /Users/brian/Dev/glm";
+				USER_HEADER_SEARCH_PATHS = "/Users/brian/Dev/glew-1.10.0/include /Users/brian/Dev/glm ../../header";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
