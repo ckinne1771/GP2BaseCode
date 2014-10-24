@@ -35,6 +35,8 @@ using glm::vec3;
 #include <gl/GLU.h>
 #endif
 
+#include "Input.h"
+
 #ifdef _DEBUG && WIN32
 const std::string ASSET_PATH = "../assets/";
 const std::string SHADER_PATH = "shaders/";
@@ -72,8 +74,10 @@ private:
     bool initAudio();
     
     //Messages we are interested in
+    void HandleMessages();
     void OnClose();
     void onResizeWindow(int newWidth,int height);
+    
 protected:
     //Function to set/reset viewport
     void setViewport( int width, int height );

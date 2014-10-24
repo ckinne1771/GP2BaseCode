@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D3591FF619F8F412003558D9 /* Input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3591FF519F8F412003558D9 /* Input.cpp */; };
+		D3591FF919F8F5F0003558D9 /* Keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3591FF819F8F5F0003558D9 /* Keyboard.cpp */; };
+		D3591FFE19F94778003558D9 /* Mouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3591FFD19F94778003558D9 /* Mouse.cpp */; };
 		D3737B2F196854B6001A741F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3737B2D196854B6001A741F /* InfoPlist.strings */; };
 		D3737B35196854B6001A741F /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D3737B33196854B6001A741F /* Credits.rtf */; };
 		D3737B3D196854B6001A741F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3737B3C196854B6001A741F /* Images.xcassets */; };
@@ -45,6 +48,12 @@
 
 /* Begin PBXFileReference section */
 		D34CC01A19D8212400204C3A /* Vertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Vertex.h; path = ../headers/Vertex.h; sourceTree = "<group>"; };
+		D3591FF419F8F3C6003558D9 /* Input.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Input.h; path = ../headers/Input/Input.h; sourceTree = "<group>"; };
+		D3591FF519F8F412003558D9 /* Input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Input.cpp; path = ../src/Input/Input.cpp; sourceTree = "<group>"; };
+		D3591FF719F8F470003558D9 /* Keyboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Keyboard.h; path = ../headers/Input/Keyboard.h; sourceTree = "<group>"; };
+		D3591FF819F8F5F0003558D9 /* Keyboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Keyboard.cpp; path = ../src/Input/Keyboard.cpp; sourceTree = "<group>"; };
+		D3591FFA19F9472D003558D9 /* Mouse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Mouse.h; path = ../headers/Input/Mouse.h; sourceTree = "<group>"; };
+		D3591FFD19F94778003558D9 /* Mouse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Mouse.cpp; path = ../src/Input/Mouse.cpp; sourceTree = "<group>"; };
 		D3737B21196854B6001A741F /* GP2BaseCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GP2BaseCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3737B2C196854B6001A741F /* GP2BaseCode-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GP2BaseCode-Info.plist"; sourceTree = "<group>"; };
 		D3737B2E196854B6001A741F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -105,6 +114,12 @@
 		D3737B18196854B6001A741F = {
 			isa = PBXGroup;
 			children = (
+				D3591FFD19F94778003558D9 /* Mouse.cpp */,
+				D3591FFA19F9472D003558D9 /* Mouse.h */,
+				D3591FF819F8F5F0003558D9 /* Keyboard.cpp */,
+				D3591FF719F8F470003558D9 /* Keyboard.h */,
+				D3591FF519F8F412003558D9 /* Input.cpp */,
+				D3591FF419F8F3C6003558D9 /* Input.h */,
 				D393C3C319F64D2200343641 /* Game.cpp */,
 				D393C3C219F64CFD00343641 /* Game.h */,
 				D3BAC4DD19E1E78F004E734C /* Shader.h */,
@@ -287,8 +302,11 @@
 			files = (
 				D383D26119E5BEE7009A30C0 /* Texture.cpp in Sources */,
 				D3CACF9319DC6CA5003A75EA /* Shader.cpp in Sources */,
+				D3591FF919F8F5F0003558D9 /* Keyboard.cpp in Sources */,
 				D3737B591968557F001A741F /* main.cpp in Sources */,
 				D393C3C419F64D2200343641 /* Game.cpp in Sources */,
+				D3591FFE19F94778003558D9 /* Mouse.cpp in Sources */,
+				D3591FF619F8F412003558D9 /* Input.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
