@@ -2,7 +2,7 @@
 #include <CoreFoundation/CoreFoundation.h>
 #endif
 
-#include "Game.h"
+#include "Game/Game.h"
 
 //Main Method
 int main(int argc, char * arg[])

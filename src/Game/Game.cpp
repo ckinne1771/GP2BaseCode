@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Glasgow Caledonian University. All rights reserved.
 //
 
-#include "Game.h"
+#include "Game/Game.h"
 
 GameApplication::GameApplication()
 {
