@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Glasgow Caledonian University. All rights reserved.
 //
 
-#include "Mouse.h"
+#include "Input/Mouse.h"
 
 Mouse::Mouse()
 {

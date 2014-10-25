@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Glasgow Caledonian University. All rights reserved.
 //
 
-#include "Game.h"
+#include "Game/Game.h"
 
 GameApplication::GameApplication()
 {
@@ -27,6 +27,7 @@ GameApplication::~GameApplication()
 
 void GameApplication::destroy()
 {
+	InputSystem.destroy();
 	SDL_GL_DeleteContext(m_GLContext);
 	SDL_DestroyWindow(m_pWindow);
 	IMG_Quit();
@@ -212,6 +213,25 @@ void GameApplication::HandleMessages()
                 InputSystem.getMouse().setMouseButtonUp(event.button.button);
                 break;
             }
+			case SDL_JOYAXISMOTION:
+			{
+				int joypadIndex = event.jaxis.which;
+				int joypadAxisID = event.jaxis.axis;
+				short axisValue = event.jaxis.value;
+				std::cout << "Joypad ID " << joypadIndex << " Joypad Axis ID " << joypadAxisID << " Value " << axisValue << std::endl;
+				break;
+			}
+			case SDL_JOYBUTTONDOWN:
+			{
+				int joypadIndex = event.jbutton.which;
+				short joypadButtonID = event.jbutton.button;
+				break;
+			}
+			case SDL_JOYHATMOTION:
+			{
+				int joypadIndex = event.jhat.which;
+				short joypdaHatID=event.jhat.value;
+			}
         }
         
     }

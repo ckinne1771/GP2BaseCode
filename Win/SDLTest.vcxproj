@@ -11,11 +11,20 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\Game\Game.cpp" />
+    <ClCompile Include="..\src\Input\Input.cpp" />
+    <ClCompile Include="..\src\Input\Joypad.cpp" />
+    <ClCompile Include="..\src\Input\Keyboard.cpp" />
+    <ClCompile Include="..\src\Input\Mouse.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\Shader.cpp" />
     <ClCompile Include="..\src\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\headers\Input\Input.h" />
+    <ClInclude Include="..\headers\Input\Joypad.h" />
+    <ClInclude Include="..\headers\Input\Keyboard.h" />
+    <ClInclude Include="..\headers\Input\Mouse.h" />
     <ClInclude Include="..\headers\Shader.h" />
     <ClInclude Include="..\headers\Texture.h" />
     <ClInclude Include="..\headers\Vertex.h" />

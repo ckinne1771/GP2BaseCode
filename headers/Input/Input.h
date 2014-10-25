@@ -9,8 +9,17 @@
 #ifndef Input_h
 #define Input_h
 
+#ifdef __APPLE__
+#include <SDL2/SDL.h>
+#elif WIN32
+#include <SDL.h>
+#endif
+
 #include "Keyboard.h"
 #include "Mouse.h"
+#include "Joypad.h"
+
+#include <vector>
 
 class Input
 {
@@ -19,6 +28,7 @@ public:
     ~Input();
     
     bool init();
+	void destroy();
     
     void update();
     
@@ -32,10 +42,18 @@ public:
         return m_Mouse;
     };
     
+	int getNumberofAttachedJoypads()
+	{
+		return m_AttachedJoypads.size();
+	};
+
 private:
     Keyboard m_Keyboard;
     Mouse m_Mouse;
+	std::vector<Joypad> m_AttachedJoypads;
+	std::vector<SDL_Joystick*> m_SDLJoypads;
 };
 
 static Input InputSystem;
+
 #endif

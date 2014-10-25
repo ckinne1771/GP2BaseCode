@@ -35,7 +35,7 @@ using glm::vec3;
 #include <gl/GLU.h>
 #endif
 
-#include "Input.h"
+#include "Input/Input.h"
 
 #ifdef _DEBUG && WIN32
 const std::string ASSET_PATH = "../assets/";
