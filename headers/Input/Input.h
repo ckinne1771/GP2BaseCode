@@ -19,6 +19,7 @@
 #include "Mouse.h"
 #include "Joypad.h"
 
+#include <string>
 #include <vector>
 
 class Input
@@ -27,7 +28,7 @@ public:
     Input();
     ~Input();
     
-    bool init();
+    bool init(const std::string& inputDBFilename);
 	void destroy();
     
     void update();
@@ -47,11 +48,14 @@ public:
 		return m_AttachedJoypads.size();
 	};
 
+	Joypad * getJoypad(int playerIndex)
+	{
+		return m_AttachedJoypads[playerIndex];
+	}
 private:
     Keyboard m_Keyboard;
     Mouse m_Mouse;
-	std::vector<Joypad> m_AttachedJoypads;
-	std::vector<SDL_Joystick*> m_SDLJoypads;
+	std::vector<Joypad*> m_AttachedJoypads;
 };
 
 static Input InputSystem;

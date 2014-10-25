@@ -2,75 +2,83 @@
 #define JOYPAD_H
 
 #include <glm/glm.hpp>
-#include <string>
+
+#ifdef __APPLE__
+#include <SDL2/SDL.h>
+#elif WIN32
+#include <SDL.h>
+#endif
 
 using glm::vec2;
 
-//http://hg.libsdl.org/SDL/file/default/include/SDL_joystick.h
-enum DPadStates
-{
-	CENTRED=0x00,
-	UP_PRESSED = 0x01,
-	DOWN_PRESSED = 0x04,
-	LEFT_PRESSED = 0x03,
-	RIGHT_PRESSED=0x02,
-	RIGHTUP_PRESSED = (RIGHT_PRESSED | UP_PRESSED),
-	RIGHTDOWN_PRESSED = (RIGHT_PRESSED | DOWN_PRESSED),
-	LEFTUP_PRESSED = (LEFT_PRESSED | UP_PRESSED),
-	LEFTDOWN_PRESSED = (LEFT_PRESSED | DOWN_PRESSED)
-};
-
-//This was indetified by manually checking the values via SDL Events
-enum ButtonIDs
-{
-	A_BUTTON=10,
-	X_BUTTON=12,
-	B_BUTTON=11,
-	Y_BUTTON=13,
-	BACK_BUTTON=5,
-	START_BUTTON=4,
-	LEFT_BUMPER_BUTTON=8,
-	RIGHT_BUMPER_BUTTON=9,
-	LEFT_THUMBSTICK_BUTTON=6,
-	RIGHT_THUMBSTICK_BUTTON=7,
-};
-
-enum AxisID
-{
-	LEFT_AXIS = 0,
-	RIGHT_AXIS=1,
-	LEFT_TRIGGER=2,
-	RIGHT_TRIGGER=3,
-
-};
-
+//http://devcry.heiho.net/2014/07/game-on.html
 class Joypad
 {
-public:
-	Joypad();
-	~Joypad();
-
-	void setName(const std::string& name)
+	enum AxisID
 	{
-		m_Name = name;
-	}
-	const std::string& getName()
-	{
-		return m_Name;
+		LEFT_AXIS_HORIZONTAL = 0,
+		LEFT_AXIS_VERTICAL =1,
+		RIGHT_AXIS_VERTICAL = 2,
+		RIGHT_AXIS_HORIZONTAL =3,
+		LEFT_TRIGGER=4,
+		RIGHT_TRIGGER=5,
 	};
+public:
+	Joypad(SDL_GameController * SDLController);
+	~Joypad();
 
 	void setButtonUp(short buttonIndex);
 	void setButtonDown(short buttonIndex);
+
+	void setAxisValue(short axisID, int value);
+
+	bool isButtonDown(short buttonIndex)
+	{
+		return m_ButtonsDown[buttonIndex];
+	};
+
+	bool isButtonUp(short buttonIndex)
+	{
+		return m_ButtonsUp[buttonIndex];
+	};
+
+	vec2& getLeftThumbstick()
+	{
+		return m_LeftThumbstick;
+	};
+
+	vec2& getRightTumbstick()
+	{
+		return m_RightThumbstick;
+	};
+
+	float getLeftTrigger()
+	{
+		return m_LeftTrigger;
+	};
+
+	float getRightTrigger()
+	{
+		return m_RightTrigger;
+	};
+
+public:
+	const static int DeadzoneNeg = -3200;
+	const static int DeadzonePos = 3200;
+	const static int MAX_NO_OF_BUTTONS = 15;
+
 private:
 	//This assumes we are using a 360 Joypad
-	bool m_ButtonsDown[10];
-	bool m_ButtonsUp[10];
-	vec2 m_LeftThumbStickAxis;
-	vec2 m_RightThumbStickAxis;
+	bool m_ButtonsDown[MAX_NO_OF_BUTTONS];
+	bool m_ButtonsUp[MAX_NO_OF_BUTTONS];
+	SDL_GameController *m_SDLController;
+
+	vec2 m_LeftThumbstick;
+	vec2 m_RightThumbstick;
 	float m_LeftTrigger;
 	float m_RightTrigger;
-	DPadStates dpadState;
-	std::string m_Name;
+
+	bool m_InvertAxis;
 };
 
 #endif

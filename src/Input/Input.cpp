@@ -21,32 +21,38 @@ Input::~Input()
 
 void Input::destroy()
 {
-	auto iter = m_SDLJoypads.begin();
-	while (iter != m_SDLJoypads.end())
+	auto iter = m_AttachedJoypads.begin();
+	while (iter != m_AttachedJoypads.end())
 	{
 		if ((*iter))
 		{
-			SDL_JoystickClose((*iter));
+			delete (*iter);
+			iter = m_AttachedJoypads.erase(iter);
 		}
-		iter++;
+		else
+			iter++;
 	}
-	m_SDLJoypads.clear();
+	m_AttachedJoypads.clear();
 }
 
 void Input::update()
 {
 }
 
-bool Input::init()
+bool Input::init(const std::string& inputDBFilename)
 {
-	SDL_JoystickEventState(SDL_ENABLE);
-	//get Number of joysticks
-	for (int i = 0; i < SDL_NumJoysticks(); i++)
+	SDL_GameControllerAddMappingsFromFile(inputDBFilename.c_str());
+	int numOfJoypads = SDL_NumJoysticks();
+	for (int i = 0; i < numOfJoypads; i++)
 	{
-		Joypad pad;
-		pad.setName(SDL_JoystickNameForIndex(i));
-		m_AttachedJoypads.push_back(pad);
-		m_SDLJoypads.push_back(SDL_JoystickOpen(i));
+		//Is the joypad able to use the new controller interface
+		if (SDL_IsGameController(i))
+		{
+			SDL_GameController *controller = SDL_GameControllerOpen(i);
+			Joypad * joypad = new Joypad(controller);
+			m_AttachedJoypads.push_back(joypad);
+		}
 	}
+
     return true;
 }

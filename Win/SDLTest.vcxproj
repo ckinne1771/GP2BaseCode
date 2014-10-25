@@ -21,6 +21,7 @@
     <ClCompile Include="..\src\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\headers\Game\Game.h" />
     <ClInclude Include="..\headers\Input\Input.h" />
     <ClInclude Include="..\headers\Input\Joypad.h" />
     <ClInclude Include="..\headers\Input\Keyboard.h" />

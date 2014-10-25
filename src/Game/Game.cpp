@@ -157,7 +157,8 @@ bool GameApplication::initGraphics()
 
 bool GameApplication::initInput()
 {
-    return InputSystem.init();
+	std::string inputDBFilename = ASSET_PATH + "gamecontrollerdb.txt";
+	return InputSystem.init(inputDBFilename);
 }
 
 bool GameApplication::initAudio()
@@ -213,24 +214,36 @@ void GameApplication::HandleMessages()
                 InputSystem.getMouse().setMouseButtonUp(event.button.button);
                 break;
             }
-			case SDL_JOYAXISMOTION:
+			case SDL_CONTROLLERAXISMOTION:
 			{
-				int joypadIndex = event.jaxis.which;
-				int joypadAxisID = event.jaxis.axis;
-				short axisValue = event.jaxis.value;
-				std::cout << "Joypad ID " << joypadIndex << " Joypad Axis ID " << joypadAxisID << " Value " << axisValue << std::endl;
+				int controllerID=event.caxis.which;
+				short axisID = event.caxis.axis;
+				int axisValue = event.caxis.value;
+				//filter results between -3200 and 3200(are in the ‘dead zone’)
+				if (axisValue > Joypad::DeadzoneNeg && axisValue < Joypad::DeadzonePos)
+				{
+					axisValue = 0;
+				}
+
+				InputSystem.getJoypad(controllerID)->setAxisValue(axisID, axisValue);
+
 				break;
 			}
-			case SDL_JOYBUTTONDOWN:
+			case SDL_CONTROLLERBUTTONDOWN:
 			{
-				int joypadIndex = event.jbutton.which;
-				short joypadButtonID = event.jbutton.button;
+				int controllerID = event.cbutton.which;
+				short buttonID = event.cbutton.button;
+
+				InputSystem.getJoypad(controllerID)->setButtonDown(buttonID);
 				break;
 			}
-			case SDL_JOYHATMOTION:
+			case SDL_CONTROLLERBUTTONUP:
 			{
-				int joypadIndex = event.jhat.which;
-				short joypdaHatID=event.jhat.value;
+				int controllerID = event.cbutton.which;
+				short buttonID = event.cbutton.button;
+
+				InputSystem.getJoypad(controllerID)->setButtonUp(buttonID);
+				break;
 			}
         }
         
