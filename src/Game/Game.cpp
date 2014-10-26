@@ -7,6 +7,7 @@
 //
 
 #include "Game/Game.h"
+#include "Game/GameObject.h"
 
 GameApplication::GameApplication()
 {
@@ -27,6 +28,17 @@ GameApplication::~GameApplication()
 
 void GameApplication::destroy()
 {
+	auto iter = m_SceneGraph.begin();
+	while (iter != m_SceneGraph.end())
+	{
+		if ((*iter))
+		{
+			(*iter)->destroy();
+			iter = m_SceneGraph.erase(iter);
+		}
+		iter++;
+	}
+	m_SceneGraph.clear();
 	InputSystem.destroy();
 	SDL_GL_DeleteContext(m_GLContext);
 	SDL_DestroyWindow(m_pWindow);
@@ -84,10 +96,16 @@ bool GameApplication::init(int argc, char * arg[])
     }
     
     m_isRunning=true;
-    
+
 	Time.start();
     return true;
 }
+
+void GameApplication::createGame()
+{
+
+}
+
 
 bool GameApplication::initWindow(const std::string& title,int width, int height,bool fullscreen)
 {
@@ -255,6 +273,10 @@ void GameApplication::update()
 {
     HandleMessages();
 	Time.update();
+	for (auto iter = m_SceneGraph.begin(); iter != m_SceneGraph.end(); iter++)
+	{
+		(*iter)->update();
+	}
 }
 
 void GameApplication::render()
@@ -265,7 +287,8 @@ void GameApplication::render()
     //clear the colour and depth buffer
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-    
+    //render is a bit more complex
+
     SDL_GL_SwapWindow(m_pWindow);
 }
 

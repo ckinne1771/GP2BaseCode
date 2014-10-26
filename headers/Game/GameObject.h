@@ -46,6 +46,16 @@ public:
 		m_ChildGameObjects.push_back(child);
 	};
 
+	std::vector<GameObject*>::iterator getFirstChild()
+	{
+		return m_ChildGameObjects.begin();
+	};
+
+	std::vector<GameObject*>::iterator getLastChild()
+	{
+		return m_ChildGameObjects.end();
+	};
+
 private:
 	std::vector<Component*> m_Components;
 	std::vector<GameObject*> m_ChildGameObjects;

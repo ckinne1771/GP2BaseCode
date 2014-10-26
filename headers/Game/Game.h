@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include <GL/glew.h>
 //maths headers
 #include <glm/glm.hpp>
@@ -53,6 +54,8 @@ const std::string ASSET_PATH="/assets/";
 const std::string SHADER_PATH="shaders/";
 #endif
 
+class GameObject;
+
 class GameApplication
 {
 public:
@@ -63,6 +66,7 @@ public:
     virtual void update();
     virtual void render();
     virtual void destroy();
+	virtual void createGame();
     
     bool isRunning()
     {
@@ -82,6 +86,7 @@ private:
 protected:
     //Function to set/reset viewport
     void setViewport( int width, int height );
+	std::vector<GameObject*> m_SceneGraph;
 private:
     SDL_Window * m_pWindow;
     //May shift this out to a renderer!
@@ -91,7 +96,6 @@ private:
     int m_WindowWidth;
     int m_WindowHeight;
     bool m_WindowFullscreen;
-    
 };
 
 #endif

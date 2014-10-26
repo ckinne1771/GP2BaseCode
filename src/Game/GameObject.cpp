@@ -1,6 +1,8 @@
 #include "Game\GameObject.h"
 #include "Game\Component.h"
 #include "Game\Transform.h"
+#include "Game\Material.h"
+#include "Game\Mesh.h"
 
 
 GameObject::GameObject()
@@ -82,4 +84,16 @@ void GameObject::destroy()
 		}
 		gameObjectIter++;
 	}
+}
+
+void GameObject::setMaterial(Material * mat)
+{
+	m_Material = mat;
+	addComponent(mat);
+}
+
+void GameObject::setMesh(Mesh * mesh)
+{
+	m_Mesh = mesh;
+	addComponent(mesh);
 }

@@ -1,4 +1,5 @@
 #include "Game\Mesh.h"
+#include "Vertex.h"
 
 Mesh::Mesh()
 {
@@ -23,6 +24,14 @@ void Mesh::createBuffers()
 	glGenBuffers(1, &m_EBO);
 	//Make the EBO active
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
+
+	//Tell the shader that 0 is the position element
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), NULL);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void**)sizeof(vec3));
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void**)(sizeof(vec3) + sizeof(vec2)));
 }
 
 void Mesh::destroy()
@@ -44,4 +53,9 @@ void Mesh::copyIndexData(int count, int stride, void **data)
 	m_IndexCount = count;
 	glBindBuffer(GL_ARRAY_BUFFER, m_EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * stride, data, GL_STATIC_DRAW);
+}
+
+void Mesh::bind()
+{
+	glBindVertexArray(m_VAO);
 }

@@ -16,6 +16,7 @@ public:
 
 	void copyVertexData(int count,int stride, void ** data); 
 	void copyIndexData(int count,int stride, void **data);
+	void bind();
 private:
 	GLuint m_VBO;
 	GLuint m_EBO;

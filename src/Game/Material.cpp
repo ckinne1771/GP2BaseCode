@@ -29,6 +29,10 @@ bool Material::linkShaderProgram(GLuint vertexShader, GLuint fragmentShader)
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
 
+	//We can just in this in the shader! - https://www.opengl.org/wiki/Layout_Qualifier_(GLSL)
+	glBindAttribLocation(m_ShaderProgram, 0, "vertexPosition");
+	glBindAttribLocation(m_ShaderProgram, 1, "vertexTexCoords");
+	glBindAttribLocation(m_ShaderProgram, 2, "vertexColour");
 	return true;
 }
 
