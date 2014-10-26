@@ -4,6 +4,7 @@
 Material::Material()
 {
 	m_ShaderProgram = -1;
+	m_Type = "Material";
 }
 
 Material::~Material()

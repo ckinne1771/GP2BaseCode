@@ -87,6 +87,7 @@ protected:
     //Function to set/reset viewport
     void setViewport( int width, int height );
 	std::vector<GameObject*> m_SceneGraph;
+	GameObject * m_MainCamera;
 private:
     SDL_Window * m_pWindow;
     //May shift this out to a renderer!

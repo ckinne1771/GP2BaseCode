@@ -7,6 +7,7 @@
 class Transform;
 class Material;
 class Mesh;
+class Camera;
 class Component;
 
 class GameObject
@@ -38,6 +39,7 @@ public:
 
 	void setMaterial(Material * mat);
 	void setMesh(Mesh * mesh);
+	void setCamera(Camera *camera);
 
 	void addComponent(Component * component);
 
@@ -62,6 +64,7 @@ private:
 	Transform *m_Transform;
 	Material * m_Material;
 	Mesh *m_Mesh;
+	Camera *m_Camera;
 
 };
 #endif

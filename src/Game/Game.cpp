@@ -8,6 +8,7 @@
 
 #include "Game/Game.h"
 #include "Game/GameObject.h"
+#include "Game/Camera.h"
 
 GameApplication::GameApplication()
 {
@@ -18,6 +19,7 @@ GameApplication::GameApplication()
     m_WindowWidth=1280;
     m_WindowHeight=800;
     m_WindowFullscreen=false;
+	m_MainCamera = NULL;
     
 }
 
@@ -103,7 +105,11 @@ bool GameApplication::init(int argc, char * arg[])
 
 void GameApplication::createGame()
 {
+	m_MainCamera = new GameObject();
+	Camera *pCamera = new Camera();
+	m_MainCamera->setCamera(pCamera);
 
+	m_SceneGraph.push_back(m_MainCamera);
 }
 
 

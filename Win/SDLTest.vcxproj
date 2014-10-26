@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\headers\Game\Mesh.cpp" />
+    <ClCompile Include="..\src\Game\Camera.cpp" />
     <ClCompile Include="..\src\Game\Game.cpp" />
     <ClCompile Include="..\src\Game\GameObject.cpp" />
     <ClCompile Include="..\src\Game\Material.cpp" />
@@ -26,6 +27,7 @@
     <ClCompile Include="..\src\Utils\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\headers\Game\Camera.h" />
     <ClInclude Include="..\headers\Game\Component.h" />
     <ClInclude Include="..\headers\Game\Game.h" />
     <ClInclude Include="..\headers\Game\GameObject.h" />

@@ -3,6 +3,7 @@
 #include "Game\Transform.h"
 #include "Game\Material.h"
 #include "Game\Mesh.h"
+#include "Game\Camera.h"
 
 
 GameObject::GameObject()
@@ -96,4 +97,10 @@ void GameObject::setMesh(Mesh * mesh)
 {
 	m_Mesh = mesh;
 	addComponent(mesh);
+}
+
+void GameObject::setCamera(Camera *camera)
+{
+	m_Camera = camera;
+	addComponent(camera);
 }

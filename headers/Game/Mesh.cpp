@@ -3,7 +3,7 @@
 
 Mesh::Mesh()
 {
-
+	m_Type = "Mesh";
 }
 
 Mesh::~Mesh()

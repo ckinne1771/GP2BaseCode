@@ -10,16 +10,10 @@ class Component
 public:
 	Component()
 	{
-		m_Name = "BaseComponent";
 		m_Type = "BaseComponent";
 	};
 
 	virtual ~Component(){};
-
-	const std::string& getName()
-	{
-		return m_Name;
-	};
 
 	const std::string& getType()
 	{
@@ -37,7 +31,6 @@ public:
 	virtual void render(){};
 	virtual void destroy(){};
 protected:
-	std::string m_Name;
 	std::string m_Type;
 	GameObject *m_Parent;
 };
