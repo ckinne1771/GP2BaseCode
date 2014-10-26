@@ -85,6 +85,7 @@ bool GameApplication::init(int argc, char * arg[])
     
     m_isRunning=true;
     
+	Time.start();
     return true;
 }
 
@@ -253,6 +254,7 @@ void GameApplication::HandleMessages()
 void GameApplication::update()
 {
     HandleMessages();
+	Time.update();
 }
 
 void GameApplication::render()

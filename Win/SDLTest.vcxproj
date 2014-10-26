@@ -19,6 +19,7 @@
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\Shader.cpp" />
     <ClCompile Include="..\src\Texture.cpp" />
+    <ClCompile Include="..\src\Utils\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\headers\Game\Game.h" />
@@ -28,6 +29,7 @@
     <ClInclude Include="..\headers\Input\Mouse.h" />
     <ClInclude Include="..\headers\Shader.h" />
     <ClInclude Include="..\headers\Texture.h" />
+    <ClInclude Include="..\headers\Utils\Timer.h" />
     <ClInclude Include="..\headers\Vertex.h" />
   </ItemGroup>
   <ItemGroup>

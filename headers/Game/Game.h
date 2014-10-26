@@ -36,6 +36,7 @@ using glm::vec3;
 #endif
 
 #include "Input/Input.h"
+#include "Utils/Timer.h"
 
 #ifdef _DEBUG && WIN32
 const std::string ASSET_PATH = "../assets/";
