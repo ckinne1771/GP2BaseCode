@@ -11,7 +11,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\headers\Game\Mesh.cpp" />
     <ClCompile Include="..\src\Game\Game.cpp" />
+    <ClCompile Include="..\src\Game\GameObject.cpp" />
+    <ClCompile Include="..\src\Game\Material.cpp" />
+    <ClCompile Include="..\src\Game\Transform.cpp" />
     <ClCompile Include="..\src\Input\Input.cpp" />
     <ClCompile Include="..\src\Input\Joypad.cpp" />
     <ClCompile Include="..\src\Input\Keyboard.cpp" />
@@ -22,7 +26,12 @@
     <ClCompile Include="..\src\Utils\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\headers\Game\Component.h" />
     <ClInclude Include="..\headers\Game\Game.h" />
+    <ClInclude Include="..\headers\Game\GameObject.h" />
+    <ClInclude Include="..\headers\Game\Material.h" />
+    <ClInclude Include="..\headers\Game\Mesh.h" />
+    <ClInclude Include="..\headers\Game\Transform.h" />
     <ClInclude Include="..\headers\Input\Input.h" />
     <ClInclude Include="..\headers\Input\Joypad.h" />
     <ClInclude Include="..\headers\Input\Keyboard.h" />

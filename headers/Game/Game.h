@@ -17,7 +17,7 @@
 using glm::mat4;
 using glm::vec3;
 
-#include <glm/gtc/matrix_transform.hpp>
+
 #include <glm/gtc/type_ptr.hpp>
 
 #ifdef __APPLE__
