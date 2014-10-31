@@ -76,7 +76,6 @@ Vertex triangleData[] = {
     
     { vec3(0.5f, 0.5f, 0.5f), vec2(1.0f, 0.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f) },// Top Right
     
-    
 	//back
     { vec3(-0.5f, 0.5f, -0.5f), vec2(0.0f, 0.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f) },// Top Left
     
@@ -141,6 +140,23 @@ void InitWindow(int width, int height, bool fullscreen)
 
 void CleanUp()
 {
+    auto iter=displayList.begin();
+	while(iter!=displayList.end())
+    {
+        (*iter)->destroy();
+        if ((*iter))
+        {
+            delete (*iter);
+            (*iter)=NULL;
+            iter=displayList.erase(iter);
+        }
+        else
+        {
+            iter++;
+        }
+    }
+    displayList.clear();
+    
 	// clean up, reverse order!!!
 	SDL_GL_DeleteContext(glcontext);
 	SDL_DestroyWindow(window);
@@ -155,6 +171,7 @@ void CleanUp()
 void initOpenGL()
 {
     //Ask for version 3.2 of OpenGL
+    
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
@@ -187,9 +204,6 @@ void initOpenGL()
     
     //Turn on best perspective correction
     glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
-
-	
-
 }
 
 //Function to set/reset viewport
@@ -216,12 +230,17 @@ void Initialise()
     mainCamera->setTransform(t);
     
     Camera * c=new Camera();
+    c->setAspectRatio((float)(WINDOW_WIDTH/WINDOW_HEIGHT));
+    c->setFOV(45.0f);
+    c->setNearClip(0.1f);
+    c->setFarClip(1000.0f);
+    
     mainCamera->setCamera(c);
     displayList.push_back(mainCamera);
     
+    
     GameObject * cube=new GameObject();
     cube->setName("Cube");
-    
     Transform *transform=new Transform();
     transform ->setPosition(0.0f,0.0f,0.0f);
     cube ->setTransform(transform);
@@ -278,19 +297,16 @@ void render()
         
         if (currentMesh && currentMaterial && currentTransform)
         {
-            
             currentMaterial->bind();
+            currentMesh->bind();
             
-            GLint MVPLocation = currentMaterial ->getUniformLocation("MVP");
+            GLint MVPLocation = currentMaterial->getUniformLocation("MVP");
             
             Camera * cam=mainCamera->getCamera();
             mat4 MVP=currentTransform->getModel()*cam->getView()*cam->getProjection();
             glUniformMatrix4fv(MVPLocation, 1, GL_FALSE, glm::value_ptr(MVP));
             
-            currentMesh->bind();
             glDrawElements(GL_TRIANGLES, currentMesh->getIndexCount(),GL_UNSIGNED_INT,0);
-            CheckForErrors();
-
         }
     }
     
