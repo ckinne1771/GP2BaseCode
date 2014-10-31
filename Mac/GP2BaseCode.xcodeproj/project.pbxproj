@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D3002D281A02876F009CDD65 /* Component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3002D271A02876F009CDD65 /* Component.cpp */; };
+		D3002D2B1A0399A1009CDD65 /* GameObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3002D2A1A0399A1009CDD65 /* GameObject.cpp */; };
+		D3002D2F1A039E06009CDD65 /* Transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3002D2D1A039E06009CDD65 /* Transform.cpp */; };
+		D3002D321A03A200009CDD65 /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3002D311A03A200009CDD65 /* Mesh.cpp */; };
+		D3002D351A03A79D009CDD65 /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3002D341A03A79D009CDD65 /* Material.cpp */; };
+		D3002D381A03AB08009CDD65 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3002D371A03AB08009CDD65 /* Camera.cpp */; };
 		D3737B2F196854B6001A741F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3737B2D196854B6001A741F /* InfoPlist.strings */; };
 		D3737B35196854B6001A741F /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D3737B33196854B6001A741F /* Credits.rtf */; };
 		D3737B3D196854B6001A741F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3737B3C196854B6001A741F /* Images.xcassets */; };
@@ -43,6 +49,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D3002D261A028612009CDD65 /* Component.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Component.h; path = ../headers/Component.h; sourceTree = "<group>"; };
+		D3002D271A02876F009CDD65 /* Component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Component.cpp; path = ../src/Component.cpp; sourceTree = "<group>"; };
+		D3002D291A0397CE009CDD65 /* GameObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GameObject.h; path = ../headers/GameObject.h; sourceTree = "<group>"; };
+		D3002D2A1A0399A1009CDD65 /* GameObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameObject.cpp; path = ../src/GameObject.cpp; sourceTree = "<group>"; };
+		D3002D2C1A039C5F009CDD65 /* Transform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Transform.h; path = ../headers/Transform.h; sourceTree = "<group>"; };
+		D3002D2D1A039E06009CDD65 /* Transform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Transform.cpp; path = ../src/Transform.cpp; sourceTree = "<group>"; };
+		D3002D301A039FEC009CDD65 /* Mesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Mesh.h; path = ../headers/Mesh.h; sourceTree = "<group>"; };
+		D3002D311A03A200009CDD65 /* Mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Mesh.cpp; path = ../src/Mesh.cpp; sourceTree = "<group>"; };
+		D3002D331A03A5E1009CDD65 /* Material.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Material.h; path = ../headers/Material.h; sourceTree = "<group>"; };
+		D3002D341A03A79D009CDD65 /* Material.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Material.cpp; path = ../src/Material.cpp; sourceTree = "<group>"; };
+		D3002D361A03A9A4009CDD65 /* Camera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Camera.h; path = ../headers/Camera.h; sourceTree = "<group>"; };
+		D3002D371A03AB08009CDD65 /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Camera.cpp; path = ../src/Camera.cpp; sourceTree = "<group>"; };
 		D34CC01A19D8212400204C3A /* Vertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Vertex.h; path = ../headers/Vertex.h; sourceTree = "<group>"; };
 		D3737B21196854B6001A741F /* GP2BaseCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GP2BaseCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3737B2C196854B6001A741F /* GP2BaseCode-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GP2BaseCode-Info.plist"; sourceTree = "<group>"; };
@@ -102,6 +120,18 @@
 		D3737B18196854B6001A741F = {
 			isa = PBXGroup;
 			children = (
+				D3002D371A03AB08009CDD65 /* Camera.cpp */,
+				D3002D361A03A9A4009CDD65 /* Camera.h */,
+				D3002D341A03A79D009CDD65 /* Material.cpp */,
+				D3002D331A03A5E1009CDD65 /* Material.h */,
+				D3002D311A03A200009CDD65 /* Mesh.cpp */,
+				D3002D301A039FEC009CDD65 /* Mesh.h */,
+				D3002D2D1A039E06009CDD65 /* Transform.cpp */,
+				D3002D2C1A039C5F009CDD65 /* Transform.h */,
+				D3002D2A1A0399A1009CDD65 /* GameObject.cpp */,
+				D3002D291A0397CE009CDD65 /* GameObject.h */,
+				D3002D271A02876F009CDD65 /* Component.cpp */,
+				D3002D261A028612009CDD65 /* Component.h */,
 				D3BAC4DD19E1E78F004E734C /* Shader.h */,
 				D3CACF9219DC6CA5003A75EA /* Shader.cpp */,
 				D34CC01A19D8212400204C3A /* Vertex.h */,
@@ -280,9 +310,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3002D2F1A039E06009CDD65 /* Transform.cpp in Sources */,
 				D383D26119E5BEE7009A30C0 /* Texture.cpp in Sources */,
+				D3002D351A03A79D009CDD65 /* Material.cpp in Sources */,
 				D3CACF9319DC6CA5003A75EA /* Shader.cpp in Sources */,
+				D3002D321A03A200009CDD65 /* Mesh.cpp in Sources */,
 				D3737B591968557F001A741F /* main.cpp in Sources */,
+				D3002D281A02876F009CDD65 /* Component.cpp in Sources */,
+				D3002D2B1A0399A1009CDD65 /* GameObject.cpp in Sources */,
+				D3002D381A03AB08009CDD65 /* Camera.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
