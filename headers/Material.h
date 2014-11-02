@@ -9,7 +9,13 @@
 #ifndef Material_h
 #define Material_h
 
+
+
 #include <GL/glew.h>
+
+#include <glm/glm.hpp>
+using glm::vec4;
+
 #include <string>
 
 #ifdef __APPLE__
@@ -34,9 +40,13 @@ public:
     
     bool loadShader(const std::string& vsFilename,const std::string& fsFilename);
     GLint getUniformLocation(const std::string& name);
+	
+	vec4& getAmbientColour();
+	void setAmbientColour(float r, float g, float b, float a);
 protected:
 private:
     GLuint m_ShaderProgram;
+	vec4 m_AmbientColour;
 };
 
 #endif

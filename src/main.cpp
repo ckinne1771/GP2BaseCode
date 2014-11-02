@@ -3,6 +3,7 @@
 //maths headers
 #include <glm/glm.hpp>
 using glm::mat4;
+using glm::vec4;
 using glm::vec3;
 
 #include <glm/gtc/matrix_transform.hpp>
@@ -62,6 +63,8 @@ const int WINDOW_WIDTH = 640;
 const int WINDOW_HEIGHT = 480;
 
 bool running = true;
+
+vec4 ambientLightColour = vec4(1.0f, 1.0f, 1.0f, 1.0f);
 
 std::vector<GameObject*> displayList;
 GameObject * mainCamera;
@@ -239,8 +242,8 @@ void Initialise()
     cube ->setTransform(transform);
     
     Material * material=new Material();
-    std::string vsPath = ASSET_PATH + SHADER_PATH+"/simpleVS.glsl";
-    std::string fsPath = ASSET_PATH + SHADER_PATH + "/simpleFS.glsl";
+    std::string vsPath = ASSET_PATH + SHADER_PATH+"/ambientVS.glsl";
+    std::string fsPath = ASSET_PATH + SHADER_PATH + "/ambientFS.glsl";
     material -> loadShader(vsPath,fsPath);
     cube->setMaterial(material);
     
@@ -295,11 +298,18 @@ void render()
             currentMesh->bind();
             
             GLint MVPLocation = currentMaterial->getUniformLocation("MVP");
+			GLint ambientMatLocation = currentMaterial->getUniformLocation("ambientMaterialColour");
+			GLint ambientLightLocation = currentMaterial->getUniformLocation("ambientLightColour");
             
             Camera * cam=mainCamera->getCamera();
+
             mat4 MVP=cam->getProjection()*cam->getView()*currentTransform->getModel();
+			vec4 ambientMaterialColour = currentMaterial->getAmbientColour();
             glUniformMatrix4fv(MVPLocation, 1, GL_FALSE, glm::value_ptr(MVP));
-            
+			glUniform4fv(ambientMatLocation, 1, glm::value_ptr(ambientMaterialColour));
+			glUniform4fv(ambientLightLocation, 1, glm::value_ptr(ambientLightColour));
+
+
             glDrawElements(GL_TRIANGLES, currentMesh->getIndexCount(),GL_UNSIGNED_INT,0);
         }
     }

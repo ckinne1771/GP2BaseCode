@@ -13,6 +13,7 @@ Material::Material()
 {
 	m_ShaderProgram = -1;
 	m_Type = "Material";
+	m_AmbientColour = vec4(0.5f, 0.5f, 0.5f, 1.0f);
 }
 
 Material::~Material()
@@ -59,4 +60,14 @@ bool Material::loadShader(const std::string& vsFilename,const std::string& fsFil
 GLint Material::getUniformLocation(const std::string& name)
 {
     return glGetUniformLocation(m_ShaderProgram, name.c_str());
+}
+
+vec4& Material::getAmbientColour()
+{
+	return m_AmbientColour;
+}
+
+void Material::setAmbientColour(float r, float g, float b, float a)
+{
+	m_AmbientColour = vec4(r, g, b, a);
 }
