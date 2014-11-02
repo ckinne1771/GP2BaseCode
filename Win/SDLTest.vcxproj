@@ -41,6 +41,8 @@
     <None Include="..\assets\shaders\diffuseVS.glsl" />
     <None Include="..\assets\shaders\simpleFS.glsl" />
     <None Include="..\assets\shaders\simpleVS.glsl" />
+    <None Include="..\assets\shaders\specularFS.glsl" />
+    <None Include="..\assets\shaders\specularVS.glsl" />
     <None Include="..\assets\shaders\textureFS.glsl" />
     <None Include="..\assets\shaders\textureVS.glsl" />
     <None Include="..\assets\shaders\vertexColourFS.glsl" />

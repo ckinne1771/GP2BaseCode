@@ -256,8 +256,8 @@ void Initialise()
     cube ->setTransform(transform);
     
     Material * material=new Material();
-    std::string vsPath = ASSET_PATH + SHADER_PATH+"/diffuseVS.glsl";
-    std::string fsPath = ASSET_PATH + SHADER_PATH + "/diffuseFS.glsl";
+    std::string vsPath = ASSET_PATH + SHADER_PATH+"/specularVS.glsl";
+    std::string fsPath = ASSET_PATH + SHADER_PATH + "/specularFS.glsl";
     material -> loadShader(vsPath,fsPath);
     cube->setMaterial(material);
     
@@ -318,6 +318,10 @@ void render()
 			GLint diffuseMatLocation = currentMaterial->getUniformLocation("diffuseMaterialColour");
 			GLint diffuseLightLocation = currentMaterial->getUniformLocation("diffuseLightColour");
 			GLint lightDirectionLocation = currentMaterial->getUniformLocation("lightDirection");
+			GLint specularMatLocation = currentMaterial->getUniformLocation("specularMaterialColour");
+			GLint specularLightLocation = currentMaterial->getUniformLocation("specularLightColour");
+			GLint specularpowerLocation = currentMaterial->getUniformLocation("specularPower");
+			GLint cameraPositionLocation = currentMaterial->getUniformLocation("cameraPosition");
             
             Camera * cam=mainCamera->getCamera();
 			Light* light = mainLight->getLight();
@@ -328,8 +332,14 @@ void render()
 
 			vec4 ambientMaterialColour = currentMaterial->getAmbientColour();
 			vec4 diffuseMaterialColour = currentMaterial->getDiffuseColour();
+			vec4 specularMaterialColour = currentMaterial->getSpecularColour();
+			float specularPower = currentMaterial->getSpecularPower();
+
 			vec4 diffuseLightColour = light->getDiffuseColour();
+			vec4 specularLightColour = light->getSpecularColour();
 			vec3 lightDirection = light->getDirection();
+			
+			vec3 cameraPosition = mainCamera->getTransform()->getPosition();
 
 			glUniformMatrix4fv(ModelLocation, 1, GL_FALSE, glm::value_ptr(Model));
             glUniformMatrix4fv(MVPLocation, 1, GL_FALSE, glm::value_ptr(MVP));
@@ -339,6 +349,12 @@ void render()
 			glUniform4fv(diffuseMatLocation, 1, glm::value_ptr(diffuseMaterialColour));
 			glUniform4fv(diffuseLightLocation, 1, glm::value_ptr(diffuseLightColour));
 			glUniform3fv(lightDirectionLocation, 1, glm::value_ptr(lightDirection));
+
+			glUniform4fv(specularMatLocation, 1, glm::value_ptr(specularMaterialColour));
+			glUniform4fv(specularLightLocation, 1, glm::value_ptr(specularLightColour));
+
+			glUniform3fv(cameraPositionLocation, 1, glm::value_ptr(cameraPosition));
+			glUniform1f(specularpowerLocation, specularPower);
 
             glDrawElements(GL_TRIANGLES, currentMesh->getIndexCount(),GL_UNSIGNED_INT,0);
         }

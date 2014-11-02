@@ -15,6 +15,8 @@ Material::Material()
 	m_Type = "Material";
 	m_AmbientColour = vec4(0.5f, 0.5f, 0.5f, 1.0f);
 	m_DiffuseColour = vec4(0.75f, 0.75f, 0.75f, 1.0f);
+	m_SpecularColour = vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_SpecularPower = 12.0f;
 }
 
 Material::~Material()
@@ -81,4 +83,24 @@ vec4& Material::getDiffuseColour()
 void Material::setDiffuseColour(float r, float g, float b, float a)
 {
 	m_DiffuseColour = vec4(r, g, b, a);
+}
+
+vec4& Material::getSpecularColour()
+{
+	return m_SpecularColour;
+}
+
+void Material::setSpecularColour(float r, float g, float b, float a)
+{
+	m_SpecularColour = vec4(r, g, b, a);
+}
+
+float Material::getSpecularPower()
+{
+	return m_SpecularPower;
+}
+
+void Material::setSpecularPower(float power)
+{
+	m_SpecularPower = power;
 }
