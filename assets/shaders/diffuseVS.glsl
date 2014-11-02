@@ -20,6 +20,6 @@ void main()
 {
 	vec3 worldNorm = normalize(Model*vec4(vertexNormals,0.0f)).xyz;
 	float diffuseTerm = dot(worldNorm, lightDirection);
-	vertexColourOut = (ambientMaterialColour*ambientLightColour)*(diffuseMaterialColour*diffuseLightColour*diffuseTerm);
+	vertexColourOut = (ambientMaterialColour*ambientLightColour)+(diffuseMaterialColour*diffuseLightColour*diffuseTerm);
 	gl_Position = MVP * vec4(vertexPosition, 1.0);
 }
