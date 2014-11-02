@@ -67,24 +67,17 @@ std::vector<GameObject*> displayList;
 GameObject * mainCamera;
 
 Vertex triangleData[] = {
-	//Front
-    { vec3(-0.5f, 0.5f, 0.5f) },// Top Left
-    
-    { vec3(-0.5f, -0.5f, 0.5f)},// Bottom Left
-    
-    { vec3(0.5f, -0.5f, 0.5f) }, //Bottom Right
-    
-    { vec3(0.5f, 0.5f, 0.5f) },// Top Right
-    
-	//back
-    { vec3(-0.5f, 0.5f, -0.5f)},// Top Left
-    
-    { vec3(-0.5f, -0.5f, -0.5f) },// Bottom Left
-    
-    {vec3(0.5f, -0.5f, -0.5f)}, //Bottom Right
-    
-    {vec3(0.5f, 0.5f, -0.5f)}// Top Right
-    
+		{ vec3(-0.5f, 0.5f, 0.5f), vec2(0.0f, 0.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f) },// Top Left
+		{ vec3(-0.5f, -0.5f, 0.5f), vec2(0.0f, 1.0f), vec4(0.0f, 1.0f, 0.0f, 1.0f) },// Bottom Left
+		{ vec3(0.5f, -0.5f, 0.5f), vec2(1.0f, 1.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f) }, //Bottom Right
+		{ vec3(0.5f, 0.5f, 0.5f), vec2(1.0f, 0.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f) },// Top Right
+		
+		
+		//back
+		{ vec3(-0.5f, 0.5f, -0.5f), vec2(0.0f, 0.0f), vec4(0.0f, 0.0f, 1.0f, 1.0f) },// Top Left
+		{ vec3(-0.5f, -0.5f, -0.5f), vec2(0.0f, 1.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f) },// Bottom Left
+		{ vec3(0.5f, -0.5f, -0.5f), vec2(1.0f, 1.0f), vec4(0.0f, 0.0f, 0.0f, 1.0f) }, //Bottom Right
+		{ vec3(0.5f, 0.5f, -0.5f), vec2(1.0f, 0.0f), vec4(0.0f, 1.0f, 0.0f, 1.0f)}// Top Right
 };
 
 
