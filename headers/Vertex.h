@@ -17,6 +17,7 @@ using glm::vec2;
 struct Vertex
 {
 	vec3 position;
+
 	vec2 texCoords;
 	vec4 colours;
 };

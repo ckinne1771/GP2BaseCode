@@ -30,6 +30,7 @@ const std::string ASSET_PATH = "../assets/";
 const std::string SHADER_PATH = "shaders/";
 const std::string TEXTURE_PATH = "textures/";
 const std::string FONT_PATH = "fonts/";
+const std::string MODEL_PATH = "models/";
 #elif __APPLE__
 const std::string ASSET_PATH;
 const std::string SHADER_PATH;
@@ -49,6 +50,7 @@ const std::string SHADER_PATH="shaders/";
 #include "Mesh.h"
 #include "Material.h"
 #include "Camera.h"
+#include "FBXLoader.h"
 
 
 //SDL Window
@@ -257,6 +259,21 @@ void Initialise()
     
     mesh->copyVertexData(8,sizeof(Vertex), (void**)triangleData);
     mesh->copyIndexData(36,sizeof(int), (void**)indices);
+
+
+	std::string modelPath = ASSET_PATH + MODEL_PATH + "armoredrecon.fbx";
+	GameObject * go=loadFBXFromFile(modelPath);
+	for (int i = 0; i < go->getChildCount(); i++)
+	{
+		Material * material = new Material();
+		material->init();
+		std::string vsPath = ASSET_PATH + SHADER_PATH + "/simpleVS.glsl";
+		std::string fsPath = ASSET_PATH + SHADER_PATH + "/simpleFS.glsl";
+		material->loadShader(vsPath, fsPath);
+
+		go->getChild(i)->setMaterial(material);
+	}
+	displayList.push_back(go);
 }
 
 
@@ -268,6 +285,35 @@ void update()
     {
         (*iter)->update();
     }
+}
+
+void renderGameObject(GameObject * pObject)
+{
+	if (!pObject)
+		return;
+
+	Mesh * currentMesh = pObject->getMesh();
+	Transform * currentTransform = pObject->getTransform();
+	Material * currentMaterial = pObject->getMaterial();
+
+	if (currentMesh && currentMaterial && currentTransform)
+	{
+		currentMaterial->bind();
+		currentMesh->bind();
+
+		GLint MVPLocation = currentMaterial->getUniformLocation("MVP");
+
+		Camera * cam = mainCamera->getCamera();
+		mat4 MVP = cam->getProjection()*cam->getView()*currentTransform->getModel();
+		glUniformMatrix4fv(MVPLocation, 1, GL_FALSE, glm::value_ptr(MVP));
+
+		glDrawElements(GL_TRIANGLES, currentMesh->getIndexCount(), GL_UNSIGNED_INT, 0);
+	}
+
+	for (int i = 0; i < pObject->getChildCount(); i++)
+	{
+		renderGameObject(pObject->getChild(i));
+	}
 }
 
 //Function to render(aka draw)
@@ -284,24 +330,10 @@ void render()
     for(auto iter=displayList.begin();iter!=displayList.end();iter++)
     {
         (*iter)->render();
+		renderGameObject((*iter));
+
         
-        Mesh * currentMesh=(*iter)->getMesh();
-        Transform * currentTransform=(*iter)->getTransform();
-        Material * currentMaterial=(*iter)->getMaterial();
-        
-        if (currentMesh && currentMaterial && currentTransform)
-        {
-            currentMaterial->bind();
-            currentMesh->bind();
-            
-            GLint MVPLocation = currentMaterial->getUniformLocation("MVP");
-            
-            Camera * cam=mainCamera->getCamera();
-            mat4 MVP=cam->getProjection()*cam->getView()*currentTransform->getModel();
-            glUniformMatrix4fv(MVPLocation, 1, GL_FALSE, glm::value_ptr(MVP));
-            
-            glDrawElements(GL_TRIANGLES, currentMesh->getIndexCount(),GL_UNSIGNED_INT,0);
-        }
+
     }
     
     SDL_GL_SwapWindow(window);
