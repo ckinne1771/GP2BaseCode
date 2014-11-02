@@ -31,6 +31,7 @@ const std::string ASSET_PATH = "../assets/";
 const std::string SHADER_PATH = "shaders/";
 const std::string TEXTURE_PATH = "textures/";
 const std::string FONT_PATH = "fonts/";
+const std::string MODEL_PATH = "models/";
 #elif __APPLE__
 const std::string ASSET_PATH;
 const std::string SHADER_PATH;
@@ -39,6 +40,9 @@ const std::string FONT_PATH;
 #else
 const std::string ASSET_PATH="/assets/";
 const std::string SHADER_PATH="shaders/";
+const std::string TEXTURE_PATH = "textures/";
+const std::string FONT_PATH = "fonts/";
+const std::string MODEL_PATH = "models/";
 #endif
 
 //Our headers
@@ -50,7 +54,7 @@ const std::string SHADER_PATH="shaders/";
 #include "Mesh.h"
 #include "Material.h"
 #include "Camera.h"
-
+#include "FBXLoader.h"
 
 //SDL Window
 SDL_Window * window = NULL;
@@ -123,7 +127,7 @@ void InitWindow(int width, int height, bool fullscreen)
 {
 	//Create a window
 	window = SDL_CreateWindow(
-		"Lab 6",             // window title
+		"Lab 7",             // window title
 		SDL_WINDOWPOS_CENTERED,     // x position, centered
 		SDL_WINDOWPOS_CENTERED,     // y position, centered
 		width,                        // width, in pixels
@@ -260,6 +264,20 @@ void Initialise()
     
     mesh->copyVertexData(8,sizeof(Vertex), (void**)triangleData);
     mesh->copyIndexData(36,sizeof(int), (void**)indices);
+
+	std::string modelPath = ASSET_PATH + MODEL_PATH + "armoredrecon.fbx";
+	GameObject * go = loadFBXFromFile(modelPath);
+	for (int i = 0; i < go->getChildCount(); i++)
+	{
+		Material * material = new Material();
+		material->init();
+		std::string vsPath = ASSET_PATH + SHADER_PATH + "/ambientVS.glsl";
+		std::string fsPath = ASSET_PATH + SHADER_PATH + "/ambientFS.glsl";
+		material->loadShader(vsPath, fsPath);
+
+		go->getChild(i)->setMaterial(material);
+	}
+	displayList.push_back(go);
 }
 
 
@@ -271,6 +289,44 @@ void update()
     {
         (*iter)->update();
     }
+}
+
+void renderGameObject(GameObject * pObject)
+{
+	if (!pObject)
+		return;
+
+	pObject->render();
+
+	Mesh * currentMesh = pObject->getMesh();
+	Transform * currentTransform = pObject->getTransform();
+	Material * currentMaterial = pObject->getMaterial();
+
+	if (currentMesh && currentMaterial && currentTransform)
+	{
+		currentMaterial->bind();
+		currentMesh->bind();
+
+		GLint MVPLocation = currentMaterial->getUniformLocation("MVP");
+		GLint ambientMatLocation = currentMaterial->getUniformLocation("ambientMaterialColour");
+		GLint ambientLightLocation = currentMaterial->getUniformLocation("ambientLightColour");
+
+		Camera * cam = mainCamera->getCamera();
+
+		mat4 MVP = cam->getProjection()*cam->getView()*currentTransform->getModel();
+		vec4 ambientMaterialColour = currentMaterial->getAmbientColour();
+		glUniformMatrix4fv(MVPLocation, 1, GL_FALSE, glm::value_ptr(MVP));
+		glUniform4fv(ambientMatLocation, 1, glm::value_ptr(ambientMaterialColour));
+		glUniform4fv(ambientLightLocation, 1, glm::value_ptr(ambientLightColour));
+
+
+		glDrawElements(GL_TRIANGLES, currentMesh->getIndexCount(), GL_UNSIGNED_INT, 0);
+	}
+
+	for (int i = 0; i < pObject->getChildCount(); i++)
+	{
+		renderGameObject(pObject->getChild(i));
+	}
 }
 
 //Function to render(aka draw)
@@ -286,32 +342,7 @@ void render()
     //alternative sytanx
     for(auto iter=displayList.begin();iter!=displayList.end();iter++)
     {
-        (*iter)->render();
-        
-        Mesh * currentMesh=(*iter)->getMesh();
-        Transform * currentTransform=(*iter)->getTransform();
-        Material * currentMaterial=(*iter)->getMaterial();
-        
-        if (currentMesh && currentMaterial && currentTransform)
-        {
-            currentMaterial->bind();
-            currentMesh->bind();
-            
-            GLint MVPLocation = currentMaterial->getUniformLocation("MVP");
-			GLint ambientMatLocation = currentMaterial->getUniformLocation("ambientMaterialColour");
-			GLint ambientLightLocation = currentMaterial->getUniformLocation("ambientLightColour");
-            
-            Camera * cam=mainCamera->getCamera();
-
-            mat4 MVP=cam->getProjection()*cam->getView()*currentTransform->getModel();
-			vec4 ambientMaterialColour = currentMaterial->getAmbientColour();
-            glUniformMatrix4fv(MVPLocation, 1, GL_FALSE, glm::value_ptr(MVP));
-			glUniform4fv(ambientMatLocation, 1, glm::value_ptr(ambientMaterialColour));
-			glUniform4fv(ambientLightLocation, 1, glm::value_ptr(ambientLightColour));
-
-
-            glDrawElements(GL_TRIANGLES, currentMesh->getIndexCount(),GL_UNSIGNED_INT,0);
-        }
+		renderGameObject((*iter));
     }
     
     SDL_GL_SwapWindow(window);
