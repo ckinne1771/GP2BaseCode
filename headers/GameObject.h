@@ -40,33 +40,22 @@ public:
     void setMesh(Mesh * mesh);
     void setMaterial(Material * material);
     void setCamera(Camera * camera);
-	void addChild(GameObject * obj);
-	void setParent(GameObject *parent);
     
-	GameObject *getParent();
-
-	Transform * getTransform();
+    Transform * getTransform();
     Mesh *getMesh();
     Material *getMaterial();
     Camera * getCamera();
-
-	int getChildCount();
-	GameObject * getChild(int index);
-
     
-
 protected:
 private:
     std::vector<Component*> m_Components;
-	std::vector<GameObject*> m_Children;
-	std::string m_Name;
+    std::string m_Name;
     
     Transform *m_Transform;
     Mesh *m_Mesh;
     Material *m_Material;
     Camera *m_Camera;
-
-	GameObject *m_Parent;
+    
 };
 
 
