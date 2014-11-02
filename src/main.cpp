@@ -255,8 +255,6 @@ void Initialise()
     cube->setMesh(mesh);
     displayList.push_back(cube);
 
-    
-    //alternative sytanx
     for(auto iter=displayList.begin();iter!=displayList.end();iter++)
     {
         (*iter)->init();
