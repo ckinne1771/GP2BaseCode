@@ -31,6 +31,7 @@ const std::string ASSET_PATH = "../assets/";
 const std::string SHADER_PATH = "shaders/";
 const std::string TEXTURE_PATH = "textures/";
 const std::string FONT_PATH = "fonts/";
+const std::string MODEL_PATH = "models/";
 #elif __APPLE__
 const std::string ASSET_PATH;
 const std::string SHADER_PATH;
@@ -39,6 +40,9 @@ const std::string FONT_PATH;
 #else
 const std::string ASSET_PATH="/assets/";
 const std::string SHADER_PATH="shaders/";
+const std::string TEXTURE_PATH = "textures/";
+const std::string FONT_PATH = "fonts/";
+const std::string MODEL_PATH = "models/";
 #endif
 
 //Our headers
@@ -51,6 +55,7 @@ const std::string SHADER_PATH="shaders/";
 #include "Material.h"
 #include "Camera.h"
 #include "Light.h"
+#include "FBXLoader.h"
 
 
 //SDL Window
@@ -126,7 +131,7 @@ void InitWindow(int width, int height, bool fullscreen)
 {
 	//Create a window
 	window = SDL_CreateWindow(
-		"Lab 6",             // window title
+		"Lab 7",             // window title
 		SDL_WINDOWPOS_CENTERED,     // x position, centered
 		SDL_WINDOWPOS_CENTERED,     // y position, centered
 		width,                        // width, in pixels
@@ -274,6 +279,20 @@ void Initialise()
     
     mesh->copyVertexData(8,sizeof(Vertex), (void**)triangleData);
     mesh->copyIndexData(36,sizeof(int), (void**)indices);
+
+	std::string modelPath = ASSET_PATH + MODEL_PATH + "armoredrecon.fbx";
+	GameObject * go = loadFBXFromFile(modelPath);
+	for (int i = 0; i < go->getChildCount(); i++)
+	{
+		Material * material = new Material();
+		material->init();
+		std::string vsPath = ASSET_PATH + SHADER_PATH + "/diffuseVS.glsl";
+		std::string fsPath = ASSET_PATH + SHADER_PATH + "/diffuseFS.glsl";
+		material->loadShader(vsPath, fsPath);
+
+		go->getChild(i)->setMaterial(material);
+	}
+	displayList.push_back(go);
 }
 
 
@@ -287,6 +306,60 @@ void update()
     }
 }
 
+void renderGameObject(GameObject * pObject)
+{
+	if (!pObject)
+		return;
+
+	pObject->render();
+
+	Mesh * currentMesh = pObject->getMesh();
+	Transform * currentTransform = pObject->getTransform();
+	Material * currentMaterial = pObject->getMaterial();
+
+	if (currentMesh && currentMaterial && currentTransform)
+	{
+		currentMaterial->bind();
+		currentMesh->bind();
+
+		GLint MVPLocation = currentMaterial->getUniformLocation("MVP");
+		GLint ModelLocation = currentMaterial->getUniformLocation("Model");
+		GLint ambientMatLocation = currentMaterial->getUniformLocation("ambientMaterialColour");
+		GLint ambientLightLocation = currentMaterial->getUniformLocation("ambientLightColour");
+		GLint diffuseMatLocation = currentMaterial->getUniformLocation("diffuseMaterialColour");
+		GLint diffuseLightLocation = currentMaterial->getUniformLocation("diffuseLightColour");
+		GLint lightDirectionLocation = currentMaterial->getUniformLocation("lightDirection");
+
+		Camera * cam = mainCamera->getCamera();
+		Light* light = mainLight->getLight();
+
+
+		mat4 MVP = cam->getProjection()*cam->getView()*currentTransform->getModel();
+		mat4 Model = currentTransform->getModel();
+
+		vec4 ambientMaterialColour = currentMaterial->getAmbientColour();
+		vec4 diffuseMaterialColour = currentMaterial->getDiffuseColour();
+		vec4 diffuseLightColour = light->getDiffuseColour();
+		vec3 lightDirection = light->getDirection();
+
+		glUniformMatrix4fv(ModelLocation, 1, GL_FALSE, glm::value_ptr(Model));
+		glUniformMatrix4fv(MVPLocation, 1, GL_FALSE, glm::value_ptr(MVP));
+		glUniform4fv(ambientMatLocation, 1, glm::value_ptr(ambientMaterialColour));
+		glUniform4fv(ambientLightLocation, 1, glm::value_ptr(ambientLightColour));
+
+		glUniform4fv(diffuseMatLocation, 1, glm::value_ptr(diffuseMaterialColour));
+		glUniform4fv(diffuseLightLocation, 1, glm::value_ptr(diffuseLightColour));
+		glUniform3fv(lightDirectionLocation, 1, glm::value_ptr(lightDirection));
+
+		glDrawElements(GL_TRIANGLES, currentMesh->getIndexCount(), GL_UNSIGNED_INT, 0);
+	}
+
+	for (int i = 0; i < pObject->getChildCount(); i++)
+	{
+		renderGameObject(pObject->getChild(i));
+	}
+}
+
 //Function to render(aka draw)
 void render()
 {
@@ -297,52 +370,10 @@ void render()
     //clear the colour and depth buffer
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     
-    //alternative sytanx
-    for(auto iter=displayList.begin();iter!=displayList.end();iter++)
-    {
-        (*iter)->render();
-        
-        Mesh * currentMesh=(*iter)->getMesh();
-        Transform * currentTransform=(*iter)->getTransform();
-        Material * currentMaterial=(*iter)->getMaterial();
-        
-        if (currentMesh && currentMaterial && currentTransform)
-        {
-            currentMaterial->bind();
-            currentMesh->bind();
-            
-            GLint MVPLocation = currentMaterial->getUniformLocation("MVP");
-			GLint ModelLocation = currentMaterial->getUniformLocation("Model");
-			GLint ambientMatLocation = currentMaterial->getUniformLocation("ambientMaterialColour");
-			GLint ambientLightLocation = currentMaterial->getUniformLocation("ambientLightColour");
-			GLint diffuseMatLocation = currentMaterial->getUniformLocation("diffuseMaterialColour");
-			GLint diffuseLightLocation = currentMaterial->getUniformLocation("diffuseLightColour");
-			GLint lightDirectionLocation = currentMaterial->getUniformLocation("lightDirection");
-            
-            Camera * cam=mainCamera->getCamera();
-			Light* light = mainLight->getLight();
-
-
-            mat4 MVP=cam->getProjection()*cam->getView()*currentTransform->getModel();
-			mat4 Model = currentTransform->getModel();
-
-			vec4 ambientMaterialColour = currentMaterial->getAmbientColour();
-			vec4 diffuseMaterialColour = currentMaterial->getDiffuseColour();
-			vec4 diffuseLightColour = light->getDiffuseColour();
-			vec3 lightDirection = light->getDirection();
-
-			glUniformMatrix4fv(ModelLocation, 1, GL_FALSE, glm::value_ptr(Model));
-            glUniformMatrix4fv(MVPLocation, 1, GL_FALSE, glm::value_ptr(MVP));
-			glUniform4fv(ambientMatLocation, 1, glm::value_ptr(ambientMaterialColour));
-			glUniform4fv(ambientLightLocation, 1, glm::value_ptr(ambientLightColour));
-
-			glUniform4fv(diffuseMatLocation, 1, glm::value_ptr(diffuseMaterialColour));
-			glUniform4fv(diffuseLightLocation, 1, glm::value_ptr(diffuseLightColour));
-			glUniform3fv(lightDirectionLocation, 1, glm::value_ptr(lightDirection));
-
-            glDrawElements(GL_TRIANGLES, currentMesh->getIndexCount(),GL_UNSIGNED_INT,0);
-        }
-    }
+	for (auto iter = displayList.begin(); iter != displayList.end(); iter++)
+	{
+		renderGameObject((*iter));
+	}
     
     SDL_GL_SwapWindow(window);
 }

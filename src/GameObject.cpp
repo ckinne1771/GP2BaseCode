@@ -35,6 +35,12 @@ void GameObject::init()
 	{
 		(*iter)->init();
 	}
+
+	for (auto iter = m_Children.begin(); iter != m_Children.end(); iter++)
+	{
+		(*iter)->init();
+	}
+
     
 }
 
@@ -44,12 +50,22 @@ void GameObject::update()
 	{
 		(*iter)->update();
 	}
+
+	for (auto iter = m_Children.begin(); iter != m_Children.end(); iter++)
+	{
+		(*iter)->update();
+	}
     
 }
 
 void GameObject::render()
 {
 	for (auto iter = m_Components.begin(); iter != m_Components.end(); iter++)
+	{
+		(*iter)->render();
+	}
+
+	for (auto iter = m_Children.begin(); iter != m_Children.end(); iter++)
 	{
 		(*iter)->render();
 	}
@@ -74,6 +90,23 @@ void GameObject::destroy()
         }
     }
     m_Components.clear();
+
+	auto gameObjiter = m_Children.begin();
+	while (gameObjiter != m_Children.end())
+	{
+		(*gameObjiter)->destroy();
+		if ((*gameObjiter))
+		{
+			delete (*gameObjiter);
+			(*gameObjiter) = NULL;
+			gameObjiter = m_Children.erase(gameObjiter);
+		}
+		else
+		{
+			gameObjiter++;
+		}
+	}
+	m_Children.clear();
     
 }
 
@@ -146,4 +179,33 @@ Camera * GameObject::getCamera()
 Light * GameObject::getLight()
 {
 	return m_Light;
+}
+
+void GameObject::addChild(GameObject * obj)
+{
+	obj->setParent(this);
+	m_Children.push_back(obj);
+}
+
+void GameObject::setParent(GameObject *parent)
+{
+	m_Parent = parent;
+}
+
+GameObject *GameObject::getParent()
+{
+	return m_Parent;
+}
+
+int GameObject::getChildCount()
+{
+	return m_Children.size();
+}
+
+GameObject * GameObject::getChild(int index)
+{
+	if (index < m_Children.size())
+		return m_Children[index];
+	else
+		return NULL;
 }
