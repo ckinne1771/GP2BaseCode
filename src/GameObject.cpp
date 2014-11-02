@@ -12,6 +12,7 @@
 #include "Mesh.h"
 #include "Material.h"
 #include "Camera.h"
+#include "Light.h"
 
 GameObject::GameObject()
 {
@@ -19,6 +20,7 @@ GameObject::GameObject()
     m_Mesh=NULL;
     m_Material=NULL;
     m_Camera=NULL;
+	m_Light = NULL;
     m_Name="GameObject";
 }
 
@@ -115,6 +117,12 @@ void GameObject::setCamera(Camera * camera)
     addComponent(camera);
 }
 
+void GameObject::setLight(Light * light)
+{
+	m_Light = light;
+	addComponent(light);
+}
+
 Transform * GameObject::getTransform()
 {
     return m_Transform;
@@ -133,4 +141,9 @@ Material * GameObject::getMaterial()
 Camera * GameObject::getCamera()
 {
     return m_Camera;
+}
+
+Light * GameObject::getLight()
+{
+	return m_Light;
 }

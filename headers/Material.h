@@ -43,10 +43,15 @@ public:
 	
 	vec4& getAmbientColour();
 	void setAmbientColour(float r, float g, float b, float a);
+
+	vec4& getDiffuseColour();
+	void setDiffuseColour(float r, float g, float b, float a);
+
 protected:
 private:
     GLuint m_ShaderProgram;
 	vec4 m_AmbientColour;
+	vec4 m_DiffuseColour;
 };
 
 #endif
