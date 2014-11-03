@@ -130,5 +130,11 @@
     <None Include="..\assets\shaders\specularVS.glsl">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="..\assets\shaders\specularFSPerPixel.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\assets\shaders\specularVSPerPixel.glsl">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

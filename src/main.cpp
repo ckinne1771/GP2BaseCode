@@ -253,24 +253,6 @@ void Initialise()
 	Light * light = new Light();
 	mainLight->setLight(light);
 	displayList.push_back(mainLight);
-
-
-    GameObject * cube=new GameObject();
-    cube->setName("Cube");
-    Transform *transform=new Transform();
-    transform ->setPosition(0.0f,0.0f,0.0f);
-    cube ->setTransform(transform);
-    
-    Material * material=new Material();
-    std::string vsPath = ASSET_PATH + SHADER_PATH+"/specularVS.glsl";
-    std::string fsPath = ASSET_PATH + SHADER_PATH + "/specularFS.glsl";
-    material -> loadShader(vsPath,fsPath);
-    cube->setMaterial(material);
-    
-    Mesh * mesh=new Mesh();
-    cube->setMesh(mesh);
-    displayList.push_back(cube);
-
     
     //alternative sytanx
     for(auto iter=displayList.begin();iter!=displayList.end();iter++)
@@ -278,8 +260,6 @@ void Initialise()
         (*iter)->init();
     }
     
-    mesh->copyVertexData(8,sizeof(Vertex), (void**)triangleData);
-    mesh->copyIndexData(36,sizeof(int), (void**)indices);
 
 	std::string modelPath = ASSET_PATH + MODEL_PATH + "armoredrecon.fbx";
 	GameObject * go = loadFBXFromFile(modelPath);
@@ -287,8 +267,8 @@ void Initialise()
 	{
 		Material * material = new Material();
 		material->init();
-		std::string vsPath = ASSET_PATH + SHADER_PATH + "/specularVS.glsl";
-		std::string fsPath = ASSET_PATH + SHADER_PATH + "/specularFS.glsl";
+		std::string vsPath = ASSET_PATH + SHADER_PATH + "/specularVSPerPixel.glsl";
+		std::string fsPath = ASSET_PATH + SHADER_PATH + "/specularFSPerPixel.glsl";
 		material->loadShader(vsPath, fsPath);
 
 		go->getChild(i)->setMaterial(material);
