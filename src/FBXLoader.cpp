@@ -151,7 +151,8 @@ void processMesh(FbxMesh * mesh, GameObject *go)
 
 	//read normal
 	processMeshNormals(mesh, pVerts, numVerts);
-	processMeshTextureCoords(mesh, pVerts, numVerts);
+	processMeshTextureCoords(mesh, pVerts, numVerts); 
+	proccessMeshTangentNormals(mesh, pVerts, numVerts);
 
 	//read texture coordinates
 	std::cout << "Vertices " << numVerts << " Indices " << numIndices << std::endl;
@@ -164,6 +165,16 @@ void processMesh(FbxMesh * mesh, GameObject *go)
 	{
 		delete[] pVerts;
 		pVerts = NULL;
+	}
+}
+
+void proccessMeshTangentNormals(FbxMesh * mesh, Vertex * verts, int numVerts)
+{
+	for (int iPolygon = 0; iPolygon < mesh->GetPolygonCount(); iPolygon++) {
+		for (unsigned iPolygonVertex = 0; iPolygonVertex < 3; iPolygonVertex++) {
+			int fbxCornerIndex = mesh->GetPolygonVertex(iPolygon, iPolygonVertex);
+			FbxVector4 fbxTangent;
+		}
 	}
 }
 

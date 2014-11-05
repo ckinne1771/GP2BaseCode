@@ -17,6 +17,8 @@ void processMesh(FbxMesh * mesh, GameObject *go);
 
 void processMeshNormals(FbxMesh * mesh, Vertex * verts, int numVerts);
 
+void proccessMeshTangentNormals(FbxMesh * mesh, Vertex * verts, int numVerts);
+
 void processMeshTextureCoords(FbxMesh * mesh, Vertex * verts, int numVerts);
 
 #endif
