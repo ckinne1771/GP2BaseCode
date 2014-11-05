@@ -267,9 +267,15 @@ void Initialise()
 	{
 		Material * material = new Material();
 		material->init();
-		std::string vsPath = ASSET_PATH + SHADER_PATH + "/specularVSPerPixel.glsl";
-		std::string fsPath = ASSET_PATH + SHADER_PATH + "/specularFSPerPixel.glsl";
+		std::string vsPath = ASSET_PATH + SHADER_PATH + "/DirectionalLightTextureVS.glsl";
+		std::string fsPath = ASSET_PATH + SHADER_PATH + "/DirectionalLightTextureFS.glsl";
 		material->loadShader(vsPath, fsPath);
+
+		std::string diffTexturePath = ASSET_PATH + TEXTURE_PATH + "/armoredrecon_diff.png";
+		material->loadDiffuseMap(diffTexturePath);
+
+		std::string specTexturePath = ASSET_PATH + TEXTURE_PATH + "/armoredrecon_spec.png";
+		material->loadSpecularMap(specTexturePath);
 
 		go->getChild(i)->setMaterial(material);
 	}
@@ -315,7 +321,8 @@ void renderGameObject(GameObject * pObject)
 		GLint specularLightLocation = currentMaterial->getUniformLocation("specularLightColour");
 		GLint specularpowerLocation = currentMaterial->getUniformLocation("specularPower");
 		GLint cameraPositionLocation = currentMaterial->getUniformLocation("cameraPosition");
-
+		GLint diffuseTextureLocation = currentMaterial->getUniformLocation("diffuseMap");
+		GLint specTextureLocation = currentMaterial->getUniformLocation("specMap");
 		Camera * cam = mainCamera->getCamera();
 		Light* light = mainLight->getLight();
 
@@ -348,6 +355,10 @@ void renderGameObject(GameObject * pObject)
 
 		glUniform3fv(cameraPositionLocation, 1, glm::value_ptr(cameraPosition));
 		glUniform1f(specularpowerLocation, specularPower);
+
+		glUniform1i(diffuseTextureLocation, 0);
+		glUniform1i(specTextureLocation, 1);
+
 
 		glDrawElements(GL_TRIANGLES, currentMesh->getIndexCount(), GL_UNSIGNED_INT, 0);
 	}

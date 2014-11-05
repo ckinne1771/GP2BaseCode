@@ -136,5 +136,11 @@
     <None Include="..\assets\shaders\specularVSPerPixel.glsl">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="..\assets\shaders\DirectionalLightTextureFS.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\assets\shaders\DirectionalLightTextureVS.glsl">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
