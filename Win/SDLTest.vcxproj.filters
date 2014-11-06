@@ -148,5 +148,11 @@
     <None Include="..\assets\shaders\BumpmappingFS.glsl">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="..\assets\shaders\ParallaxMappingFS.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\assets\shaders\ParallaxMappingVS.glsl">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -20,6 +20,7 @@ Material::Material()
 	m_SpecularPower = 2.0f;
 	m_DiffuseMap = 0;
 	m_SpecularMap = 0;
+	m_HeightMap = 0;
 }
 
 Material::~Material()
@@ -32,6 +33,8 @@ void Material::destroy()
     glDeleteProgram(m_ShaderProgram);
 	glDeleteTextures(1, &m_DiffuseMap);
 	glDeleteTextures(1, &m_SpecularMap);
+	glDeleteTextures(1, &m_BumpMap);
+	glDeleteTextures(2, &m_HeightMap);
 }
 
 void Material::bind()
@@ -45,6 +48,9 @@ void Material::bind()
 
 	glActiveTexture(GL_TEXTURE2);
 	glBindTexture(GL_TEXTURE_2D, m_BumpMap);
+
+	glActiveTexture(GL_TEXTURE3);
+	glBindTexture(GL_TEXTURE_2D, m_HeightMap);
 }
 
 bool Material::loadShader(const std::string& vsFilename,const std::string& fsFilename)
@@ -149,4 +155,15 @@ void Material::loadBumpMap(const std::string& filename)
 GLuint Material::getBumpMap()
 {
 	return m_BumpMap;
+}
+
+void Material::loadHeightMap(const std::string& filename)
+{
+	m_HeightMap = loadTextureFromFile(filename);
+}
+
+
+GLuint Material::getHeightMap()
+{
+	return m_HeightMap;
 }

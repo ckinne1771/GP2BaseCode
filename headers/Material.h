@@ -59,6 +59,9 @@ public:
 
 	void loadBumpMap(const std::string& filename);
 	GLuint getBumpMap();
+
+	void loadHeightMap(const std::string& filename);
+	GLuint getHeightMap();
 protected:
 private:
     GLuint m_ShaderProgram;
@@ -69,6 +72,7 @@ private:
 	GLuint m_DiffuseMap;
 	GLuint m_SpecularMap;
 	GLuint m_BumpMap;
+	GLuint m_HeightMap;
 };
 
 #endif
