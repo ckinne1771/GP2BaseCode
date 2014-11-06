@@ -56,6 +56,9 @@ public:
 
 	void loadSpecularMap(const std::string& filename);
 	GLuint getSpecularMap();
+
+	void loadBumpMap(const std::string& filename);
+	GLuint getBumpMap();
 protected:
 private:
     GLuint m_ShaderProgram;
@@ -65,6 +68,7 @@ private:
 	float m_SpecularPower;
 	GLuint m_DiffuseMap;
 	GLuint m_SpecularMap;
+	GLuint m_BumpMap;
 };
 
 #endif

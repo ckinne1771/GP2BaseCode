@@ -226,8 +226,8 @@ void Initialise()
 	{
 		Material * material = new Material();
 		material->init();
-		std::string vsPath = ASSET_PATH + SHADER_PATH + "/DirectionalLightTextureVS.glsl";
-		std::string fsPath = ASSET_PATH + SHADER_PATH + "/DirectionalLightTextureFS.glsl";
+		std::string vsPath = ASSET_PATH + SHADER_PATH + "/BumpmappingVS.glsl";
+		std::string fsPath = ASSET_PATH + SHADER_PATH + "/BumpmappingFS.glsl";
 		material->loadShader(vsPath, fsPath);
 
 		std::string diffTexturePath = ASSET_PATH + TEXTURE_PATH + "/armoredrecon_diff.png";
@@ -282,6 +282,7 @@ void renderGameObject(GameObject * pObject)
 		GLint cameraPositionLocation = currentMaterial->getUniformLocation("cameraPosition");
 		GLint diffuseTextureLocation = currentMaterial->getUniformLocation("diffuseMap");
 		GLint specTextureLocation = currentMaterial->getUniformLocation("specMap");
+		GLint bumpTextureLocation = currentMaterial->getUniformLocation("bumpMap");
 		Camera * cam = mainCamera->getCamera();
 		Light* light = mainLight->getLight();
 
@@ -317,7 +318,7 @@ void renderGameObject(GameObject * pObject)
 
 		glUniform1i(diffuseTextureLocation, 0);
 		glUniform1i(specTextureLocation, 1);
-
+		glUniform1i(bumpTextureLocation, 2);
 
 		glDrawElements(GL_TRIANGLES, currentMesh->getIndexCount(), GL_UNSIGNED_INT, 0);
 	}

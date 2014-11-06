@@ -152,10 +152,11 @@ void processMesh(FbxMesh * mesh, GameObject *go)
 	//read normal
 	processMeshNormals(mesh, pVerts, numVerts);
 	processMeshTextureCoords(mesh, pVerts, numVerts); 
-	proccessMeshTangentNormals(mesh, pVerts, numVerts);
 
 	//read texture coordinates
 	std::cout << "Vertices " << numVerts << " Indices " << numIndices << std::endl;
+
+	calculateTagentAndBinormals(pVerts, numVerts, pIndices, numIndices);
 
 	meshComponent->copyIndexData(numIndices, sizeof(int), (void**)pIndices);
 	meshComponent->copyVertexData(numVerts, sizeof(Vertex), (void**)pVerts);
@@ -165,16 +166,6 @@ void processMesh(FbxMesh * mesh, GameObject *go)
 	{
 		delete[] pVerts;
 		pVerts = NULL;
-	}
-}
-
-void proccessMeshTangentNormals(FbxMesh * mesh, Vertex * verts, int numVerts)
-{
-	for (int iPolygon = 0; iPolygon < mesh->GetPolygonCount(); iPolygon++) {
-		for (unsigned iPolygonVertex = 0; iPolygonVertex < 3; iPolygonVertex++) {
-			int fbxCornerIndex = mesh->GetPolygonVertex(iPolygon, iPolygonVertex);
-			FbxVector4 fbxTangent;
-		}
 	}
 }
 
@@ -216,5 +207,53 @@ void processMeshTextureCoords(FbxMesh * mesh, Vertex * verts, int numVerts)
 				verts[fbxCornerIndex].texCoords.y = 1.0f - fbxUV[1];
 			}
 		}
+	}
+}
+
+//Bug in some exporters means that we will have to calculate these!
+void calculateTagentAndBinormals(Vertex * verts, int numVerts, int * indices, int numIndices)
+{
+	//create arrays for 
+	for (int i = 0; i < numIndices; i += 3)
+	{
+		vec3 vertex0 = verts[indices[i]].position;
+		vec3 vertex1 = verts[indices[i+1]].position;
+		vec3 vertex2 = verts[indices[i+2]].position;
+
+		vec3 normal = glm::cross((vertex1 - vertex0), (vertex2 - vertex0));
+
+		vec3 deltaPos;
+		if (vertex0 == vertex1)
+			deltaPos = vertex2 - vertex0;
+		else
+			deltaPos = vertex1 - vertex0;
+
+		vec2 uv0 = verts[indices[i]].texCoords;
+		vec2 uv1 = verts[indices[i+1]].texCoords;
+		vec2 uv2 = verts[indices[i+2]].texCoords;
+
+		vec2 deltaUV1 = uv1 - uv0;
+		vec2 deltaUV2 = uv2 - uv0;
+
+		vec3 tan; // tangents
+		vec3 bin; // binormal
+
+		// avoid divion with 0
+		if (deltaUV1.s != 0)
+			tan = deltaPos / deltaUV1.s;
+		else
+			tan = deltaPos / 1.0f;
+
+		tan = glm::normalize(tan - glm::dot(normal, tan)*normal);
+
+		bin = glm::normalize(glm::cross(tan, normal));
+
+		verts[indices[i]].tangentNormals=tan;
+		verts[indices[i + 1]].tangentNormals = tan;
+		verts[indices[i + 2]].tangentNormals = tan;
+
+		verts[indices[i]].binormals = bin;
+		verts[indices[i + 1]].binormals = bin;
+		verts[indices[i + 2]].binormals = bin;
 	}
 }

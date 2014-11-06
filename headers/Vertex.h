@@ -18,10 +18,10 @@ struct Vertex
 {
 	vec3 position;
 	vec3 normal;
-	vec3 tangentNormals;
-	vec3 biNormals;
 	vec2 texCoords;
 	vec4 colours;
+	vec3 tangentNormals;
+	vec3 binormals;
 };
 
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))

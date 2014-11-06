@@ -42,6 +42,9 @@ void Material::bind()
 	
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, m_SpecularMap);
+
+	glActiveTexture(GL_TEXTURE2);
+	glBindTexture(GL_TEXTURE_2D, m_BumpMap);
 }
 
 bool Material::loadShader(const std::string& vsFilename,const std::string& fsFilename)
@@ -64,10 +67,10 @@ bool Material::loadShader(const std::string& vsFilename,const std::string& fsFil
     
     glBindAttribLocation(m_ShaderProgram, 0, "vertexPosition");
 	glBindAttribLocation(m_ShaderProgram, 1, "vertexNormals");
-	glBindAttribLocation(m_ShaderProgram, 2, "vertexTangents");
-	glBindAttribLocation(m_ShaderProgram, 3, "vertexBiNormals");
-	glBindAttribLocation(m_ShaderProgram, 4, "vertexTexCoords");
-	glBindAttribLocation(m_ShaderProgram, 5, "vertexColour");
+	glBindAttribLocation(m_ShaderProgram, 2, "vertexTexCoords");
+	glBindAttribLocation(m_ShaderProgram, 3, "vertexColour");
+	glBindAttribLocation(m_ShaderProgram, 4, "vertexTangents");
+	glBindAttribLocation(m_ShaderProgram, 5, "vertexBinormals");
 
     return true;
 }
@@ -135,4 +138,15 @@ void Material::loadSpecularMap(const std::string& filename)
 GLuint Material::getSpecularMap()
 {
 	return m_SpecularMap;
+}
+
+
+void Material::loadBumpMap(const std::string& filename)
+{
+	m_BumpMap = loadTextureFromFile(filename);
+}
+
+GLuint Material::getBumpMap()
+{
+	return m_BumpMap;
 }
