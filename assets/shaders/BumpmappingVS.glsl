@@ -29,7 +29,6 @@ void main()
 	//vertexNormalOut = vertexNormalModel;
 	//cameraDirectionOut = cameraDir;
 
-	
 	lightDirectionOut = normalize(tangentMatrix*lightDirection);
 	vertexNormalOut = normalize(tangentMatrix*vertexNormalModel);
 	cameraDirectionOut = normalize(tangentMatrix*cameraDir);

@@ -17,7 +17,7 @@ Material::Material()
 	m_AmbientColour = vec4(0.0f, 0.0f, 0.0f, 1.0f);
 	m_DiffuseColour = vec4(0.0f, 0.0f, 0.0f, 1.0f);
 	m_SpecularColour = vec4(0.0f, 0.0f, 0.0f, 1.0f);
-	m_SpecularPower = 10.0f;
+	m_SpecularPower = 2.0f;
 	m_DiffuseMap = 0;
 	m_SpecularMap = 0;
 }

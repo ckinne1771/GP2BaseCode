@@ -147,6 +147,8 @@ void processMesh(FbxMesh * mesh, GameObject *go)
 		pVerts[i].position = vec3(currentVert[0], currentVert[1], currentVert[2]);
 		pVerts[i].colours = vec4(1.0f, 1.0f, 1.0f, 1.0f);
 		pVerts[i].texCoords = vec2(0.0f, 0.0f);
+		pVerts[i].binormals = vec3(0.0f, 0.0f, 0.0f);
+		pVerts[i].tangentNormals = vec3(0.0f, 0.0f, 0.0f);
 	}
 
 	//read normal
