@@ -25,9 +25,6 @@ void main()
 	vec3 worldPos = (Model*vec4(vertexPosition, 1.0)).xyz;
 	vec3 cameraDir = normalize(cameraPosition - worldPos);
 
-	//lightDirectionOut = lightDirection;
-	//vertexNormalOut = vertexNormalModel;
-	//cameraDirectionOut = cameraDir;
 
 	lightDirectionOut = normalize(tangentMatrix*lightDirection);
 	vertexNormalOut = normalize(tangentMatrix*vertexNormalModel);
