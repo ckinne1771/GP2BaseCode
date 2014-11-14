@@ -7,35 +7,58 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D3002D281A02876F009CDD65 /* Component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3002D271A02876F009CDD65 /* Component.cpp */; };
-		D3002D2B1A0399A1009CDD65 /* GameObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3002D2A1A0399A1009CDD65 /* GameObject.cpp */; };
-		D3002D2F1A039E06009CDD65 /* Transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3002D2D1A039E06009CDD65 /* Transform.cpp */; };
-		D3002D321A03A200009CDD65 /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3002D311A03A200009CDD65 /* Mesh.cpp */; };
-		D3002D351A03A79D009CDD65 /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3002D341A03A79D009CDD65 /* Material.cpp */; };
-		D3002D381A03AB08009CDD65 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3002D371A03AB08009CDD65 /* Camera.cpp */; };
+		D31791971A154DD000474536 /* libfbxsdk.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D31791961A154DD000474536 /* libfbxsdk.dylib */; };
+		D31791991A154ED100474536 /* armoredrecon.fbx in Resources */ = {isa = PBXBuildFile; fileRef = D31791981A154ED100474536 /* armoredrecon.fbx */; };
 		D3737B2F196854B6001A741F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3737B2D196854B6001A741F /* InfoPlist.strings */; };
 		D3737B35196854B6001A741F /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D3737B33196854B6001A741F /* Credits.rtf */; };
 		D3737B3D196854B6001A741F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3737B3C196854B6001A741F /* Images.xcassets */; };
-		D3737B591968557F001A741F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3737B581968557F001A741F /* main.cpp */; };
 		D3737B5B19695DA0001A741F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3737B5A19695DA0001A741F /* OpenGL.framework */; };
 		D3737B5D19695DAF001A741F /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3737B5C19695DAF001A741F /* GLUT.framework */; };
 		D3737B6119695F55001A741F /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3737B6019695F55001A741F /* SDL2.framework */; };
-		D383D25A19E5BEB2009A30C0 /* textureFS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D383D25619E5BEB2009A30C0 /* textureFS.glsl */; };
-		D383D25B19E5BEB2009A30C0 /* textureVS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D383D25719E5BEB2009A30C0 /* textureVS.glsl */; };
-		D383D25C19E5BEB2009A30C0 /* vertexColourFS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D383D25819E5BEB2009A30C0 /* vertexColourFS.glsl */; };
-		D383D25D19E5BEB2009A30C0 /* vertexColourVS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D383D25919E5BEB2009A30C0 /* vertexColourVS.glsl */; };
-		D383D25F19E5BEC2009A30C0 /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = D383D25E19E5BEC2009A30C0 /* test.png */; };
-		D383D26119E5BEE7009A30C0 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D383D26019E5BEE7009A30C0 /* Texture.cpp */; };
 		D383D26419E5BF1F009A30C0 /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D383D26319E5BF1F009A30C0 /* SDL2_image.framework */; };
 		D386D4F319EC810700998AD5 /* SDL2_ttf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D386D4F219EC810700998AD5 /* SDL2_ttf.framework */; };
-		D386D4F919EC857F00998AD5 /* vertexColourTextureFS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D386D4F719EC857F00998AD5 /* vertexColourTextureFS.glsl */; };
-		D386D4FA19EC857F00998AD5 /* vertexColourTextureVS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D386D4F819EC857F00998AD5 /* vertexColourTextureVS.glsl */; };
-		D386D4FB19EC862500998AD5 /* OratorStd.otf in Resources */ = {isa = PBXBuildFile; fileRef = D386D4F619EC856C00998AD5 /* OratorStd.otf */; };
-		D3934F9219DC8FF50015CCBF /* simpleVS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D3934F9119DC8FF50015CCBF /* simpleVS.glsl */; };
+		D39831BD1A10DA3400D8154A /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D39831B21A10DA3400D8154A /* Camera.cpp */; };
+		D39831BE1A10DA3400D8154A /* Component.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D39831B31A10DA3400D8154A /* Component.cpp */; };
+		D39831BF1A10DA3400D8154A /* FBXLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D39831B41A10DA3400D8154A /* FBXLoader.cpp */; };
+		D39831C01A10DA3400D8154A /* GameObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D39831B51A10DA3400D8154A /* GameObject.cpp */; };
+		D39831C11A10DA3400D8154A /* Light.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D39831B61A10DA3400D8154A /* Light.cpp */; };
+		D39831C21A10DA3400D8154A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D39831B71A10DA3400D8154A /* main.cpp */; };
+		D39831C31A10DA3400D8154A /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D39831B81A10DA3400D8154A /* Material.cpp */; };
+		D39831C41A10DA3400D8154A /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D39831B91A10DA3400D8154A /* Mesh.cpp */; };
+		D39831C51A10DA3400D8154A /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D39831BA1A10DA3400D8154A /* Shader.cpp */; };
+		D39831C61A10DA3400D8154A /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D39831BB1A10DA3400D8154A /* Texture.cpp */; };
+		D39831C71A10DA3400D8154A /* Transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D39831BC1A10DA3400D8154A /* Transform.cpp */; };
+		D39831EB1A10DA8C00D8154A /* ambientFS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D39831D51A10DA8C00D8154A /* ambientFS.glsl */; };
+		D39831EC1A10DA8C00D8154A /* ambientVS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D39831D61A10DA8C00D8154A /* ambientVS.glsl */; };
+		D39831ED1A10DA8C00D8154A /* BumpmappingFS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D39831D71A10DA8C00D8154A /* BumpmappingFS.glsl */; };
+		D39831EE1A10DA8C00D8154A /* BumpmappingVS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D39831D81A10DA8C00D8154A /* BumpmappingVS.glsl */; };
+		D39831EF1A10DA8C00D8154A /* diffuseFS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D39831D91A10DA8C00D8154A /* diffuseFS.glsl */; };
+		D39831F01A10DA8C00D8154A /* diffuseVS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D39831DA1A10DA8C00D8154A /* diffuseVS.glsl */; };
+		D39831F11A10DA8C00D8154A /* DirectionalLightTextureFS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D39831DB1A10DA8C00D8154A /* DirectionalLightTextureFS.glsl */; };
+		D39831F21A10DA8C00D8154A /* DirectionalLightTextureVS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D39831DC1A10DA8C00D8154A /* DirectionalLightTextureVS.glsl */; };
+		D39831F31A10DA8C00D8154A /* ParallaxMappingFS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D39831DD1A10DA8C00D8154A /* ParallaxMappingFS.glsl */; };
+		D39831F41A10DA8C00D8154A /* ParallaxMappingVS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D39831DE1A10DA8C00D8154A /* ParallaxMappingVS.glsl */; };
+		D39831F51A10DA8C00D8154A /* simpleFS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D39831DF1A10DA8C00D8154A /* simpleFS.glsl */; };
+		D39831F61A10DA8C00D8154A /* simpleVS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D39831E01A10DA8C00D8154A /* simpleVS.glsl */; };
+		D39831F71A10DA8C00D8154A /* specularFS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D39831E11A10DA8C00D8154A /* specularFS.glsl */; };
+		D39831F81A10DA8C00D8154A /* specularFSPerPixel.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D39831E21A10DA8C00D8154A /* specularFSPerPixel.glsl */; };
+		D39831F91A10DA8C00D8154A /* specularVS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D39831E31A10DA8C00D8154A /* specularVS.glsl */; };
+		D39831FA1A10DA8C00D8154A /* specularVSPerPixel.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D39831E41A10DA8C00D8154A /* specularVSPerPixel.glsl */; };
+		D39831FB1A10DA8C00D8154A /* textureFS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D39831E51A10DA8C00D8154A /* textureFS.glsl */; };
+		D39831FC1A10DA8C00D8154A /* textureVS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D39831E61A10DA8C00D8154A /* textureVS.glsl */; };
+		D39831FD1A10DA8C00D8154A /* vertexColourFS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D39831E71A10DA8C00D8154A /* vertexColourFS.glsl */; };
+		D39831FE1A10DA8C00D8154A /* vertexColourTextureFS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D39831E81A10DA8C00D8154A /* vertexColourTextureFS.glsl */; };
+		D39831FF1A10DA8C00D8154A /* vertexColourTextureVS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D39831E91A10DA8C00D8154A /* vertexColourTextureVS.glsl */; };
+		D39832001A10DA8C00D8154A /* vertexColourVS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D39831EA1A10DA8C00D8154A /* vertexColourVS.glsl */; };
+		D39832081A10DA9D00D8154A /* armoredrecon_diff.png in Resources */ = {isa = PBXBuildFile; fileRef = D39832021A10DA9D00D8154A /* armoredrecon_diff.png */; };
+		D39832091A10DA9D00D8154A /* armoredrecon_Height.png in Resources */ = {isa = PBXBuildFile; fileRef = D39832031A10DA9D00D8154A /* armoredrecon_Height.png */; };
+		D398320A1A10DA9D00D8154A /* armoredrecon_N.png in Resources */ = {isa = PBXBuildFile; fileRef = D39832041A10DA9D00D8154A /* armoredrecon_N.png */; };
+		D398320B1A10DA9D00D8154A /* armoredrecon_spec.png in Resources */ = {isa = PBXBuildFile; fileRef = D39832051A10DA9D00D8154A /* armoredrecon_spec.png */; };
+		D398320C1A10DA9D00D8154A /* char_idle.png in Resources */ = {isa = PBXBuildFile; fileRef = D39832061A10DA9D00D8154A /* char_idle.png */; };
+		D398320D1A10DA9D00D8154A /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = D39832071A10DA9D00D8154A /* test.png */; };
+		D39832151A10DBC800D8154A /* libfbxsdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D39832141A10DBC800D8154A /* libfbxsdk.a */; };
 		D3CAAEEB198FFE3B006E620D /* libGLEW.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3CAAEEA198FFE3B006E620D /* libGLEW.a */; };
-		D3CACF9319DC6CA5003A75EA /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3CACF9219DC6CA5003A75EA /* Shader.cpp */; };
 		D3CACF9519DC6CF6003A75EA /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3CACF9419DC6CF6003A75EA /* CoreFoundation.framework */; };
-		D3CACF9719DC857F003A75EA /* simpleFS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D3CACF9619DC857F003A75EA /* simpleFS.glsl */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,48 +71,87 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		D31791951A154D9C00474536 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				D31791971A154DD000474536 /* libfbxsdk.dylib in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		D3002D261A028612009CDD65 /* Component.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Component.h; path = ../headers/Component.h; sourceTree = "<group>"; };
-		D3002D271A02876F009CDD65 /* Component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Component.cpp; path = ../src/Component.cpp; sourceTree = "<group>"; };
-		D3002D291A0397CE009CDD65 /* GameObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GameObject.h; path = ../headers/GameObject.h; sourceTree = "<group>"; };
-		D3002D2A1A0399A1009CDD65 /* GameObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameObject.cpp; path = ../src/GameObject.cpp; sourceTree = "<group>"; };
-		D3002D2C1A039C5F009CDD65 /* Transform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Transform.h; path = ../headers/Transform.h; sourceTree = "<group>"; };
-		D3002D2D1A039E06009CDD65 /* Transform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Transform.cpp; path = ../src/Transform.cpp; sourceTree = "<group>"; };
-		D3002D301A039FEC009CDD65 /* Mesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Mesh.h; path = ../headers/Mesh.h; sourceTree = "<group>"; };
-		D3002D311A03A200009CDD65 /* Mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Mesh.cpp; path = ../src/Mesh.cpp; sourceTree = "<group>"; };
-		D3002D331A03A5E1009CDD65 /* Material.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Material.h; path = ../headers/Material.h; sourceTree = "<group>"; };
-		D3002D341A03A79D009CDD65 /* Material.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Material.cpp; path = ../src/Material.cpp; sourceTree = "<group>"; };
-		D3002D361A03A9A4009CDD65 /* Camera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Camera.h; path = ../headers/Camera.h; sourceTree = "<group>"; };
-		D3002D371A03AB08009CDD65 /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Camera.cpp; path = ../src/Camera.cpp; sourceTree = "<group>"; };
-		D34CC01A19D8212400204C3A /* Vertex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Vertex.h; path = ../headers/Vertex.h; sourceTree = "<group>"; };
+		D31791961A154DD000474536 /* libfbxsdk.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libfbxsdk.dylib; sourceTree = "<group>"; };
+		D31791981A154ED100474536 /* armoredrecon.fbx */ = {isa = PBXFileReference; lastKnownFileType = file; path = armoredrecon.fbx; sourceTree = "<group>"; };
 		D3737B21196854B6001A741F /* GP2BaseCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GP2BaseCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3737B2C196854B6001A741F /* GP2BaseCode-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GP2BaseCode-Info.plist"; sourceTree = "<group>"; };
 		D3737B2E196854B6001A741F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D3737B34196854B6001A741F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		D3737B3C196854B6001A741F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D3737B42196854B6001A741F /* GP2BaseCodeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GP2BaseCodeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D3737B581968557F001A741F /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../src/main.cpp; sourceTree = "<group>"; };
 		D3737B5A19695DA0001A741F /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = ../../../../../System/Library/Frameworks/OpenGL.framework; sourceTree = "<group>"; };
 		D3737B5C19695DAF001A741F /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../../../System/Library/Frameworks/GLUT.framework; sourceTree = "<group>"; };
 		D3737B6019695F55001A741F /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
-		D383D25619E5BEB2009A30C0 /* textureFS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = textureFS.glsl; path = ../../assets/shaders/textureFS.glsl; sourceTree = "<group>"; };
-		D383D25719E5BEB2009A30C0 /* textureVS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = textureVS.glsl; path = ../../assets/shaders/textureVS.glsl; sourceTree = "<group>"; };
-		D383D25819E5BEB2009A30C0 /* vertexColourFS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = vertexColourFS.glsl; path = ../../assets/shaders/vertexColourFS.glsl; sourceTree = "<group>"; };
-		D383D25919E5BEB2009A30C0 /* vertexColourVS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = vertexColourVS.glsl; path = ../../assets/shaders/vertexColourVS.glsl; sourceTree = "<group>"; };
-		D383D25E19E5BEC2009A30C0 /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = test.png; path = ../../assets/textures/test.png; sourceTree = "<group>"; };
-		D383D26019E5BEE7009A30C0 /* Texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Texture.cpp; path = ../src/Texture.cpp; sourceTree = "<group>"; };
-		D383D26219E5BEEE009A30C0 /* Texture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Texture.h; path = ../headers/Texture.h; sourceTree = "<group>"; };
 		D383D26319E5BF1F009A30C0 /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_image.framework; path = ../../../../../Library/Frameworks/SDL2_image.framework; sourceTree = "<group>"; };
 		D386D4F219EC810700998AD5 /* SDL2_ttf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_ttf.framework; path = ../../../../../Library/Frameworks/SDL2_ttf.framework; sourceTree = "<group>"; };
-		D386D4F619EC856C00998AD5 /* OratorStd.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = OratorStd.otf; path = ../../assets/fonts/OratorStd.otf; sourceTree = "<group>"; };
-		D386D4F719EC857F00998AD5 /* vertexColourTextureFS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = vertexColourTextureFS.glsl; path = ../../assets/shaders/vertexColourTextureFS.glsl; sourceTree = "<group>"; };
-		D386D4F819EC857F00998AD5 /* vertexColourTextureVS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = vertexColourTextureVS.glsl; path = ../../assets/shaders/vertexColourTextureVS.glsl; sourceTree = "<group>"; };
-		D3934F9119DC8FF50015CCBF /* simpleVS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = simpleVS.glsl; path = ../../assets/shaders/simpleVS.glsl; sourceTree = "<group>"; };
-		D3BAC4DD19E1E78F004E734C /* Shader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Shader.h; path = ../headers/Shader.h; sourceTree = "<group>"; };
+		D39831A71A10DA2500D8154A /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Camera.h; path = ../headers/Camera.h; sourceTree = "<group>"; };
+		D39831A81A10DA2500D8154A /* Component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Component.h; path = ../headers/Component.h; sourceTree = "<group>"; };
+		D39831A91A10DA2500D8154A /* FBXLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBXLoader.h; path = ../headers/FBXLoader.h; sourceTree = "<group>"; };
+		D39831AA1A10DA2500D8154A /* GameObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameObject.h; path = ../headers/GameObject.h; sourceTree = "<group>"; };
+		D39831AB1A10DA2500D8154A /* Light.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Light.h; path = ../headers/Light.h; sourceTree = "<group>"; };
+		D39831AC1A10DA2500D8154A /* Material.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Material.h; path = ../headers/Material.h; sourceTree = "<group>"; };
+		D39831AD1A10DA2500D8154A /* Mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mesh.h; path = ../headers/Mesh.h; sourceTree = "<group>"; };
+		D39831AE1A10DA2500D8154A /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Shader.h; path = ../headers/Shader.h; sourceTree = "<group>"; };
+		D39831AF1A10DA2500D8154A /* Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Texture.h; path = ../headers/Texture.h; sourceTree = "<group>"; };
+		D39831B01A10DA2500D8154A /* Transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Transform.h; path = ../headers/Transform.h; sourceTree = "<group>"; };
+		D39831B11A10DA2500D8154A /* Vertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Vertex.h; path = ../headers/Vertex.h; sourceTree = "<group>"; };
+		D39831B21A10DA3400D8154A /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Camera.cpp; path = ../src/Camera.cpp; sourceTree = "<group>"; };
+		D39831B31A10DA3400D8154A /* Component.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Component.cpp; path = ../src/Component.cpp; sourceTree = "<group>"; };
+		D39831B41A10DA3400D8154A /* FBXLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FBXLoader.cpp; path = ../src/FBXLoader.cpp; sourceTree = "<group>"; };
+		D39831B51A10DA3400D8154A /* GameObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameObject.cpp; path = ../src/GameObject.cpp; sourceTree = "<group>"; };
+		D39831B61A10DA3400D8154A /* Light.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Light.cpp; path = ../src/Light.cpp; sourceTree = "<group>"; };
+		D39831B71A10DA3400D8154A /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../src/main.cpp; sourceTree = "<group>"; };
+		D39831B81A10DA3400D8154A /* Material.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Material.cpp; path = ../src/Material.cpp; sourceTree = "<group>"; };
+		D39831B91A10DA3400D8154A /* Mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Mesh.cpp; path = ../src/Mesh.cpp; sourceTree = "<group>"; };
+		D39831BA1A10DA3400D8154A /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Shader.cpp; path = ../src/Shader.cpp; sourceTree = "<group>"; };
+		D39831BB1A10DA3400D8154A /* Texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Texture.cpp; path = ../src/Texture.cpp; sourceTree = "<group>"; };
+		D39831BC1A10DA3400D8154A /* Transform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Transform.cpp; path = ../src/Transform.cpp; sourceTree = "<group>"; };
+		D39831D51A10DA8C00D8154A /* ambientFS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ambientFS.glsl; path = ../../assets/shaders/ambientFS.glsl; sourceTree = "<group>"; };
+		D39831D61A10DA8C00D8154A /* ambientVS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ambientVS.glsl; path = ../../assets/shaders/ambientVS.glsl; sourceTree = "<group>"; };
+		D39831D71A10DA8C00D8154A /* BumpmappingFS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = BumpmappingFS.glsl; path = ../../assets/shaders/BumpmappingFS.glsl; sourceTree = "<group>"; };
+		D39831D81A10DA8C00D8154A /* BumpmappingVS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = BumpmappingVS.glsl; path = ../../assets/shaders/BumpmappingVS.glsl; sourceTree = "<group>"; };
+		D39831D91A10DA8C00D8154A /* diffuseFS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = diffuseFS.glsl; path = ../../assets/shaders/diffuseFS.glsl; sourceTree = "<group>"; };
+		D39831DA1A10DA8C00D8154A /* diffuseVS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = diffuseVS.glsl; path = ../../assets/shaders/diffuseVS.glsl; sourceTree = "<group>"; };
+		D39831DB1A10DA8C00D8154A /* DirectionalLightTextureFS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DirectionalLightTextureFS.glsl; path = ../../assets/shaders/DirectionalLightTextureFS.glsl; sourceTree = "<group>"; };
+		D39831DC1A10DA8C00D8154A /* DirectionalLightTextureVS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DirectionalLightTextureVS.glsl; path = ../../assets/shaders/DirectionalLightTextureVS.glsl; sourceTree = "<group>"; };
+		D39831DD1A10DA8C00D8154A /* ParallaxMappingFS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ParallaxMappingFS.glsl; path = ../../assets/shaders/ParallaxMappingFS.glsl; sourceTree = "<group>"; };
+		D39831DE1A10DA8C00D8154A /* ParallaxMappingVS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ParallaxMappingVS.glsl; path = ../../assets/shaders/ParallaxMappingVS.glsl; sourceTree = "<group>"; };
+		D39831DF1A10DA8C00D8154A /* simpleFS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = simpleFS.glsl; path = ../../assets/shaders/simpleFS.glsl; sourceTree = "<group>"; };
+		D39831E01A10DA8C00D8154A /* simpleVS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = simpleVS.glsl; path = ../../assets/shaders/simpleVS.glsl; sourceTree = "<group>"; };
+		D39831E11A10DA8C00D8154A /* specularFS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = specularFS.glsl; path = ../../assets/shaders/specularFS.glsl; sourceTree = "<group>"; };
+		D39831E21A10DA8C00D8154A /* specularFSPerPixel.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = specularFSPerPixel.glsl; path = ../../assets/shaders/specularFSPerPixel.glsl; sourceTree = "<group>"; };
+		D39831E31A10DA8C00D8154A /* specularVS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = specularVS.glsl; path = ../../assets/shaders/specularVS.glsl; sourceTree = "<group>"; };
+		D39831E41A10DA8C00D8154A /* specularVSPerPixel.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = specularVSPerPixel.glsl; path = ../../assets/shaders/specularVSPerPixel.glsl; sourceTree = "<group>"; };
+		D39831E51A10DA8C00D8154A /* textureFS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = textureFS.glsl; path = ../../assets/shaders/textureFS.glsl; sourceTree = "<group>"; };
+		D39831E61A10DA8C00D8154A /* textureVS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = textureVS.glsl; path = ../../assets/shaders/textureVS.glsl; sourceTree = "<group>"; };
+		D39831E71A10DA8C00D8154A /* vertexColourFS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = vertexColourFS.glsl; path = ../../assets/shaders/vertexColourFS.glsl; sourceTree = "<group>"; };
+		D39831E81A10DA8C00D8154A /* vertexColourTextureFS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = vertexColourTextureFS.glsl; path = ../../assets/shaders/vertexColourTextureFS.glsl; sourceTree = "<group>"; };
+		D39831E91A10DA8C00D8154A /* vertexColourTextureVS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = vertexColourTextureVS.glsl; path = ../../assets/shaders/vertexColourTextureVS.glsl; sourceTree = "<group>"; };
+		D39831EA1A10DA8C00D8154A /* vertexColourVS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = vertexColourVS.glsl; path = ../../assets/shaders/vertexColourVS.glsl; sourceTree = "<group>"; };
+		D39832021A10DA9D00D8154A /* armoredrecon_diff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = armoredrecon_diff.png; path = ../../assets/textures/armoredrecon_diff.png; sourceTree = "<group>"; };
+		D39832031A10DA9D00D8154A /* armoredrecon_Height.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = armoredrecon_Height.png; path = ../../assets/textures/armoredrecon_Height.png; sourceTree = "<group>"; };
+		D39832041A10DA9D00D8154A /* armoredrecon_N.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = armoredrecon_N.png; path = ../../assets/textures/armoredrecon_N.png; sourceTree = "<group>"; };
+		D39832051A10DA9D00D8154A /* armoredrecon_spec.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = armoredrecon_spec.png; path = ../../assets/textures/armoredrecon_spec.png; sourceTree = "<group>"; };
+		D39832061A10DA9D00D8154A /* char_idle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = char_idle.png; path = ../../assets/textures/char_idle.png; sourceTree = "<group>"; };
+		D39832071A10DA9D00D8154A /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = test.png; path = ../../assets/textures/test.png; sourceTree = "<group>"; };
+		D398320F1A10DAAC00D8154A /* OratorStd.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = OratorStd.otf; path = ../../assets/fonts/OratorStd.otf; sourceTree = "<group>"; };
+		D39832141A10DBC800D8154A /* libfbxsdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfbxsdk.a; path = "../../../../../Applications/Autodesk/FBX SDK/2015.1/lib/clang/libstdcpp/debug/libfbxsdk.a"; sourceTree = "<group>"; };
 		D3CAAEEA198FFE3B006E620D /* libGLEW.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGLEW.a; path = "../../../Dev/glew-1.10.0/lib/libGLEW.a"; sourceTree = "<group>"; };
-		D3CACF9219DC6CA5003A75EA /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Shader.cpp; path = ../src/Shader.cpp; sourceTree = "<group>"; };
 		D3CACF9419DC6CF6003A75EA /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		D3CACF9619DC857F003A75EA /* simpleFS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = simpleFS.glsl; path = ../../assets/shaders/simpleFS.glsl; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +162,7 @@
 				D3CACF9519DC6CF6003A75EA /* CoreFoundation.framework in Frameworks */,
 				D386D4F319EC810700998AD5 /* SDL2_ttf.framework in Frameworks */,
 				D3CAAEEB198FFE3B006E620D /* libGLEW.a in Frameworks */,
+				D39832151A10DBC800D8154A /* libfbxsdk.a in Frameworks */,
 				D3737B6119695F55001A741F /* SDL2.framework in Frameworks */,
 				D383D26419E5BF1F009A30C0 /* SDL2_image.framework in Frameworks */,
 				D3737B5D19695DAF001A741F /* GLUT.framework in Frameworks */,
@@ -120,24 +183,9 @@
 		D3737B18196854B6001A741F = {
 			isa = PBXGroup;
 			children = (
-				D3002D371A03AB08009CDD65 /* Camera.cpp */,
-				D3002D361A03A9A4009CDD65 /* Camera.h */,
-				D3002D341A03A79D009CDD65 /* Material.cpp */,
-				D3002D331A03A5E1009CDD65 /* Material.h */,
-				D3002D311A03A200009CDD65 /* Mesh.cpp */,
-				D3002D301A039FEC009CDD65 /* Mesh.h */,
-				D3002D2D1A039E06009CDD65 /* Transform.cpp */,
-				D3002D2C1A039C5F009CDD65 /* Transform.h */,
-				D3002D2A1A0399A1009CDD65 /* GameObject.cpp */,
-				D3002D291A0397CE009CDD65 /* GameObject.h */,
-				D3002D271A02876F009CDD65 /* Component.cpp */,
-				D3002D261A028612009CDD65 /* Component.h */,
-				D3BAC4DD19E1E78F004E734C /* Shader.h */,
-				D3CACF9219DC6CA5003A75EA /* Shader.cpp */,
-				D34CC01A19D8212400204C3A /* Vertex.h */,
-				D383D26219E5BEEE009A30C0 /* Texture.h */,
-				D3737B581968557F001A741F /* main.cpp */,
-				D383D26019E5BEE7009A30C0 /* Texture.cpp */,
+				D31791961A154DD000474536 /* libfbxsdk.dylib */,
+				D39831A61A10DA0F00D8154A /* headers */,
+				D39831A51A10D9FA00D8154A /* src */,
 				D3737B2A196854B6001A741F /* GP2BaseCode */,
 				D3737B23196854B6001A741F /* Frameworks */,
 				D3737B22196854B6001A741F /* Products */,
@@ -156,6 +204,7 @@
 		D3737B23196854B6001A741F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D39832141A10DBC800D8154A /* libfbxsdk.a */,
 				D386D4F219EC810700998AD5 /* SDL2_ttf.framework */,
 				D383D26319E5BF1F009A30C0 /* SDL2_image.framework */,
 				D3CACF9419DC6CF6003A75EA /* CoreFoundation.framework */,
@@ -178,18 +227,12 @@
 		D3737B2A196854B6001A741F /* GP2BaseCode */ = {
 			isa = PBXGroup;
 			children = (
-				D386D4F619EC856C00998AD5 /* OratorStd.otf */,
-				D386D4F719EC857F00998AD5 /* vertexColourTextureFS.glsl */,
-				D386D4F819EC857F00998AD5 /* vertexColourTextureVS.glsl */,
-				D383D25E19E5BEC2009A30C0 /* test.png */,
-				D383D25619E5BEB2009A30C0 /* textureFS.glsl */,
-				D383D25719E5BEB2009A30C0 /* textureVS.glsl */,
-				D383D25819E5BEB2009A30C0 /* vertexColourFS.glsl */,
-				D383D25919E5BEB2009A30C0 /* vertexColourVS.glsl */,
-				D3934F9119DC8FF50015CCBF /* simpleVS.glsl */,
+				D39832101A10DAAF00D8154A /* models */,
+				D398320E1A10DAA100D8154A /* fonts */,
+				D39832011A10DA9100D8154A /* textures */,
+				D39831D41A10DA8000D8154A /* shaders */,
 				D3737B3C196854B6001A741F /* Images.xcassets */,
 				D3737B2B196854B6001A741F /* Supporting Files */,
-				D3CACF9619DC857F003A75EA /* simpleFS.glsl */,
 			);
 			path = GP2BaseCode;
 			sourceTree = "<group>";
@@ -204,6 +247,100 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		D39831A51A10D9FA00D8154A /* src */ = {
+			isa = PBXGroup;
+			children = (
+				D39831B21A10DA3400D8154A /* Camera.cpp */,
+				D39831B31A10DA3400D8154A /* Component.cpp */,
+				D39831B41A10DA3400D8154A /* FBXLoader.cpp */,
+				D39831B51A10DA3400D8154A /* GameObject.cpp */,
+				D39831B61A10DA3400D8154A /* Light.cpp */,
+				D39831B71A10DA3400D8154A /* main.cpp */,
+				D39831B81A10DA3400D8154A /* Material.cpp */,
+				D39831B91A10DA3400D8154A /* Mesh.cpp */,
+				D39831BA1A10DA3400D8154A /* Shader.cpp */,
+				D39831BB1A10DA3400D8154A /* Texture.cpp */,
+				D39831BC1A10DA3400D8154A /* Transform.cpp */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		D39831A61A10DA0F00D8154A /* headers */ = {
+			isa = PBXGroup;
+			children = (
+				D39831A71A10DA2500D8154A /* Camera.h */,
+				D39831A81A10DA2500D8154A /* Component.h */,
+				D39831A91A10DA2500D8154A /* FBXLoader.h */,
+				D39831AA1A10DA2500D8154A /* GameObject.h */,
+				D39831AB1A10DA2500D8154A /* Light.h */,
+				D39831AC1A10DA2500D8154A /* Material.h */,
+				D39831AD1A10DA2500D8154A /* Mesh.h */,
+				D39831AE1A10DA2500D8154A /* Shader.h */,
+				D39831AF1A10DA2500D8154A /* Texture.h */,
+				D39831B01A10DA2500D8154A /* Transform.h */,
+				D39831B11A10DA2500D8154A /* Vertex.h */,
+			);
+			name = headers;
+			sourceTree = "<group>";
+		};
+		D39831D41A10DA8000D8154A /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+				D39831D51A10DA8C00D8154A /* ambientFS.glsl */,
+				D39831D61A10DA8C00D8154A /* ambientVS.glsl */,
+				D39831D71A10DA8C00D8154A /* BumpmappingFS.glsl */,
+				D39831D81A10DA8C00D8154A /* BumpmappingVS.glsl */,
+				D39831D91A10DA8C00D8154A /* diffuseFS.glsl */,
+				D39831DA1A10DA8C00D8154A /* diffuseVS.glsl */,
+				D39831DB1A10DA8C00D8154A /* DirectionalLightTextureFS.glsl */,
+				D39831DC1A10DA8C00D8154A /* DirectionalLightTextureVS.glsl */,
+				D39831DD1A10DA8C00D8154A /* ParallaxMappingFS.glsl */,
+				D39831DE1A10DA8C00D8154A /* ParallaxMappingVS.glsl */,
+				D39831DF1A10DA8C00D8154A /* simpleFS.glsl */,
+				D39831E01A10DA8C00D8154A /* simpleVS.glsl */,
+				D39831E11A10DA8C00D8154A /* specularFS.glsl */,
+				D39831E21A10DA8C00D8154A /* specularFSPerPixel.glsl */,
+				D39831E31A10DA8C00D8154A /* specularVS.glsl */,
+				D39831E41A10DA8C00D8154A /* specularVSPerPixel.glsl */,
+				D39831E51A10DA8C00D8154A /* textureFS.glsl */,
+				D39831E61A10DA8C00D8154A /* textureVS.glsl */,
+				D39831E71A10DA8C00D8154A /* vertexColourFS.glsl */,
+				D39831E81A10DA8C00D8154A /* vertexColourTextureFS.glsl */,
+				D39831E91A10DA8C00D8154A /* vertexColourTextureVS.glsl */,
+				D39831EA1A10DA8C00D8154A /* vertexColourVS.glsl */,
+			);
+			name = shaders;
+			sourceTree = "<group>";
+		};
+		D39832011A10DA9100D8154A /* textures */ = {
+			isa = PBXGroup;
+			children = (
+				D39832021A10DA9D00D8154A /* armoredrecon_diff.png */,
+				D39832031A10DA9D00D8154A /* armoredrecon_Height.png */,
+				D39832041A10DA9D00D8154A /* armoredrecon_N.png */,
+				D39832051A10DA9D00D8154A /* armoredrecon_spec.png */,
+				D39832061A10DA9D00D8154A /* char_idle.png */,
+				D39832071A10DA9D00D8154A /* test.png */,
+			);
+			name = textures;
+			sourceTree = "<group>";
+		};
+		D398320E1A10DAA100D8154A /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				D398320F1A10DAAC00D8154A /* OratorStd.otf */,
+			);
+			name = fonts;
+			sourceTree = "<group>";
+		};
+		D39832101A10DAAF00D8154A /* models */ = {
+			isa = PBXGroup;
+			children = (
+				D31791981A154ED100474536 /* armoredrecon.fbx */,
+			);
+			name = models;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -214,6 +351,7 @@
 				D3737B1D196854B6001A741F /* Sources */,
 				D3737B1E196854B6001A741F /* Frameworks */,
 				D3737B1F196854B6001A741F /* Resources */,
+				D31791951A154D9C00474536 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -280,19 +418,38 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D386D4FB19EC862500998AD5 /* OratorStd.otf in Resources */,
-				D3CACF9719DC857F003A75EA /* simpleFS.glsl in Resources */,
-				D386D4F919EC857F00998AD5 /* vertexColourTextureFS.glsl in Resources */,
-				D383D25F19E5BEC2009A30C0 /* test.png in Resources */,
-				D3934F9219DC8FF50015CCBF /* simpleVS.glsl in Resources */,
-				D383D25D19E5BEB2009A30C0 /* vertexColourVS.glsl in Resources */,
-				D383D25B19E5BEB2009A30C0 /* textureVS.glsl in Resources */,
-				D386D4FA19EC857F00998AD5 /* vertexColourTextureVS.glsl in Resources */,
+				D39831F41A10DA8C00D8154A /* ParallaxMappingVS.glsl in Resources */,
+				D39831F61A10DA8C00D8154A /* simpleVS.glsl in Resources */,
+				D39832001A10DA8C00D8154A /* vertexColourVS.glsl in Resources */,
+				D398320A1A10DA9D00D8154A /* armoredrecon_N.png in Resources */,
+				D39831F31A10DA8C00D8154A /* ParallaxMappingFS.glsl in Resources */,
+				D39831F11A10DA8C00D8154A /* DirectionalLightTextureFS.glsl in Resources */,
 				D3737B2F196854B6001A741F /* InfoPlist.strings in Resources */,
+				D39831FA1A10DA8C00D8154A /* specularVSPerPixel.glsl in Resources */,
+				D39831FF1A10DA8C00D8154A /* vertexColourTextureVS.glsl in Resources */,
+				D39831ED1A10DA8C00D8154A /* BumpmappingFS.glsl in Resources */,
+				D39831EE1A10DA8C00D8154A /* BumpmappingVS.glsl in Resources */,
+				D398320C1A10DA9D00D8154A /* char_idle.png in Resources */,
+				D39831F71A10DA8C00D8154A /* specularFS.glsl in Resources */,
+				D398320D1A10DA9D00D8154A /* test.png in Resources */,
+				D39831EC1A10DA8C00D8154A /* ambientVS.glsl in Resources */,
+				D39831FD1A10DA8C00D8154A /* vertexColourFS.glsl in Resources */,
+				D39831F01A10DA8C00D8154A /* diffuseVS.glsl in Resources */,
+				D39831FE1A10DA8C00D8154A /* vertexColourTextureFS.glsl in Resources */,
+				D39831F81A10DA8C00D8154A /* specularFSPerPixel.glsl in Resources */,
 				D3737B3D196854B6001A741F /* Images.xcassets in Resources */,
-				D383D25A19E5BEB2009A30C0 /* textureFS.glsl in Resources */,
-				D383D25C19E5BEB2009A30C0 /* vertexColourFS.glsl in Resources */,
+				D39832081A10DA9D00D8154A /* armoredrecon_diff.png in Resources */,
+				D39831EF1A10DA8C00D8154A /* diffuseFS.glsl in Resources */,
+				D39831F51A10DA8C00D8154A /* simpleFS.glsl in Resources */,
+				D398320B1A10DA9D00D8154A /* armoredrecon_spec.png in Resources */,
 				D3737B35196854B6001A741F /* Credits.rtf in Resources */,
+				D39831FC1A10DA8C00D8154A /* textureVS.glsl in Resources */,
+				D39831FB1A10DA8C00D8154A /* textureFS.glsl in Resources */,
+				D39831EB1A10DA8C00D8154A /* ambientFS.glsl in Resources */,
+				D39831F21A10DA8C00D8154A /* DirectionalLightTextureVS.glsl in Resources */,
+				D39832091A10DA9D00D8154A /* armoredrecon_Height.png in Resources */,
+				D39831F91A10DA8C00D8154A /* specularVS.glsl in Resources */,
+				D31791991A154ED100474536 /* armoredrecon.fbx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,15 +467,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D3002D2F1A039E06009CDD65 /* Transform.cpp in Sources */,
-				D383D26119E5BEE7009A30C0 /* Texture.cpp in Sources */,
-				D3002D351A03A79D009CDD65 /* Material.cpp in Sources */,
-				D3CACF9319DC6CA5003A75EA /* Shader.cpp in Sources */,
-				D3002D321A03A200009CDD65 /* Mesh.cpp in Sources */,
-				D3737B591968557F001A741F /* main.cpp in Sources */,
-				D3002D281A02876F009CDD65 /* Component.cpp in Sources */,
-				D3002D2B1A0399A1009CDD65 /* GameObject.cpp in Sources */,
-				D3002D381A03AB08009CDD65 /* Camera.cpp in Sources */,
+				D39831C11A10DA3400D8154A /* Light.cpp in Sources */,
+				D39831C51A10DA3400D8154A /* Shader.cpp in Sources */,
+				D39831C31A10DA3400D8154A /* Material.cpp in Sources */,
+				D39831C01A10DA3400D8154A /* GameObject.cpp in Sources */,
+				D39831C21A10DA3400D8154A /* main.cpp in Sources */,
+				D39831C61A10DA3400D8154A /* Texture.cpp in Sources */,
+				D39831C71A10DA3400D8154A /* Transform.cpp in Sources */,
+				D39831BF1A10DA3400D8154A /* FBXLoader.cpp in Sources */,
+				D39831BD1A10DA3400D8154A /* Camera.cpp in Sources */,
+				D39831C41A10DA3400D8154A /* Mesh.cpp in Sources */,
+				D39831BE1A10DA3400D8154A /* Component.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,6 +597,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+					"\"$(SYSTEM_APPS_DIR)/Autodesk/FBX SDK/2015.1/lib/clang/libstdcpp/debug\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
@@ -445,9 +605,11 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/brian/Dev/glew-1.10.0/lib",
+					"\"$(SYSTEM_APPS_DIR)/Autodesk/FBX SDK/2015.1/lib/clang/debug\"",
+					"$(PROJECT_DIR)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "/Users/brian/Dev/glew-1.10.0/include /Users/brian/Dev/glm";
+				USER_HEADER_SEARCH_PATHS = "/Users/brian/Dev/glew-1.10.0/include /Users/brian/Dev/glm \"/Applications/Autodesk/FBX SDK/2015.1/include\"";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -461,6 +623,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+					"\"$(SYSTEM_APPS_DIR)/Autodesk/FBX SDK/2015.1/lib/clang/libstdcpp/debug\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
@@ -468,9 +631,11 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/brian/Dev/glew-1.10.0/lib",
+					"\"$(SYSTEM_APPS_DIR)/Autodesk/FBX SDK/2015.1/lib/clang/debug\"",
+					"$(PROJECT_DIR)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "/Users/brian/Dev/glew-1.10.0/include /Users/brian/Dev/glm";
+				USER_HEADER_SEARCH_PATHS = "/Users/brian/Dev/glew-1.10.0/include /Users/brian/Dev/glm \"/Applications/Autodesk/FBX SDK/2015.1/include\"";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -24,7 +24,7 @@ uniform sampler2D bumpMap;
 
 void main()
 {
-	vec3 bumpNormals = 2.0 * texture2D(bumpMap, texCoordsOut).rgb - 1.0;
+	vec3 bumpNormals = 2.0 * texture(bumpMap, texCoordsOut).rgb - 1.0;
 	bumpNormals = normalize(bumpNormals);
 
 	float diffuseTerm = dot(bumpNormals, lightDirectionOut);
