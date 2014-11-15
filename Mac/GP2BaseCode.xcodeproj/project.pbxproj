@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		D31791971A154DD000474536 /* libfbxsdk.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = D31791961A154DD000474536 /* libfbxsdk.dylib */; };
 		D31791991A154ED100474536 /* armoredrecon.fbx in Resources */ = {isa = PBXBuildFile; fileRef = D31791981A154ED100474536 /* armoredrecon.fbx */; };
+		D339320D1A1805F8004F455F /* PostProcessing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D339320C1A1805F8004F455F /* PostProcessing.cpp */; };
+		D33932101A180623004F455F /* passThroughVS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D339320E1A180623004F455F /* passThroughVS.glsl */; };
+		D33932111A180623004F455F /* simplePostProcessFS.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D339320F1A180623004F455F /* simplePostProcessFS.glsl */; };
 		D3737B2F196854B6001A741F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3737B2D196854B6001A741F /* InfoPlist.strings */; };
 		D3737B35196854B6001A741F /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D3737B33196854B6001A741F /* Credits.rtf */; };
 		D3737B3D196854B6001A741F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3737B3C196854B6001A741F /* Images.xcassets */; };
@@ -87,6 +90,10 @@
 /* Begin PBXFileReference section */
 		D31791961A154DD000474536 /* libfbxsdk.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libfbxsdk.dylib; sourceTree = "<group>"; };
 		D31791981A154ED100474536 /* armoredrecon.fbx */ = {isa = PBXFileReference; lastKnownFileType = file; path = armoredrecon.fbx; sourceTree = "<group>"; };
+		D339320B1A1805DB004F455F /* PostProcessing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PostProcessing.h; path = ../headers/PostProcessing.h; sourceTree = "<group>"; };
+		D339320C1A1805F8004F455F /* PostProcessing.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PostProcessing.cpp; path = ../src/PostProcessing.cpp; sourceTree = "<group>"; };
+		D339320E1A180623004F455F /* passThroughVS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = passThroughVS.glsl; path = ../../assets/shaders/passThroughVS.glsl; sourceTree = "<group>"; };
+		D339320F1A180623004F455F /* simplePostProcessFS.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = simplePostProcessFS.glsl; path = ../../assets/shaders/simplePostProcessFS.glsl; sourceTree = "<group>"; };
 		D3737B21196854B6001A741F /* GP2BaseCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GP2BaseCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3737B2C196854B6001A741F /* GP2BaseCode-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GP2BaseCode-Info.plist"; sourceTree = "<group>"; };
 		D3737B2E196854B6001A741F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -250,6 +257,7 @@
 		D39831A51A10D9FA00D8154A /* src */ = {
 			isa = PBXGroup;
 			children = (
+				D339320C1A1805F8004F455F /* PostProcessing.cpp */,
 				D39831B21A10DA3400D8154A /* Camera.cpp */,
 				D39831B31A10DA3400D8154A /* Component.cpp */,
 				D39831B41A10DA3400D8154A /* FBXLoader.cpp */,
@@ -268,6 +276,7 @@
 		D39831A61A10DA0F00D8154A /* headers */ = {
 			isa = PBXGroup;
 			children = (
+				D339320B1A1805DB004F455F /* PostProcessing.h */,
 				D39831A71A10DA2500D8154A /* Camera.h */,
 				D39831A81A10DA2500D8154A /* Component.h */,
 				D39831A91A10DA2500D8154A /* FBXLoader.h */,
@@ -286,6 +295,8 @@
 		D39831D41A10DA8000D8154A /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				D339320E1A180623004F455F /* passThroughVS.glsl */,
+				D339320F1A180623004F455F /* simplePostProcessFS.glsl */,
 				D39831D51A10DA8C00D8154A /* ambientFS.glsl */,
 				D39831D61A10DA8C00D8154A /* ambientVS.glsl */,
 				D39831D71A10DA8C00D8154A /* BumpmappingFS.glsl */,
@@ -422,9 +433,11 @@
 				D39831F61A10DA8C00D8154A /* simpleVS.glsl in Resources */,
 				D39832001A10DA8C00D8154A /* vertexColourVS.glsl in Resources */,
 				D398320A1A10DA9D00D8154A /* armoredrecon_N.png in Resources */,
+				D33932111A180623004F455F /* simplePostProcessFS.glsl in Resources */,
 				D39831F31A10DA8C00D8154A /* ParallaxMappingFS.glsl in Resources */,
 				D39831F11A10DA8C00D8154A /* DirectionalLightTextureFS.glsl in Resources */,
 				D3737B2F196854B6001A741F /* InfoPlist.strings in Resources */,
+				D33932101A180623004F455F /* passThroughVS.glsl in Resources */,
 				D39831FA1A10DA8C00D8154A /* specularVSPerPixel.glsl in Resources */,
 				D39831FF1A10DA8C00D8154A /* vertexColourTextureVS.glsl in Resources */,
 				D39831ED1A10DA8C00D8154A /* BumpmappingFS.glsl in Resources */,
@@ -477,6 +490,7 @@
 				D39831BF1A10DA3400D8154A /* FBXLoader.cpp in Sources */,
 				D39831BD1A10DA3400D8154A /* Camera.cpp in Sources */,
 				D39831C41A10DA3400D8154A /* Mesh.cpp in Sources */,
+				D339320D1A1805F8004F455F /* PostProcessing.cpp in Sources */,
 				D39831BE1A10DA3400D8154A /* Component.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
