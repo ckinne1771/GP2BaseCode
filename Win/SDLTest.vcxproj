@@ -37,6 +37,7 @@
     <ClInclude Include="..\headers\Texture.h" />
     <ClInclude Include="..\headers\Transform.h" />
     <ClInclude Include="..\headers\Vertex.h" />
+    <ClInclude Include="..\src\ColourFilters.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\assets\shaders\ambientFS.glsl" />

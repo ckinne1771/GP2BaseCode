@@ -94,21 +94,17 @@ void PostProcessing::bind()
 	glBindFramebuffer(GL_FRAMEBUFFER, m_FrameBufferObject);
 }
 
-void PostProcessing::draw()
+void PostProcessing::preDraw()
 {
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glClearColor(0.0, 0.0, 0.0, 1.0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, m_FBOTexture);
 
 	glUseProgram(m_PostProcessingProgram);
-	GLint textureLocation = glGetUniformLocation(m_PostProcessingProgram,"texture0");
+	GLint textureLocation = glGetUniformLocation(m_PostProcessingProgram, "texture0");
 	glUniform1i(textureLocation, 0);
-	
+
 	glEnableVertexAttribArray(0);
-	
+
 	glBindBuffer(GL_ARRAY_BUFFER, m_FullScreenVBO);
 	glVertexAttribPointer(
 		0,  // attribute
@@ -118,9 +114,23 @@ void PostProcessing::draw()
 		0,                  // no extra data between each position
 		0                   // offset of first element
 		);
+}
+
+void PostProcessing::postDraw()
+{
+	glDisableVertexAttribArray(0);
+}
+
+void PostProcessing::draw()
+{
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glClearColor(0.0, 0.0, 0.0, 1.0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
-	glDisableVertexAttribArray(0);
+
 }
 
 void PostProcessing::destroy()

@@ -22,7 +22,10 @@ public:
 	void init(int width, int height,std::string& vertexShaderFilename,std::string& fragmentShaderFilename);
 	
 	void bind();
+
+	void preDraw();
 	void draw();
+	void postDraw();
 
 	void destroy();
 

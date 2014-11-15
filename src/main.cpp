@@ -59,6 +59,7 @@ const std::string MODEL_PATH = "models/";
 #include "FBXLoader.h"
 
 #include "PostProcessing.h"
+#include "ColourFilters.h"
 
 
 //SDL Window
@@ -192,7 +193,7 @@ void setViewport( int width, int height )
 void Initialise()
 {
 	std::string vsPath = ASSET_PATH + SHADER_PATH + "/passThroughVS.glsl";
-	std::string fsPath = ASSET_PATH + SHADER_PATH + "/SimplePostProcessFS.glsl";
+	std::string fsPath = ASSET_PATH + SHADER_PATH + "/colourFilterPostFS.glsl";
 
 	postProcessor.init(WINDOW_WIDTH, WINDOW_HEIGHT, vsPath, fsPath);
 
@@ -390,8 +391,18 @@ void render()
 	}
 
 	//now switch to normal framebuffer
+	postProcessor.preDraw();
+	//Grab stuff from shader
+	GLint colourFilterLocation = postProcessor.getUniformVariableLocation("colourFilter"); 
+	glUniformMatrix3fv(colourFilterLocation, 1, GL_FALSE, glm::value_ptr(SEPIA_FILTER));
+
+	//draw
 	postProcessor.draw();
-    SDL_GL_SwapWindow(window);
+
+	//post draw
+	postProcessor.postDraw();
+    
+	SDL_GL_SwapWindow(window);
 }
 
 
