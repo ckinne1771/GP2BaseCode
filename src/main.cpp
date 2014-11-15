@@ -58,6 +58,8 @@ const std::string MODEL_PATH = "models/";
 #include "Light.h"
 #include "FBXLoader.h"
 
+#include "PostProcessing.h"
+
 
 //SDL Window
 SDL_Window * window = NULL;
@@ -76,6 +78,7 @@ vec4 ambientLightColour = vec4(1.0f, 1.0f, 1.0f, 1.0f);
 std::vector<GameObject*> displayList;
 GameObject * mainCamera;
 GameObject * mainLight;
+PostProcessing postProcessor;
 
 
 void CheckForErrors()
@@ -104,6 +107,7 @@ void InitWindow(int width, int height, bool fullscreen)
 
 void CleanUp()
 {
+
     auto iter=displayList.begin();
 	while(iter!=displayList.end())
     {
@@ -121,6 +125,7 @@ void CleanUp()
     }
     displayList.clear();
     
+	postProcessor.destroy();
 	// clean up, reverse order!!!
 	SDL_GL_DeleteContext(glcontext);
 	SDL_DestroyWindow(window);
@@ -186,6 +191,11 @@ void setViewport( int width, int height )
 
 void Initialise()
 {
+	std::string vsPath = ASSET_PATH + SHADER_PATH + "/passThroughVS.glsl";
+	std::string fsPath = ASSET_PATH + SHADER_PATH + "/SimplePostProcessFS.glsl";
+
+	postProcessor.init(WINDOW_WIDTH, WINDOW_HEIGHT, vsPath, fsPath);
+
     mainCamera=new GameObject();
     mainCamera->setName("MainCamera");
     
@@ -365,8 +375,9 @@ void renderGameObject(GameObject * pObject)
 //Function to render(aka draw)
 void render()
 {
-    //old imediate mode!
-    //Set the clear colour(background)
+	//Bind Framebuffer
+	postProcessor.bind();
+
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f); 
 	glClearDepth(1.0f);
     //clear the colour and depth buffer
@@ -377,7 +388,9 @@ void render()
 	{
 		renderGameObject((*iter));
 	}
-    
+
+	//now switch to normal framebuffer
+	postProcessor.draw();
     SDL_GL_SwapWindow(window);
 }
 

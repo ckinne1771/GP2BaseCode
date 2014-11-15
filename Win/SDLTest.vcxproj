@@ -19,6 +19,7 @@
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\Material.cpp" />
     <ClCompile Include="..\src\Mesh.cpp" />
+    <ClCompile Include="..\src\PostProcessing.cpp" />
     <ClCompile Include="..\src\Shader.cpp" />
     <ClCompile Include="..\src\Texture.cpp" />
     <ClCompile Include="..\src\Transform.cpp" />
@@ -31,6 +32,7 @@
     <ClInclude Include="..\headers\Light.h" />
     <ClInclude Include="..\headers\Material.h" />
     <ClInclude Include="..\headers\Mesh.h" />
+    <ClInclude Include="..\headers\PostProcessing.h" />
     <ClInclude Include="..\headers\Shader.h" />
     <ClInclude Include="..\headers\Texture.h" />
     <ClInclude Include="..\headers\Transform.h" />
@@ -41,13 +43,16 @@
     <None Include="..\assets\shaders\ambientVS.glsl" />
     <None Include="..\assets\shaders\BumpmappingFS.glsl" />
     <None Include="..\assets\shaders\BumpmappingVS.glsl" />
+    <None Include="..\assets\shaders\colourFilterPostFS.glsl" />
     <None Include="..\assets\shaders\diffuseFS.glsl" />
     <None Include="..\assets\shaders\diffuseVS.glsl" />
     <None Include="..\assets\shaders\DirectionalLightTextureFS.glsl" />
     <None Include="..\assets\shaders\DirectionalLightTextureVS.glsl" />
     <None Include="..\assets\shaders\ParallaxMappingFS.glsl" />
     <None Include="..\assets\shaders\ParallaxMappingVS.glsl" />
+    <None Include="..\assets\shaders\passThroughVS.glsl" />
     <None Include="..\assets\shaders\simpleFS.glsl" />
+    <None Include="..\assets\shaders\simplePostProcessFS.glsl" />
     <None Include="..\assets\shaders\simpleVS.glsl" />
     <None Include="..\assets\shaders\specularFS.glsl" />
     <None Include="..\assets\shaders\specularFSPerPixel.glsl" />
