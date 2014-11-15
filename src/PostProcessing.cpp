@@ -86,7 +86,7 @@ void PostProcessing::createFramebuffer(int width, int height)
 	if ((status = glCheckFramebufferStatus(GL_FRAMEBUFFER)) != GL_FRAMEBUFFER_COMPLETE) {
 		//something went wrong
 	}
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	
 }
 
 void PostProcessing::bind()
@@ -119,6 +119,7 @@ void PostProcessing::preDraw()
 void PostProcessing::postDraw()
 {
 	glDisableVertexAttribArray(0);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 void PostProcessing::draw()
