@@ -23,8 +23,8 @@ uniform sampler2D specMap;
 uniform sampler2D bumpMap;
 uniform sampler2D heightMap;
 
-uniform float bias = 0.03;
-uniform float scale = 0.015;
+uniform float bias = 0.015;
+uniform float scale = 0.03;
 
 void main()
 {
@@ -32,7 +32,7 @@ void main()
 	float height = texture(heightMap, texCoordsOut).r;
     
     //use offset limits(scale and bias) to move texture coords
-	vec2 correctedTexCoords = scale*texCoordsOut.xy*height;
+	vec2 correctedTexCoords = scale*(texCoordsOut.xy*lightDirectionOut.xy)*(height - bias);
     
     //Calculate new texture coords, we use these instead of normal texture coords
     correctedTexCoords=texCoordsOut-correctedTexCoords;
