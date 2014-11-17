@@ -241,10 +241,10 @@ void Initialise()
 
 		go->getChild(i)->setMaterial(material);
 	}
-	go->getTransform()->setPosition(-2.0f, 0.0f, -6.0f);
+	go->getTransform()->setPosition(0.0f, -2.0f, -6.0f);
 	go->getTransform()->setRotation(0.0f, -40.0f, 0.0f);
 	displayList.push_back(go);
-
+	/*
 	go = loadFBXFromFile(modelPath);
 	for (int i = 0; i < go->getChildCount(); i++)
 	{
@@ -264,7 +264,7 @@ void Initialise()
 	}
 	go->getTransform()->setPosition(2.0f, 0.0f, -6.0f);
 	go->getTransform()->setRotation(0.0f, -40.0f, 0.0f);
-	displayList.push_back(go);
+	displayList.push_back(go);*/
 }
 
 
