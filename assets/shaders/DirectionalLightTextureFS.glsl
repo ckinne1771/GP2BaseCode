@@ -1,11 +1,12 @@
 #version 150
 
 out vec4 FragColor;
+
 in vec3 vertexNormalOut;
 in vec3 cameraDirectionOut;
-in vec2 texCoordsOut;
+in vec3 lightDirectionOut;
 
-uniform vec3 lightDirection;
+in vec2 texCoordsOut;
 
 uniform vec4 ambientMaterialColour;
 uniform vec4 diffuseMaterialColour;
@@ -21,8 +22,8 @@ uniform sampler2D specMap;
 
 void main()
 {
-	float diffuseTerm = dot(vertexNormalOut, lightDirection);
-	vec3 halfWayVec = normalize(cameraDirectionOut + lightDirection);
+	float diffuseTerm = dot(vertexNormalOut, lightDirectionOut);
+	vec3 halfWayVec = normalize(cameraDirectionOut + lightDirectionOut);
 	float specularTerm = pow(dot(vertexNormalOut, halfWayVec), specularPower);
 
 	vec4 diffuseTextureColour = texture(diffuseMap, texCoordsOut);
