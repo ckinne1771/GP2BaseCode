@@ -6,7 +6,6 @@ in vec2 vertexTexCoords;
 in vec3 vertexTangents;
 in vec3 vertexBinormals;
 
-out vec3 vertexNormalOut;
 out vec3 cameraDirectionOut;
 out vec3 lightDirectionOut;
 out vec2 texCoordsOut;
@@ -30,7 +29,6 @@ void main()
 	//cameraDirectionOut = cameraDir;
 
 	lightDirectionOut = normalize(tangentMatrix*lightDirection);
-	vertexNormalOut = normalize(tangentMatrix*vertexNormalModel);
 	cameraDirectionOut = normalize(tangentMatrix*cameraDir);
 
 	texCoordsOut = vertexTexCoords;

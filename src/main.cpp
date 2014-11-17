@@ -326,6 +326,7 @@ void renderGameObject(GameObject * pObject)
 		GLint specTextureLocation = currentMaterial->getUniformLocation("specMap");
 		GLint bumpTextureLocation = currentMaterial->getUniformLocation("bumpMap");
 		GLint heightTextureLocation = currentMaterial->getUniformLocation("heightMap");
+        
 		Camera * cam = mainCamera->getCamera();
 		Light* light = mainLight->getLight();
 
@@ -346,18 +347,17 @@ void renderGameObject(GameObject * pObject)
 
 		glUniformMatrix4fv(ModelLocation, 1, GL_FALSE, glm::value_ptr(Model));
 		glUniformMatrix4fv(MVPLocation, 1, GL_FALSE, glm::value_ptr(MVP));
+        glUniform3fv(cameraPositionLocation, 1, glm::value_ptr(cameraPosition));
+        
 		glUniform4fv(ambientMatLocation, 1, glm::value_ptr(ambientMaterialColour));
-		glUniform4fv(ambientLightLocation, 1, glm::value_ptr(ambientLightColour));
-
 		glUniform4fv(diffuseMatLocation, 1, glm::value_ptr(diffuseMaterialColour));
-		glUniform4fv(diffuseLightLocation, 1, glm::value_ptr(diffuseLightColour));
-		glUniform3fv(lightDirectionLocation, 1, glm::value_ptr(lightDirection));
-
 		glUniform4fv(specularMatLocation, 1, glm::value_ptr(specularMaterialColour));
-		glUniform4fv(specularLightLocation, 1, glm::value_ptr(specularLightColour));
-
-		glUniform3fv(cameraPositionLocation, 1, glm::value_ptr(cameraPosition));
 		glUniform1f(specularpowerLocation, specularPower);
+    
+        glUniform4fv(ambientLightLocation, 1, glm::value_ptr(ambientLightColour));
+        glUniform4fv(diffuseLightLocation, 1, glm::value_ptr(diffuseLightColour));
+        glUniform4fv(specularLightLocation, 1, glm::value_ptr(specularLightColour));
+        glUniform3fv(lightDirectionLocation, 1, glm::value_ptr(lightDirection));
 
 		glUniform1i(diffuseTextureLocation, 0);
 		glUniform1i(specTextureLocation, 1);

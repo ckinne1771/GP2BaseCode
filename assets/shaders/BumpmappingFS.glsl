@@ -2,12 +2,9 @@
 
 out vec4 FragColor;
 
-in vec3 vertexNormalOut;
 in vec3 cameraDirectionOut;
 in vec3 lightDirectionOut;
 in vec2 texCoordsOut;
-
-
 
 uniform vec4 ambientMaterialColour;
 uniform vec4 diffuseMaterialColour;
