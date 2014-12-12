@@ -27,7 +27,7 @@ using glm::vec3;
 #include <vector>
 
 #ifdef _DEBUG && WIN32
-const std::string ASSET_PATH = "../assets/";
+const std::string ASSET_PATH = "assets/";
 const std::string SHADER_PATH = "shaders/";
 const std::string TEXTURE_PATH = "textures/";
 const std::string FONT_PATH = "fonts/";
@@ -287,13 +287,19 @@ void Initialise()
 	{
 		Material * material = new Material();
 		material->init();
-		std::string vsPath = ASSET_PATH + SHADER_PATH + "/specularVS.glsl";
-		std::string fsPath = ASSET_PATH + SHADER_PATH + "/specularFS.glsl";
+		std::string vsPath = ASSET_PATH + SHADER_PATH + "bumpMappingVS.glsl";
+		std::string fsPath = ASSET_PATH + SHADER_PATH + "bumpMappingFS.glsl";
 		material->loadShader(vsPath, fsPath);
 
+		std::string diffTexturePath = ASSET_PATH + TEXTURE_PATH + "armoredrecon_diff.png";
+		std::string specTexturePath = ASSET_PATH + TEXTURE_PATH + "armoredrecon_spec.png";
+		std::string bumpTexturePath = ASSET_PATH + TEXTURE_PATH + "armoredrecon_N.png";
+		material->loadDiffuseMap(diffTexturePath);
+		material->loadSpecularMap(specTexturePath);
+		material->loadDiffuseMap(bumpTexturePath);
 		go->getChild(i)->setMaterial(material);
 	}
-	go->getTransform()->setPosition(0.0f, 0.0f, -10.0f);
+	go->getTransform()->setPosition(2.0f, -2.0f, -6.0f);
 	displayList.push_back(go);
 }
 
@@ -335,7 +341,9 @@ void renderGameObject(GameObject * pObject)
 		GLint specularLightLocation = currentMaterial->getUniformLocation("specularLightColour");
 		GLint specularpowerLocation = currentMaterial->getUniformLocation("specularPower");
 		GLint cameraPositionLocation = currentMaterial->getUniformLocation("cameraPosition");
-
+		GLint diffuseTextureLocation = currentMaterial->getUniformLocation("diffuseMap");
+		GLint specularTextureLocation = currentMaterial->getUniformLocation("specularMap");
+		GLint bumpTextureLocation = currentMaterial->getUniformLocation("bumpMap");
 		Camera * cam = mainCamera->getCamera();
 		Light* light = mainLight->getLight();
 
@@ -356,19 +364,20 @@ void renderGameObject(GameObject * pObject)
 
 		glUniformMatrix4fv(ModelLocation, 1, GL_FALSE, glm::value_ptr(Model));
 		glUniformMatrix4fv(MVPLocation, 1, GL_FALSE, glm::value_ptr(MVP));
-		glUniform4fv(ambientMatLocation, 1, glm::value_ptr(ambientMaterialColour));
-		glUniform4fv(ambientLightLocation, 1, glm::value_ptr(ambientLightColour));
-
-		glUniform4fv(diffuseMatLocation, 1, glm::value_ptr(diffuseMaterialColour));
-		glUniform4fv(diffuseLightLocation, 1, glm::value_ptr(diffuseLightColour));
-		glUniform3fv(lightDirectionLocation, 1, glm::value_ptr(lightDirection));
-
-		glUniform4fv(specularMatLocation, 1, glm::value_ptr(specularMaterialColour));
-		glUniform4fv(specularLightLocation, 1, glm::value_ptr(specularLightColour));
-
 		glUniform3fv(cameraPositionLocation, 1, glm::value_ptr(cameraPosition));
+
+		glUniform4fv(ambientMatLocation, 1, glm::value_ptr(ambientMaterialColour));
+		glUniform4fv(diffuseMatLocation, 1, glm::value_ptr(diffuseMaterialColour));
+		glUniform4fv(specularMatLocation, 1, glm::value_ptr(specularMaterialColour));
 		glUniform1f(specularpowerLocation, specularPower);
 
+		glUniform4fv(ambientLightLocation, 1, glm::value_ptr(ambientLightColour));
+		glUniform4fv(diffuseLightLocation, 1, glm::value_ptr(diffuseLightColour));
+		glUniform4fv(specularLightLocation, 1, glm::value_ptr(specularLightColour));
+		glUniform3fv(lightDirectionLocation, 1, glm::value_ptr(lightDirection));
+		glUniform1i(diffuseTextureLocation, 0);
+		glUniform1i(specularTextureLocation, 1);
+		glUniform1i(bumpTextureLocation, 2);
 		glDrawElements(GL_TRIANGLES, currentMesh->getIndexCount(), GL_UNSIGNED_INT, 0);
 	}
 

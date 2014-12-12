@@ -7,7 +7,7 @@
 
 #include <iostream>
 
-int level = 0; 
+int level = 0;
 
 void PrintTabs() {
 	for (int i = 0; i < level; i++)
@@ -58,7 +58,7 @@ GameObject * loadFBXFromFile(const std::string& filename)
 	FbxImporter* lImporter = FbxImporter::Create(lSdkManager, "");
 
 	// Create a new scene so that it can be populated by the imported file.
-	if (!lImporter->Initialize(filename.c_str(), -1, lSdkManager->GetIOSettings())) 
+	if (!lImporter->Initialize(filename.c_str(), -1, lSdkManager->GetIOSettings()))
 	{
 		return rootGo;
 	}
@@ -86,11 +86,11 @@ GameObject * loadFBXFromFile(const std::string& filename)
 	return rootGo;
 }
 
-void processNode(FbxNode *node,GameObject *rootGo)
+void processNode(FbxNode *node, GameObject *rootGo)
 {
 	PrintTabs();
 	const char* nodeName = node->GetName();
-	FbxDouble3 translation =  node->LclTranslation.Get();
+	FbxDouble3 translation = node->LclTranslation.Get();
 	FbxDouble3 rotation = node->LclRotation.Get();
 	FbxDouble3 scaling = node->LclScaling.Get();
 
@@ -124,7 +124,7 @@ void processAttribute(FbxNodeAttribute * attribute, GameObject * go)
 	std::cout << "Attribute " << typeName.Buffer() << " Name " << attrName << std::endl;
 	switch (attribute->GetAttributeType()) {
 	case FbxNodeAttribute::eSkeleton: return;
-	case FbxNodeAttribute::eMesh: processMesh(attribute->GetNode()->GetMesh(),go);
+	case FbxNodeAttribute::eMesh: processMesh(attribute->GetNode()->GetMesh(), go);
 	case FbxNodeAttribute::eCamera: return;
 	case FbxNodeAttribute::eLight: return;
 	}
@@ -147,6 +147,8 @@ void processMesh(FbxMesh * mesh, GameObject *go)
 		pVerts[i].position = vec3(currentVert[0], currentVert[1], currentVert[2]);
 		pVerts[i].colours = vec4(1.0f, 1.0f, 1.0f, 1.0f);
 		pVerts[i].texCoords = vec2(0.0f, 0.0f);
+		pVerts[i].binormals = vec3(0.0f, 0.0f, 0.0f);
+		pVerts[i].tangentNormals = vec3(0.0f, 0.0f, 0.0f);
 	}
 
 	//read normal
@@ -155,6 +157,8 @@ void processMesh(FbxMesh * mesh, GameObject *go)
 
 	//read texture coordinates
 	std::cout << "Vertices " << numVerts << " Indices " << numIndices << std::endl;
+
+	calculateTagentAndBinormals(pVerts, numVerts, pIndices, numIndices);
 
 	meshComponent->copyIndexData(numIndices, sizeof(int), (void**)pIndices);
 	meshComponent->copyVertexData(numVerts, sizeof(Vertex), (void**)pVerts);
@@ -205,5 +209,53 @@ void processMeshTextureCoords(FbxMesh * mesh, Vertex * verts, int numVerts)
 				verts[fbxCornerIndex].texCoords.y = 1.0f - fbxUV[1];
 			}
 		}
+	}
+}
+
+//Bug in some exporters means that we will have to calculate these!
+void calculateTagentAndBinormals(Vertex * verts, int numVerts, int * indices, int numIndices)
+{
+	//create arrays for 
+	for (int i = 0; i < numIndices; i += 3)
+	{
+		vec3 vertex0 = verts[indices[i]].position;
+		vec3 vertex1 = verts[indices[i + 1]].position;
+		vec3 vertex2 = verts[indices[i + 2]].position;
+
+		vec3 normal = glm::cross((vertex1 - vertex0), (vertex2 - vertex0));
+
+		vec3 deltaPos;
+		if (vertex0 == vertex1)
+			deltaPos = vertex2 - vertex0;
+		else
+			deltaPos = vertex1 - vertex0;
+
+		vec2 uv0 = verts[indices[i]].texCoords;
+		vec2 uv1 = verts[indices[i + 1]].texCoords;
+		vec2 uv2 = verts[indices[i + 2]].texCoords;
+
+		vec2 deltaUV1 = uv1 - uv0;
+		vec2 deltaUV2 = uv2 - uv0;
+
+		vec3 tan; // tangents
+		vec3 bin; // binormal
+
+		// avoid divion with 0
+		if (deltaUV1.s != 0)
+			tan = deltaPos / deltaUV1.s;
+		else
+			tan = deltaPos / 1.0f;
+
+		tan = glm::normalize(tan - glm::dot(normal, tan)*normal);
+
+		bin = glm::normalize(glm::cross(tan, normal));
+
+		verts[indices[i]].tangentNormals = tan;
+		verts[indices[i + 1]].tangentNormals = tan;
+		verts[indices[i + 2]].tangentNormals = tan;
+
+		verts[indices[i]].binormals = bin;
+		verts[indices[i + 1]].binormals = bin;
+		verts[indices[i + 2]].binormals = bin;
 	}
 }
