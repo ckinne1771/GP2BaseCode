@@ -12,6 +12,7 @@ GLuint convertSDLSurfaceToGLTexture(SDL_Surface * surface)
 		if (surface->format->Rmask == 0x000000ff){
 			texture_format = GL_RGBA;
 			internalFormat = GL_RGBA8;
+
 		}
 		else{
 			texture_format = GL_BGRA;

@@ -1,11 +1,3 @@
-//
-//  Material.h
-//  GP2BaseCode
-//
-//  Created by Brian on 31/10/2014.
-//  Copyright (c) 2014 Glasgow Caledonian University. All rights reserved.
-//
-
 #ifndef Material_h
 #define Material_h
 
@@ -27,18 +19,18 @@ using glm::vec4;
 
 #include "Component.h"
 
-class Material:public Component{
+class Material :public Component{
 public:
-    Material();
-    ~Material();
-    
-    void destroy();
-    
-    void bind();
-    
-    bool loadShader(const std::string& vsFilename,const std::string& fsFilename);
-    GLint getUniformLocation(const std::string& name);
-	
+	Material();
+	~Material();
+
+	void destroy();
+
+	void bind();
+
+	bool loadShader(const std::string& vsFilename, const std::string& fsFilename);
+	GLint getUniformLocation(const std::string& name);
+
 	vec4& getAmbientColour();
 	void setAmbientColour(float r, float g, float b, float a);
 
@@ -50,7 +42,7 @@ public:
 
 	float getSpecularPower();
 	void setSpecularPower(float power);
-	
+
 	void loadDiffuseMap(const std::string& filename);
 	GLuint getDiffuseMap();
 
@@ -60,17 +52,19 @@ public:
 	void loadBumpMap(const std::string& filename);
 	GLuint getBumpMap();
 
+	void loadHeightMap(const std::string& filename);
+	GLuint getHeightMap();
 protected:
 private:
-    GLuint m_ShaderProgram;
-	GLuint m_DiffuseMap;
+	GLuint m_ShaderProgram;
 	vec4 m_AmbientColour;
 	vec4 m_DiffuseColour;
 	vec4 m_SpecularColour;
 	float m_SpecularPower;
+	GLuint m_DiffuseMap;
 	GLuint m_SpecularMap;
 	GLuint m_BumpMap;
-
+	GLuint m_HeightMap;
 };
 
 #endif
